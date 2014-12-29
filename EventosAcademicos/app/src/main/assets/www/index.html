@@ -14,7 +14,12 @@
         <div data-role="page" id="inicio">
 
             <div data-role="header">
-                <h1>Autenticacion de Usuario</h1>
+				<div id="custom-border-radius" class="ui-btn-right">
+					<a href="#popupLogin" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext headerButton" 
+						data-rel="popup" data-position-to="window" data-transition="pop">Only Icon</a>					
+					<a href="#" class="ui-btn ui-corner-all ui-icon-gear ui-btn-icon-notext headerButton">Only Icon</a>				
+				</div>
+				<span class="ui-title" />
             </div>
             <div data-role="content">
                 <form id="formulario" >
@@ -26,6 +31,22 @@
                     <input type="submit" value="Login" id="botonLogin">
                 </form>
             </div>
+			<div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all" >
+				<form id="formulario1">
+					<div data-role="header">
+						<h1>Loguin</h1>
+						<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+					</div>
+					
+					<div style="padding:10px 20px;">
+						<label for="un" class="ui-hidden-accessible ui-inline">Username:</label>
+						<input type="text" name="user" id="un" value="" placeholder="username" data-theme="a">
+						<label for="pw" class="ui-hidden-accessible">Password:</label>
+						<input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a">
+						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+					</div>
+				</form>
+			</div>
         </div>
     </body>
 </html>
