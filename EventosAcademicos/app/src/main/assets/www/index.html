@@ -8,42 +8,58 @@
         <script type="text/javascript" src="js/cordova.js"></script>
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="js/eventos.js"></script>
         <title>Hello World</title>
     </head>
     <body>
-        <div data-role="page" id="inicio">
+
+        <div data-role="page" id="globalization">
 
             <div data-role="header">
 				<div id="custom-border-radius" class="ui-btn-right">
 					<a href="#popupLogin" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext headerButton" 
 						data-rel="popup" data-position-to="window" data-transition="pop">Only Icon</a>					
-					<a href="#" class="ui-btn ui-corner-all ui-icon-gear ui-btn-icon-notext headerButton">Only Icon</a>				
+					<a href="#popupConnectServer" class="ui-btn ui-corner-all ui-icon-gear ui-btn-icon-notext headerButton"
+						data-rel="popup" data-position-to="window" data-transition="pop">Only Icon</a>				
 				</div>
 				<span class="ui-title" />
             </div>
             <div data-role="content">
-                <form id="formulario" >
-                    <label> Usuario </label>
-                    <input type="text" id="nombredeusuario" name="nombredeusuario">
-                    <label> Password </label>
-                    <input type="password" id="clave" name="clave" >
-
-                    <input type="submit" value="Login" id="botonLogin">
-                </form>
+                <input type="button" id="getLocaleName" value="Get Locale" />
+				<input type="button" id="getPreferredLanguage" value="Get PreferedLanguage" />
+				<div id="globInfo">
+				
+				</div>
             </div>
 			<div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all" >
-				<form id="formulario1">
+				<form id="formulario_login">
 					<div data-role="header">
-						<h1>Loguin</h1>
+						<h1>Login</h1>
 						<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
 					</div>
 					
 					<div style="padding:10px 20px;">
 						<label for="un" class="ui-hidden-accessible ui-inline">Username:</label>
-						<input type="text" name="user" id="un" value="" placeholder="username" data-theme="a">
+						<input type="text" name="user" id="un" value="" placeholder="username" data-theme="a" />
 						<label for="pw" class="ui-hidden-accessible">Password:</label>
-						<input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a">
+						<input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a" />
 						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+					</div>
+				</form>
+			</div>
+			<div data-role="popup" id="popupConnectServer" data-theme="a" class="ui-corner-all" >
+				<form id="formulario_ConnectServer">
+					<div data-role="header">
+						<h1>Connect Server</h1>
+						<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+					</div>
+					
+					<div style="padding:10px 20px;">
+						<label for="text_ip" class="ui-hidden-accessible ui-inline">IP:</label>
+						<input type="text" name="user" id="text_ip" value="" placeholder="IP" data-theme="a">
+						<label for="text_puerto" class="ui-hidden-accessible">Puerto:</label>
+						<input type="password" name="pass" id="text_puerto" value="" placeholder="Puerto" data-theme="a">
+						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" >Guardar</button>
 					</div>
 				</form>
 			</div>
