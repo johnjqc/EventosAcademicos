@@ -33,10 +33,38 @@ function updateGlobalization(){
 
       }
 
-$(function() {
 
-$('#getLocaleName').bind('tap', function(e) { console.log('User tapped1 #myElement');  updateGlobalization();});
-$('#getPreferredLanguage').bind('tap', function(e) { console.log('User tapped1 #myElement');  updateGlobalization1();});
+$(document).on('pagebeforecreate','#globalization',function(e){
+    i18n.init( function() {
+        $("html").i18n();
+    });
+});
+
+
+$(document).on('pageinit','#globalization',function(e){
+    $('#saveServer').on('tap', function() {
+        window.localStorage.setItem('text_ip', $('#text_ip').val());
+        window.localStorage.setItem('text_puerto', $('#text_puerto').val());
+    });
+
+
+});
+
+$(document).on('pageshow','#globalization', function(e) {
+    var text_ip = window.localStorage.getItem('text_ip');
+    var text_puerto = window.localStorage.getItem('text_puerto');
+
+    if(text_ip.length>0){
+        $('#text_ip').val(text_ip);
+    }
+    if(text_puerto.length>0){
+        $('#text_puerto').val(text_puerto);
+    }
+});
+
+$(function() {
+$('#getLocaleName').bind('tap', function(e) { console.log('User tapped1 #myElement');  updateGlobalization1();});
+$('#getPreferredLanguage').bind('tap', function(e) { console.log('User tapped1 #myElement');  updateGlobalization();});
 
     var globalizationManager = GlobalizationManager.getInstance();
 
@@ -102,3 +130,6 @@ var GlobalizationManager = (function () {
 		}
 	};
 })();
+
+
+
