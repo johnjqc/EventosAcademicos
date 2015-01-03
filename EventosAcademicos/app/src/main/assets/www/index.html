@@ -5,45 +5,72 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
-        <script type="text/javascript" src="js/cordova.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/EventosAcademicosTheme.min.css" />
+
+        <link rel="stylesheet" type="text/css" href="css/eventos.css" />
+
+        <!--<script type="text/javascript" src="js/cordova.js"></script>-->
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript" src="js/i18next-1.7.7.min.js"></script>
-
         <script type="text/javascript" src="js/eventos.js"></script>
+
+        <script type="text/javascript">
+            if (!navigator.userAgent.toLowerCase().match('chrome')) {
+                document.write("<script type='text/javascript' src='js/cordova.js'><\/script>");
+            }
+        </script>
         <title>Hello World</title>
     </head>
     <body>
 
-        <div data-role="page" id="globalization">
+        <div data-role="page" id="globalization" data-theme="b">
 
             <div data-role="header">
 				<div id="custom-border-radius" class="ui-btn-right">
 					<a href="#popupLogin" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext headerButton" 
 						data-rel="popup" data-position-to="window" data-transition="pop">Only Icon</a>					
-					<a href="#popupConnectServer" class="ui-btn ui-btn-b ui-corner-all ui-icon-gear ui-btn-icon-notext headerButton"
+					<a href="#popupConnectServer" class="ui-btn ui-btn-b ui-corner-all ui-icon-cloud ui-btn-icon-notext headerButton"
 						data-rel="popup" data-position-to="window" data-transition="pop">Only Icon</a>				
 				</div>
 				<span class="ui-title" />
             </div>
             <div data-role="content">
-                <input type="button" id="getLocaleName" value="Get Locale" />
-				<input type="button" id="getPreferredLanguage" value="Get PreferedLanguage" />
-				<div id="globInfo">
-                </div>
+                <div class="ui-body ui-body-a ui-corner-all ">
+                    <div class="banne2">
+                        <div id="date_event1">
+                            <div class="date_event">
+                                <p>01 <span>Aug</span></p>
+                            </div>
+                        </div>
+                    </div>
 
-                <ul class="nav">
-                    <li><a href="#" data-i18n="nav.home"></a></li>
-                    <li><a href="#" data-i18n="nav.page1"></a></li>
-                    <li><a href="#" data-i18n="nav.page2"></a></li>
-                </ul>
+                    <p >Sexta semana tecnologica en la Universidad Distrital FranCISCO Jose de Caldas
+                        que se llevara a cabo en al Sede Tecnologica en el mes asignado</p>
+                </div>
+                <br />
+                <div id="event_1" class="ui-body ui-body-a ui-corner-all ">
+                    <div class="banner">
+                        <div id="date_event2">
+                            <div class="date_event">
+                                <p>25 <span>May</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-image">
+                        <img alt="home" src="./images/cartagena.jpg" />
+                        <h2>Cartagena</h2>
+                    </div>
+                    <div class="card-separator"></div>
+                    <p>Sexta semana tecnologica en la Universidad Distrital Francisco Jose de Caldas</p>
+                </div>
             </div>
-			<div data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all" >
+			<div data-role="popup" id="popupLogin" data-theme="b" class="ui-corner-all" >
+                <div data-role="header">
+                    <h1>Login</h1>
+                    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+                </div>
 				<form id="formulario_login">
-					<div data-role="header">
-						<h1>Login</h1>
-						<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-					</div>
                     <div data-role="content">
 						<input type="text" name="user" id="un" value="" placeholder="username" data-theme="a" />
 						<label for="pw" class="ui-hidden-accessible">Password:</label>
@@ -52,21 +79,19 @@
 					</div>
 				</form>
 			</div>
-			<div data-role="popup" id="popupConnectServer" data-theme="a" class="ui-corner-all" >
-				<form id="formulario_ConnectServer">
-					<div data-role="header">
-						<h1>Connect Server</h1>
-						<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-					</div>
-					
-					<div style="padding:10px 20px;">
-						<label for="text_ip" class="ui-hidden-accessible ui-inline">IP:</label>
-						<input type="text" name="user" id="text_ip" value="" placeholder="IP" data-theme="a">
-						<label for="text_puerto" class="ui-hidden-accessible">Puerto:</label>
-						<input type="text" name="pass" id="text_puerto" value="" placeholder="Puerto" data-theme="a">
-						<button id="saveServer" type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" >Guardar</button>
-					</div>
-				</form>
+			<div data-role="popup" id="popupConnectServer" data-theme="b" class="ui-corner-all" data-history="false" >
+                <div data-role="header">
+                    <h1>Server</h1>
+                    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+                </div>
+
+                <div style="padding:10px 20px;">
+                    <label for="text_ip" class="ui-hidden-accessible ui-inline">IP:</label>
+                    <input type="text" name="user" id="text_ip" value="" placeholder="IP" data-theme="a">
+                    <label for="text_puerto" class="ui-hidden-accessible">Puerto:</label>
+                    <input type="text" name="pass" id="text_puerto" value="" placeholder="Puerto" data-theme="a">
+                    <a id="saveServer" href="#" data-rel="back"  class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" >Guardar</a>
+                </div>
 			</div>
         </div>
     </body>

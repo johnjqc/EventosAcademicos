@@ -1,0 +1,10 @@
+{
+  "app": {
+    "name": "i18next Español"
+  },
+  "nav": {
+    "home": "Inicio",
+    "page1": "Pagina Uno",
+    "page2": "Pagina Dos"
+  }
+}
