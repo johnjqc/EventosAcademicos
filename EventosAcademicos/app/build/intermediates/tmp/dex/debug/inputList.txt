@@ -1,0 +1,2 @@
+D:\Proyecto\Git\EventosAcademicos\EventosAcademicos\app\build\intermediates\classes\debug
+D:\Proyecto\Git\EventosAcademicos\EventosAcademicos\app\build\intermediates\pre-dexed\debug\cordova-2.9.1-d70620cfd2f02ed913cd4f6b21e4126a7720cd7d.jar
