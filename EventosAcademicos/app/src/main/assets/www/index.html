@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
         <link rel="stylesheet" type="text/css" href="css/EventosAcademicosTheme.min.css" />
 
@@ -34,14 +34,14 @@
 					<a id="btn_popup_server" href="#popupConnectServer" class="ui-btn ui-btn-b ui-corner-all ui-icon-cloud ui-btn-icon-notext headerButton"
 						data-rel="popup" data-position-to="window" data-transition="pop">Only Icon</a>				
 				</div>
-				<span class="ui-title" />
+				<span class="ui-title" ></span>
             </div>
             <div data-role="content" id="event_home">
 
             </div>
 			<div data-role="popup" id="popupLogin" data-theme="b" class="ui-corner-all" >
                 <div data-role="header">
-                    <h1>Login</h1>
+                    <h1 data-i18n>app.login</h1>
                     <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
                 </div>
 				<form id="formulario_login">
@@ -49,13 +49,13 @@
 						<input type="text" name="user" id="un" value="" placeholder="username" data-theme="a" />
 						<label for="pw" class="ui-hidden-accessible">Password:</label>
 						<input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a" />
-						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Sign in</button>
+						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check" data-i18n>app.signin</button>
 					</div>
 				</form>
 			</div>
 			<div data-role="popup" id="popupConnectServer" data-theme="b" class="ui-corner-all" data-history="false" >
                 <div data-role="header">
-                    <h1>Server</h1>
+                    <h1 data-i18n>app.server</h1>
                     <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
                 </div>
 
@@ -64,7 +64,7 @@
                     <input type="text" name="user" id="text_ip" value="" placeholder="IP" data-theme="a">
                     <label for="text_puerto" class="ui-hidden-accessible">Puerto:</label>
                     <input type="text" name="pass" id="text_puerto" value="" placeholder="Puerto" data-theme="a">
-                    <a id="saveServer" href="#" data-rel="back"  class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" >Guardar</a>
+                    <a id="saveServer" href="#" data-rel="back"  class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check" data-i18n>app.guardar</a>
                 </div>
 			</div>
         </div>

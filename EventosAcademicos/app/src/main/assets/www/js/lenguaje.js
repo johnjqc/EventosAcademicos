@@ -1,21 +1,62 @@
 $(document).on('pagebeforecreate','#globalization',function(e){
-    var i18nOpts = {
+    i18n.init(i18nOpts).done(function() {
+        $("html").i18n();
+    });
+});
+
+$(document).on('pagebeforecreate','#pageEvento',function(e){
+    i18n.init(i18nOpts).done(function() {
+        $("html").i18n();
+    });
+});
+
+var i18nOpts = {
         resStore: {
             dev: {
                 translation: {
                     app: {
-                        button: 'Button',
-                        home: 'Home',
-                        label: 'Label',
-                        footer: 'Footer',
-                        title: 'i18n Test'
+                        login: 'Login',
+                        server: 'Servidor',
+                        guardar: 'Guardar',
+                        signin: 'Autenticar'
+                    },
+                    dates: {
+                        short1: 'Ene',
+                        short2: 'Feb',
+                        short3: 'Mar',
+                        short4: 'Abr',
+                        short5: 'May',
+                        short6: 'Jun',
+                        short7: 'Jul',
+                        short8: 'Ago',
+                        short9: 'Sep',
+                        short10: 'Oct',
+                        short11: 'Nov',
+                        short12: 'Dic'
                     }
                 }
             },
             es : {
                 translation : {
                     app: {
-                        name: "i18next Español",
+                        login: 'Login',
+                        server: 'Servidor',
+                        guardar: 'Guardar',
+                        sigin: 'Autenticar'
+                    },
+                    dates: {
+                        short1: 'Ene',
+                        short2: 'Feb',
+                        short3: 'Mar',
+                        short4: 'Abr',
+                        short5: 'May',
+                        short6: 'Jun',
+                        short7: 'Jul',
+                        short8: 'Ago',
+                        short9: 'Sep',
+                        short10: 'Oct',
+                        short11: 'Nov',
+                        short12: 'Dic'
                     },
                     card: {
                         title: "No title"
@@ -29,11 +70,3 @@ $(document).on('pagebeforecreate','#globalization',function(e){
             },
         }
     };
-    i18n.init(i18nOpts).done(function() {
-        $("html").i18n();
-    });
-
-    i18n.init( function() {
-        $("html").i18n();
-    });
-});
