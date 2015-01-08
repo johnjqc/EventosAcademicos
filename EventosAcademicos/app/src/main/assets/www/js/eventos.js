@@ -15,7 +15,6 @@ $(document).on('pageinit','#globalization',function(e){
 
 $(document).on('pageinit','#crud_evento',function(e){
     $('#submit_new_evento').on('tap', function() {
-        //#submit_new_evento
         text_ip = window.localStorage.getItem('text_ip');
         text_puerto = window.localStorage.getItem('text_puerto');
 
@@ -24,12 +23,10 @@ $(document).on('pageinit','#crud_evento',function(e){
         }
 
         var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/index.php?jsoncallback=?"
-
+		//alert($('#frm_new_evento').serialize());
         $.ajax({
             url: urlServer,
-            data: {'accion' : 'new_evento', formData : $('#frm_new_evento').serialize()},
-            type: 'post',
-            async: 'true',
+            data: {'accion' : 'new_evento', 'formData' : $('#frm_new_evento').serialize()},
             dataType: 'jsonp',
             jsonp: 'jsoncallback',
             beforeSend: function() {
@@ -38,16 +35,15 @@ $(document).on('pageinit','#crud_evento',function(e){
             complete: function() {
                 $.mobile.loading( "hide" );
             },
-            success: function (result) {
-                if(result.status) {
-                    $.mobile.changePage("#second");
-                } else {
-                    alert('Logon unsuccessful!');
-                }
+            success: function (data, status) {
+                //alert(data.respuesta);
+				$.each(data, function(i,item){
+					alert(item);
+				});
             },
-            error: function (request,error) {
+            error: function (request,status, err) {
                 $.mobile.loading( "hide" );
-                alert('Error conectando al servidor.');
+                alert(status + " :: " + err);
             }
         });
     });

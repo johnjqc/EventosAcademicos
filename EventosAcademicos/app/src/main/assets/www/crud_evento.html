@@ -50,30 +50,31 @@
     </div>
     <div data-role="content">
         <form id="frm_new_evento" class="ui-body ui-body-a ui-corner-all" data-ajax="false">
-            <label for="textarea-enhanced">Nombre del Evento:</label>
-            <textarea name="textarea-enhanced" id="textarea-enhanced" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
+            <label for="t_nombre_evento">Nombre del Evento:</label>
+            <textarea name="t_nombre_evento" id="t_nombre_evento" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
 
-            <label for="date-1">Fecha Inicio</label>
-            <input data-clear-btn="true" name="date-2" id="date-1" value="" type="date">
+            <label for="d_fecha_inico">Fecha Inicio</label>
+            <input data-clear-btn="true" name="d_fecha_inico" id="d_fecha_inico" value="" type="date">
 
-            <label for="date-2">Fecha Fin</label>
-            <input data-clear-btn="true" name="date-2" id="date-2" value="" type="date">
+            <label for="d_fecha_fin">Fecha Fin</label>
+            <input data-clear-btn="true" name="d_fecha_fin" id="d_fecha_fin" value="" type="date">
 
             <label for="t_descripcion">Descripcion</label>
-            <textarea name="textarea-enhanced" id="t_descripcion" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
+            <textarea name="t_descripcion" id="t_descripcion" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
 
-            <label for="text-3">Titulo Imagen</label>
-            <input data-clear-btn="true" name="text-3" id="text-3" value="" type="text">
+            <label for="t_titulo_img">Titulo Imagen</label>
+            <input data-clear-btn="true" name="t_titulo_img" id="t_titulo_img" value="" type="text">
 
-            <label for="file-2">File: data-clear-btn="true"</label>
-            <input data-clear-btn="true" name="file-2" id="file-2" value="" type="file">
+            <label for="imagen_path">Imagen"</label>
+            <input data-clear-btn="true" name="imagen_path" id="imagen_path" value="" type="file">
 
-            <label for="flip-checkbox-3">Is Active</label>
-            <input data-role="flipswitch" name="flip-checkbox-3" id="flip-checkbox-3" data-on-text="True" data-off-text="False" data-wrapper-class="custom-size-flipswitch" type="checkbox">
+            <label for="isactive">Is Active</label>
+            <input data-role="flipswitch" name="isactive" id="isactive" data-on-text="True" data-off-text="False" data-wrapper-class="custom-size-flipswitch" type="checkbox">
 
             <input type="button" data-theme="b" name="submit" id="submit_new_evento" value="Submit">
 
         </form>
+		<div id="result"></div>
     </div>
     <div data-role="popup" id="popupLogin" data-theme="b" class="ui-corner-all" >
         <div data-role="header">
