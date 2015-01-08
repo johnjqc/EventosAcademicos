@@ -13,6 +13,47 @@ $(document).on('pageinit','#globalization',function(e){
     getEvents();
 });
 
+$(document).on('pageinit','#crud_evento',function(e){
+    $('#submit_new_evento').on('tap', function() {
+        //#submit_new_evento
+        text_ip = window.localStorage.getItem('text_ip');
+        text_puerto = window.localStorage.getItem('text_puerto');
+
+        if ($.isEmptyObject(text_puerto)) {
+            text_puerto = "80";
+        }
+
+        var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/index.php?jsoncallback=?"
+
+        $.ajax({
+            url: urlServer,
+            data: {'accion' : 'new_evento', formData : $('#frm_new_evento').serialize()},
+            type: 'post',
+            async: 'true',
+            dataType: 'jsonp',
+            jsonp: 'jsoncallback',
+            beforeSend: function() {
+                showLoading();
+            },
+            complete: function() {
+                $.mobile.loading( "hide" );
+            },
+            success: function (result) {
+                if(result.status) {
+                    $.mobile.changePage("#second");
+                } else {
+                    alert('Logon unsuccessful!');
+                }
+            },
+            error: function (request,error) {
+                $.mobile.loading( "hide" );
+                alert('Error conectando al servidor.');
+            }
+        });
+    });
+
+});
+
 $(document).on('pageshow','#globalization', function(e) {
     if(!mainloaded) {
         showLoading();
@@ -20,6 +61,7 @@ $(document).on('pageshow','#globalization', function(e) {
 });
 
 $(function() {
+
     $( "#btn_popup_server" ).bind( "tap", function(e) {
         text_ip = window.localStorage.getItem('text_ip');
         text_puerto = window.localStorage.getItem('text_puerto');
@@ -54,12 +96,15 @@ function getEvents() {
 
     $.ajax({
         beforeSend: function(){
-                    showLoading();
-                },
-                complete: function(){
-                    $.mobile.loading( "hide" );
-                },
+            showLoading();
+        },
+        complete: function(){
+            $.mobile.loading( "hide" );
+        },
         url: archivoValidacion,
+        data: {
+            'accion': 'queryCrudEvento'
+        },
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
         timeout: 6000,

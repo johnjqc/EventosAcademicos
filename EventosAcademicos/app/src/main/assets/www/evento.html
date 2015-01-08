@@ -17,24 +17,25 @@
     <script type="text/javascript" src="js/lenguaje.js"></script>
 
     <script type="text/javascript">
-            if (!navigator.userAgent.toLowerCase().match('chrome')) {
+        if (!navigator.userAgent.toLowerCase().match('chrome') or !navigator.userAgent.toLowerCase().match('firefox')) {
                 document.write("<script type='text/javascript' src='js/cordova.js'><\/script>");
-            }
-        </script>
-    <title>Hello World</title>
+        }
+    </script>
+    <title>Eventos Academicos</title>
 </head>
 <body>
 
 <div data-role="page" id="pageEvento" data-theme="c">
-    <div data-role="panel" id="mypanel" data-theme="f">
+    <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
         <ul data-role="listview">
             <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
-            <li><a href="#">List item</a></li>
+            <li><a href="#">Gestion Eventos</a></li>
             <li><a href="#">List item</a></li>
             <li><a href="#">List item</a></li>
         </ul>
     </div>
-    <div data-role="header">
+
+    <div data-role="header" data-position="fixed">
         <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-rel="back" >Only Icon</a>
         <div id="custom-border-radius" class="ui-btn-right">
             <a href="#popupLogin1" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext headerButton"
