@@ -15,6 +15,7 @@ $(document).on('pageinit','#globalization',function(e){
 
 $(document).on('pageinit','#crud_evento',function(e){
     $('#submit_new_evento').on('tap', function() {
+        //#submit_new_evento
         text_ip = window.localStorage.getItem('text_ip');
         text_puerto = window.localStorage.getItem('text_puerto');
 
@@ -22,11 +23,13 @@ $(document).on('pageinit','#crud_evento',function(e){
             text_puerto = "80";
         }
 
-        var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/index.php?jsoncallback=?"
-		//alert($('#frm_new_evento').serialize());
+        var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/index.php?jsoncallback=?";
+        
         $.ajax({
             url: urlServer,
-            data: {'accion' : 'new_evento', 'formData' : $('#frm_new_evento').serialize()},
+            data: "&accion=new_evento&" + $('#frm_new_evento').serialize(),
+            type: 'post',
+            async: 'true',
             dataType: 'jsonp',
             jsonp: 'jsoncallback',
             beforeSend: function() {
@@ -35,15 +38,15 @@ $(document).on('pageinit','#crud_evento',function(e){
             complete: function() {
                 $.mobile.loading( "hide" );
             },
-            success: function (data, status) {
-                //alert(data.respuesta);
-				$.each(data, function(i,item){
-					alert(item);
-				});
+            success: function (result) {
+                if(result.respuesta == "ok") {
+                    alert('Logon ');
+                    $.mobile.changePage("#second");
+                }
             },
-            error: function (request,status, err) {
+            error: function (request,error) {
                 $.mobile.loading( "hide" );
-                alert(status + " :: " + err);
+                alert('Error conectando al servidor.');
             }
         });
     });
@@ -85,7 +88,7 @@ function getEvents() {
         text_puerto = "80";
     }
 
-    var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/index.php?jsoncallback=?"
+    var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/index.php?jsoncallback=?";
     var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
     var output = "";
     var div_output= $('#event_home');

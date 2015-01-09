@@ -49,15 +49,15 @@
         <span class="ui-title" ></span>
     </div>
     <div data-role="content">
-        <form id="frm_new_evento" class="ui-body ui-body-a ui-corner-all" data-ajax="false">
-            <label for="t_nombre_evento">Nombre del Evento:</label>
-            <textarea name="t_nombre_evento" id="t_nombre_evento" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
+        <form id="frm_new_evento" class="ui-body ui-body-a ui-corner-all" data-ajax="false" >
+            <label for="t_nombre">Nombre del Evento:</label>
+            <textarea name="t_nombre" id="t_nombre" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
 
-            <label for="d_fecha_inico">Fecha Inicio</label>
-            <input data-clear-btn="true" name="d_fecha_inico" id="d_fecha_inico" value="" type="date">
+            <label for="t_fecha_inicio">Fecha Inicio</label>
+            <input data-clear-btn="true" name="t_fecha_inicio" id="t_fecha_inicio" value="" type="date">
 
-            <label for="d_fecha_fin">Fecha Fin</label>
-            <input data-clear-btn="true" name="d_fecha_fin" id="d_fecha_fin" value="" type="date">
+            <label for="t_fecha_fin">Fecha Fin</label>
+            <input data-clear-btn="true" name="t_fecha_fin" id="t_fecha_fin" value="" type="date">
 
             <label for="t_descripcion">Descripcion</label>
             <textarea name="t_descripcion" id="t_descripcion" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
@@ -65,16 +65,15 @@
             <label for="t_titulo_img">Titulo Imagen</label>
             <input data-clear-btn="true" name="t_titulo_img" id="t_titulo_img" value="" type="text">
 
-            <label for="imagen_path">Imagen"</label>
-            <input data-clear-btn="true" name="imagen_path" id="imagen_path" value="" type="file">
+            <label for="t_img_path">File: data-clear-btn="true"</label>
+            <input data-clear-btn="true" name="t_img_path" id="t_img_path" value="" type="file">
 
-            <label for="isactive">Is Active</label>
-            <input data-role="flipswitch" name="isactive" id="isactive" data-on-text="True" data-off-text="False" data-wrapper-class="custom-size-flipswitch" type="checkbox">
+            <label for="is_active">Is Active</label>
+            <input data-role="flipswitch" name="is_active" id="is_active" data-on-text="True" data-off-text="False" data-wrapper-class="custom-size-flipswitch" type="checkbox">
 
             <input type="button" data-theme="b" name="submit" id="submit_new_evento" value="Submit">
 
         </form>
-		<div id="result"></div>
     </div>
     <div data-role="popup" id="popupLogin" data-theme="b" class="ui-corner-all" >
         <div data-role="header">
