@@ -1,0 +1,19 @@
+{
+    "version": "1.0.0",
+    "name": "com.maginsoft.mfilechooser",
+    "cordova_name": "Maginsoft FileChooser",
+    "description": "File Chooser for Cordova/Phonegap",
+    "license": "MIT",
+    "repo": "https://github.com/MaginSoft/MFileChooser",
+    "keywords": [
+        "cordova",
+        "filechooser",
+        "android",
+        "filepicker",
+        "phonegap"
+    ],
+    "platforms": [
+        "android"
+    ],
+    "engines": []
+}

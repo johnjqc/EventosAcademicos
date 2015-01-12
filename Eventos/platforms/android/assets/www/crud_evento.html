@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/EventosAcademicosTheme.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="css/eventos.css" />
+
+    <!--<script type="text/javascript" src="js/cordova.js"></script>-->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="js/i18next-1.7.7.min.js"></script>
+    <script type="text/javascript" src="js/eventos.js"></script>
+    <script type="text/javascript" src="js/lenguaje.js"></script>
+
+    <script type="text/javascript">
+        if (!navigator.userAgent.toLowerCase().match('chrome') or !navigator.userAgent.toLowerCase().match('firefox')) {
+            document.write("<script type='text/javascript' src='cordova.js'><\/script>");
+        }
+    </script>
+
+    <title>Eventos Academicos</title>
+</head>
+<body>
+
+<div data-role="page" id="crud_evento" data-theme="b">
+    <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
+        <ul data-role="listview">
+            <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
+            <li><a href="#">Gestion Eventos</a></li>
+            <li><a href="#">List item</a></li>
+            <li><a href="#">List item</a></li>
+        </ul>
+    </div>
+
+    <div data-role="header" data-position="fixed">
+        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-rel="back" >Only Icon</a>
+        <div id="custom-border-radius" class="ui-btn-right">
+            <a id="btn_popup_server" href="#popupConnectServer" class="ui-btn ui-btn-b ui-corner-all ui-icon-cloud ui-btn-icon-notext headerButton"
+               data-rel="popup" data-position-to="window" data-transition="pop">Only Icon</a>
+            <a href="#popupLogin" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext headerButton"
+               data-rel="popup" data-position-to="window" data-transition="pop">Only Icon</a>
+            <a id="btn_menu_home" href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext headerButton"
+               data-display="overlay">Only Icon</a>
+        </div>
+        <span class="ui-title" ></span>
+    </div>
+    <div data-role="content">
+
+        <form id="frm_new_evento" class="ui-body ui-body-a ui-corner-all" data-ajax="false" enctype="multipart/form-data">
+            <label for="t_nombre">Nombre del Evento:</label>
+            <textarea name="t_nombre" id="t_nombre" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
+
+            <label for="t_fecha_inicio">Fecha Inicio</label>
+            <input data-clear-btn="true" name="t_fecha_inicio" id="t_fecha_inicio" value="" type="date">
+
+            <label for="t_fecha_fin">Fecha Fin</label>
+            <input data-clear-btn="true" name="t_fecha_fin" id="t_fecha_fin" value="" type="date">
+
+            <label for="t_descripcion">Descripcion</label>
+            <textarea name="t_descripcion" id="t_descripcion" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
+
+            <label for="t_titulo_img">Titulo Imagen</label>
+            <input data-clear-btn="true" name="t_titulo_img" id="t_titulo_img" value="" type="text">
+
+            <label for="t_img_path">File: data-clear-btn="true"</label>
+            <input data-clear-btn="true" name="t_img_path" id="t_img_path" value="" type="file">
+            
+            <label for="is_active">Is Active</label>
+            <input data-role="flipswitch" name="is_active" id="is_active" data-on-text="True" data-off-text="False" data-wrapper-class="custom-size-flipswitch" type="checkbox">
+
+            <input type="button" data-theme="b" name="submit" id="submit_new_evento" value="Submit">
+
+        </form>
+    </div>
+    <div data-role="popup" id="popupLogin" data-theme="b" class="ui-corner-all" >
+        <div data-role="header">
+            <h1 data-i18n>app.login</h1>
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        </div>
+        <form id="formulario_login">
+            <div data-role="content">
+                <input type="text" name="user" id="un" value="" placeholder="username" data-theme="a" />
+                <label for="pw" class="ui-hidden-accessible">Password:</label>
+                <input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a" />
+                <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check" data-i18n>app.signin</button>
+            </div>
+        </form>
+    </div>
+    <div data-role="popup" id="popupConnectServer" data-theme="b" class="ui-corner-all" data-history="false" >
+        <div data-role="header">
+            <h1 data-i18n>app.server</h1>
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+        </div>
+
+        <div style="padding:10px 20px;">
+            <label for="text_ip" class="ui-hidden-accessible ui-inline">IP:</label>
+            <input type="text" name="user" id="text_ip" value="" placeholder="IP" data-theme="a">
+            <label for="text_puerto" class="ui-hidden-accessible">Puerto:</label>
+            <input type="text" name="pass" id="text_puerto" value="" placeholder="Puerto" data-theme="a">
+            <a id="saveServer" href="#" data-rel="back"  class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check" data-i18n>app.guardar</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
