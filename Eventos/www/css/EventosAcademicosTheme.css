@@ -24,7 +24,7 @@ button,
 .ui-btn {
 	font-size: 1em;
 	line-height: 1.3;
-	    font-family: sans-serif /*{global-font-family}*/;
+	 font-family: sans-serif /*{global-font-family}*/;
 }
 legend,
 .ui-input-text input,
@@ -349,7 +349,7 @@ html .ui-body-a .ui-slider-track .ui-btn-active,
 html body .ui-group-theme-a .ui-slider-track .ui-btn-active,
 html body div.ui-slider-track.ui-body-a .ui-btn-active {
 	background-color: #3388cc /*{a-active-background-color}*/;
-	border-color: #3388cc /*{a-active-border}*/;
+	border-color: #1c4a70 /*{a-active-border}*/;
 	color: #ffffff /*{a-active-color}*/;
 	text-shadow: 0 /*{a-active-shadow-x}*/ 1px /*{a-active-shadow-y}*/ 0 /*{a-active-shadow-radius}*/ #005599 /*{a-active-shadow-color}*/;
 }
@@ -1042,10 +1042,10 @@ html head + body .ui-body-e.ui-focus {
 html .ui-bar-f .ui-bar-inherit,
 html .ui-body-f .ui-bar-inherit,
 html body .ui-group-theme-f .ui-bar-inherit {
-	background-color: #e9e9e9 /*{f-bar-background-color}*/;
-	border-color: #dddddd /*{f-bar-border}*/;
-	color: #333333 /*{f-bar-color}*/;
-	text-shadow: 0 /*{f-bar-shadow-x}*/ 1px /*{f-bar-shadow-y}*/ 0 /*{f-bar-shadow-radius}*/ #eeeeee /*{f-bar-shadow-color}*/;
+	background-color: #808080 /*{f-bar-background-color}*/;
+	border-color: #464646 /*{f-bar-border}*/;
+	color: #ffffff /*{f-bar-color}*/;
+	text-shadow: 0 /*{f-bar-shadow-x}*/ 1px /*{f-bar-shadow-y}*/ 0 /*{f-bar-shadow-radius}*/ #444444 /*{f-bar-shadow-color}*/;
 	font-weight: bold;
 }
 .ui-bar-f {
@@ -1236,4 +1236,3 @@ button[disabled],
 	outline-width: 1px;
 	outline-style: auto;
 }
-			

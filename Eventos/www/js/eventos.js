@@ -36,11 +36,13 @@ function prepareUpload(event) {
 function uploadFiles(event) {
 	event.stopPropagation();
     event.preventDefault();
-
+    
     var data = new FormData();
-    $.each(files, function(key, value) {
-        data.append(key, value);
-    });
+    if (!$.isEmptyObject(files)) {
+    	$.each(files, function(key, value) {
+            data.append(key, value);
+        });
+    } 
     
     text_ip = window.localStorage.getItem('text_ip');
     text_puerto = window.localStorage.getItem('text_puerto');
@@ -61,22 +63,24 @@ function uploadFiles(event) {
         contentType: false, 
 		success : function(data, textStatus, jqXHR) {
 			if (typeof data.error === 'undefined') {
-				alert(data.result);
 				submitForm(event, data);
 			} else {
 				console.log('ERRORS: ' + data.error);
+				$.mobile.loading( "hide" );
 			}
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			console.log('ERRORS: ' + textStatus);
 		}
     });
+    
+    return false;
 }
 
 function submitForm(event, data) {
     $form = $(event.target);
 
-    var formData = $form.serialize();
+    var formData = $form.serialize() + '&accion=new_evento';
 
     $.each(data.files, function(key, value) {
         formData = formData + '&filenames[]=' + value;
@@ -89,26 +93,28 @@ function submitForm(event, data) {
         text_puerto = "80";
     }
 
-    var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/file.php";
+    var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/index.php?jsoncallback=?";
 
     $.ajax({
         url: urlServer,
         type: 'POST',
         data: formData,
         cache: false,
-        dataType: 'json',
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
         success: function(data, textStatus, jqXHR) {
             if(typeof data.error === 'undefined') {
-                console.log('SUCCESS: ' + data.success);
+                $.mobile.changePage("index.html");
             } else {
                 console.log('ERRORS: ' + data.error);
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log('ERRORS: ' + textStatus);
+            $.mobile.loading( "hide" );
         },
         complete: function() {
-            // STOP LOADING SPINNER
+        	$.mobile.loading( "hide" );
         }
     });
 }
@@ -189,7 +195,6 @@ function getEvents() {
                 $("#event_home").load();
                 $('#evento' + i).bind('tap', function(e) {
                     $.mobile.changePage( "evento.html" );
-                    //$.mobile.loadPage( "evento.html");
                 });
             });
             $("span").i18n();
