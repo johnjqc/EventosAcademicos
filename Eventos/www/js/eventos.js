@@ -1,6 +1,7 @@
 var mainloaded = false;
 var text_ip = '';
 var text_puerto = '';
+var activeEvent;
 
 var files;
 
@@ -10,7 +11,7 @@ $(function() {
 	
 	$('#frm_new_evento').on('submit', uploadFiles);
 
-    $( "#btn_popup_server" ).bind( "tap", function(e) {
+    $("#btn_popup_server").bind( "tap", function(e) {
         text_ip = window.localStorage.getItem('text_ip');
         text_puerto = window.localStorage.getItem('text_puerto');
 
@@ -27,6 +28,33 @@ $(function() {
         }
     } );
 
+});
+
+$(document).on('pageinit','#app_home',function(e){
+    $('#saveServer').on('tap', function() {
+        window.localStorage.setItem('text_ip', $('#text_ip').val());
+        window.localStorage.setItem('text_puerto', $('#text_puerto').val());
+        getEvents();
+        $('#app_home').trigger('create');
+    });
+
+    getEvents();
+});
+
+$(document).on('pageshow','#app_home', function(e) {
+    if(!mainloaded) {
+        showLoading();
+    }
+});
+
+$(document).on('pageinit','#pageEvento',function(e){
+	var parameters = $(this).data("url").split("?")[1];
+	if (!$.isEmptyObject(parameters)) {
+		activeEvent = parameters.replace("idEvento=","");
+//		alert(activeEvent);
+	}
+	
+	getEvento();
 });
 
 function prepareUpload(event) {
@@ -104,7 +132,7 @@ function submitForm(event, data) {
         jsonp: 'jsoncallback',
         success: function(data, textStatus, jqXHR) {
             if(typeof data.error === 'undefined') {
-                $.mobile.changePage("index.html");
+                $.mobile.changePage("../index.html");
             } else {
                 console.log('ERRORS: ' + data.error);
             }
@@ -119,22 +147,70 @@ function submitForm(event, data) {
     });
 }
 
-$(document).on('pageinit','#globalization',function(e){
-    $('#saveServer').on('tap', function() {
-        window.localStorage.setItem('text_ip', $('#text_ip').val());
-        window.localStorage.setItem('text_puerto', $('#text_puerto').val());
-        getEvents();
-        $('#globalization').trigger('create');
-    });
+function getEvento() {
+	text_ip = window.localStorage.getItem('text_ip');
+    text_puerto = window.localStorage.getItem('text_puerto');
 
-    getEvents();
-});
-
-$(document).on('pageshow','#globalization', function(e) {
-    if(!mainloaded) {
-        showLoading();
+    if ($.isEmptyObject(text_puerto)) {
+        text_puerto = "80";
     }
-});
+
+    var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/evento.php?jsoncallback=?";
+    var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
+    var output = "";
+    var div_output= $('#event_content');
+    
+    $.ajax({
+        beforeSend: function(){
+            showLoading();
+        },
+        complete: function(){
+            $.mobile.loading("hide");
+        },
+        url: archivoValidacion,
+        data: {
+            'accion': 'queryEvento', 'evento': activeEvent
+        },
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        timeout: 6000,
+        success: function(data, status){
+            $('#event_content').empty();
+            $.each(data, function(i,item){ 
+                output += '<div id="evento'+ (i + 1) +'" class="ui-body ui-body-a">';
+                if ($.isEmptyObject(item.imagen)) {
+                    output += '<div class="banner2">';
+                } else {
+                    output += '<div class="banner">';
+                }
+                output += '<div class="date_event">';
+                var fecha = new Date(item.fecha_inicio);
+                output += '<p>' + fecha.getUTCDate() + ' <span data-i18n>dates.short' + (fecha.getMonth() +1) + '</span></p>';
+                output += '</div>';
+                output += '</div>';
+                if (!$.isEmptyObject(item.imagen)) {
+                    output += '<div class="card-image">';
+                    output += '<img alt="home" src="' + httpImagen + item.imagen + '" />';
+                    if (!$.isEmptyObject(item.titulo_imagen)) {
+                        output += '<h2>' + item.titulo_imagen + '</h2>';
+                    }
+                    output += '</div>';
+                    output += '<div class="card-separator"></div>';
+                }
+                output += '<p>' + item.nombre + '</p>';
+                output += '</div>';
+                div_output.append(output);
+                $("#event_content").load();
+            });
+            
+        },
+        error: function(){
+            $('#event_content').empty();
+            $.mobile.loading("hide");
+            alert('Error conectando al servidor.');
+        }
+    });
+}
 
 function getEvents() {
     text_ip = window.localStorage.getItem('text_ip');
@@ -169,7 +245,7 @@ function getEvents() {
                 if (i != 0) {
                     output = '<br />';
                 }
-                output += '<div id="evento'+ i +'" class="ui-body ui-body-a ui-corner-all ">';
+                output += '<div id="evento'+ (i + 1) +'" class="ui-body ui-body-a ui-corner-all ">';
                 if ($.isEmptyObject(item.imagen)) {
                     output += '<div class="banner2">';
                 } else {
@@ -193,8 +269,8 @@ function getEvents() {
                 output += '</div>';
                 div_output.append(output);
                 $("#event_home").load();
-                $('#evento' + i).bind('tap', function(e) {
-                    $.mobile.changePage( "evento.html" );
+                $('#evento' + (i + 1)).bind('tap', function(e) {
+                    $.mobile.changePage( "pages/evento.html?idEvento="+ (i + 1) );
                 });
             });
             $("span").i18n();

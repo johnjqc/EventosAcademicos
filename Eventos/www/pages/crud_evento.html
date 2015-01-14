@@ -4,17 +4,17 @@
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
-    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/EventosAcademicosTheme.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/EventosAcademicosTheme.min.css" />
 
-    <link rel="stylesheet" type="text/css" href="css/eventos.css" />
+    <link rel="stylesheet" type="text/css" href="../css/eventos.css" />
 
     <!--<script type="text/javascript" src="js/cordova.js"></script>-->
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
-    <script type="text/javascript" src="js/i18next-1.7.7.min.js"></script>
-    <script type="text/javascript" src="js/eventos.js"></script>
-    <script type="text/javascript" src="js/lenguaje.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="../js/i18next-1.7.7.min.js"></script>
+    <script type="text/javascript" src="../js/eventos.js"></script>
+    <script type="text/javascript" src="../js/lenguaje.js"></script>
 
     <script type="text/javascript">
         if (!navigator.userAgent.toLowerCase().match('chrome') or !navigator.userAgent.toLowerCase().match('firefox')) {
@@ -42,7 +42,7 @@
     </div>
 
     <div data-role="header" data-position="fixed">
-        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-rel="back" href="index.html" >Only Icon</a>
+        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-rel="back" href="../index.html" >Only Icon</a>
         <div id="custom-border-radius" class="ui-btn-right">
             <a id="btn_menu_home" href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext headerButton"
                data-display="overlay">Only Icon</a>
@@ -76,34 +76,6 @@
             <input type="submit" data-theme="b" name="submit" id="submit_new_evento" value="Submit">
 
         </form>
-    </div>
-    <div data-role="popup" id="popupLogin" data-theme="b" class="ui-corner-all" >
-        <div data-role="header">
-            <h1 data-i18n>app.login</h1>
-            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-        </div>
-        <form id="formulario_login">
-            <div data-role="content">
-                <input type="text" name="user" id="un" value="" placeholder="username" data-theme="a" />
-                <label for="pw" class="ui-hidden-accessible">Password:</label>
-                <input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a" />
-                <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check" data-i18n>app.signin</button>
-            </div>
-        </form>
-    </div>
-    <div data-role="popup" id="popupConnectServer" data-theme="b" class="ui-corner-all" data-history="false" >
-        <div data-role="header">
-            <h1 data-i18n>app.server</h1>
-            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-        </div>
-
-        <div style="padding:10px 20px;">
-            <label for="text_ip" class="ui-hidden-accessible ui-inline">IP:</label>
-            <input type="text" name="user" id="text_ip" value="" placeholder="IP" data-theme="a">
-            <label for="text_puerto" class="ui-hidden-accessible">Puerto:</label>
-            <input type="text" name="pass" id="text_puerto" value="" placeholder="Puerto" data-theme="a">
-            <a id="saveServer" href="#" data-rel="back"  class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check" data-i18n>app.guardar</a>
-        </div>
     </div>
 </div>
 </body>

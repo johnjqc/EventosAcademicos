@@ -1,14 +1,14 @@
-$(document).on('pagebeforecreate','#globalization',function(e){
+$(document).on('pagebeforecreate','#app_home',function(e){
     i18n.init(i18nOpts).done(function() {
         $("html").i18n();
     });
 });
 
-$(document).on('pagebeforecreate','#pageEvento',function(e){
-    i18n.init(i18nOpts).done(function() {
-        $("html").i18n();
-    });
-});
+//$(document).on('pagebeforecreate','#pageEvento',function(e){
+//    i18n.init(i18nOpts).done(function() {
+//        $("html").i18n();
+//    });
+//});
 
 var i18nOpts = {
         resStore: {
