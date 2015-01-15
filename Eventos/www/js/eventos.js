@@ -57,6 +57,7 @@ $(document).on('pageinit','#pageEvento',function(e){
 	getEvento();
 });
 
+
 function prepareUpload(event) {
 	files = event.target.files;
 }
@@ -270,7 +271,7 @@ function getEvents() {
                 div_output.append(output);
                 $("#event_home").load();
                 $('#evento' + (i + 1)).bind('tap', function(e) {
-                    $.mobile.changePage( "pages/evento.html?idEvento="+ (i + 1) );
+                    $.mobile.changePage( "./pages/evento.html", {data: {idEvento : (i + 1)}} );
                 });
             });
             $("span").i18n();
