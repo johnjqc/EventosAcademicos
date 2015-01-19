@@ -7,7 +7,7 @@
         <link rel="stylesheet" type="text/css" href="../css/jquery.mobile-1.4.5.min.css" />
         <link rel="stylesheet" type="text/css" href="../css/EventosAcademicosTheme.min.css" />
 
-        <link rel="stylesheet" type="text/css" href="css/eventos.css" />
+        <link rel="stylesheet" type="text/css" href="../css/eventos.css" />
 
         <!--<script type="text/javascript" src="js/cordova.js"></script>-->
         <script type="text/javascript" src="../js/jquery.min.js"></script>
@@ -28,24 +28,26 @@
 		<div data-role="page" id="signin">
 	        <div data-role="header" data-theme="c">
 	        	<a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext" href="../index.html" data-ajax="false">Only Icon</a>
-	            <h1>Book It</h1>
+	            <h1></h1>
 	        </div><!-- /header -->
 	        <div role="main" class="ui-content">
-	            <h3>Sign In</h3>
-	            <label for="txt-email">Email Address</label>
-	            <input type="text" name="txt-email" id="txt-email" value="">
-	            <label for="txt-password">Password</label>
-	            <input type="password" name="txt-password" id="txt-password" value="">
+	            <h3>Acceso de usuario registrado</h3>
+	            <form id="frmSignin">
+		            <label for="txt-email">Email</label>
+		            <input type="email" name="txt-email" id="txt-email" value="">
+		            <label for="txt-password">Clave</label>
+		            <input type="password" name="txt-password" id="txt-password" value="">
+	            </form>
 	            <fieldset data-role="controlgroup">
 	                <input type="checkbox" name="chck-rememberme" id="chck-rememberme" checked="">
-	                <label for="chck-rememberme">Remember me</label>
+	                <label for="chck-rememberme">Recordarme</label>
 	            </fieldset>
-	            <a href="#dlg-invalid-credentials" data-rel="popup" data-transition="pop" data-position-to="window" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
-	            <p class="mc-top-margin-1-5"><a href="beginpwdreset.html">Can't access your account?</a></p>
+	            <a href="#dlg-invalid-credentials" data-transition="pop" data-position-to="window" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Enviar</a>
+	            <p class="mc-top-margin-1-5"><a href="beginpwdreset.html">Olvidaste tu clave?</a></p>
 	            <div data-role="popup" id="dlg-invalid-credentials" data-dismissible="false" style="max-width:400px;">
 	                <div role="main" class="ui-content">
-	                    <h3 class="mc-text-danger">Login Failed</h3>
-	                    <p>Did you enter the right credentials?</p>
+	                    <h3 class="mc-text-danger">Login Fallido</h3>
+	                    <p>Verifique su email y contraseña</p>
 	                    <div class="mc-text-center"><a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b mc-top-margin-1-5">OK</a></div>
 	                </div>
 	            </div>

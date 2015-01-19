@@ -7,7 +7,7 @@
         <link rel="stylesheet" type="text/css" href="../css/jquery.mobile-1.4.5.min.css" />
         <link rel="stylesheet" type="text/css" href="../css/EventosAcademicosTheme.min.css" />
 
-        <link rel="stylesheet" type="text/css" href="css/eventos.css" />
+        <link rel="stylesheet" type="text/css" href="../css/eventos.css" />
 
         <!--<script type="text/javascript" src="js/cordova.js"></script>-->
         <script type="text/javascript" src="../js/jquery.min.js"></script>
@@ -30,30 +30,41 @@
 		<div data-role="page" id="signup">
 		    <div data-role="header" data-theme="c">
 		        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext" data-rel="back" href="../index.html" >Only Icon</a>
-	            <h1>Book It</h1>
+	            <h1></h1>
 		    </div><!-- /header -->
 		    <div role="main" class="ui-content">
-		        <h3>Sign Up</h3>
-		        <label for="txt-first-name">First Name</label>
+		        <h3>Registro de nuevo Usuario</h3>
+		        <form id="frmSignup">
+		        <label id="lblName" for="txt-first-name">Nombres</label>
 		        <input type="text" name="txt-first-name" id="txt-first-name" value="">
-		        <label for="txt-last-name">Last Name</label>
+		        <label id="lblLastName" for="txt-last-name">Apellidos</label>
 		        <input type="text" name="txt-last-name" id="txt-last-name" value="">
-		        <label for="txt-email">Email Address</label>
-		        <input type="text" name="txt-email" id="txt-email" value="">
-		        <label for="txt-password">Password</label>
+		        <label id="lblEmail" for="txt-email">Email</label>
+		        <input type="email" name="txt-email" id="txt-email" value="">
+		        <label id="lblClave" for="txt-password">Clave</label>
 		        <input type="password" name="txt-password" id="txt-password" value="">
-		        <label for="txt-password-confirm">Confirm Password</label>
-		        <input type="password" name="txt-password-confirm" id="txt-password-confirm" value="">
-		        <a href="#dlg-sign-up-sent" data-rel="popup" data-transition="pop" data-position-to="window" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Submit</a>
+		        <label id="lblConfirmClave" for="txt-password-confirm">Confirmar Clave</label>
+		        <input class="data-theme-e" type="password" name="txt-password-confirm" id="txt-password-confirm" value="">
+		        </form>
+		        <a href="#dlg-sign-up-sent" data-transition="pop" data-position-to="window" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Enviar</a>
 		        <div data-role="popup" id="dlg-sign-up-sent" data-dismissible="false" style="max-width:400px;">
 		            <div data-role="header">
-		                <h1>Almost done...</h1>
+		                <h1>Notificacion</h1>
 		            </div>
 		            <div role="main" class="ui-content">
-		                <h3>Confirm Your Email Address</h3>
-		                <p>We sent you an email with instructions on how to confirm your email address. Please check your inbox and follow the instructions in the email.</p>
+		                <h3>Verifica tu direccion de correo</h3>
+		                <p>Le hemos enviado un correo electrónico con instrucciones sobre cómo confirmar su dirección de correo electrónico. Por favor revisa tu correo y siga las instrucciones.</p>
 		                <div class="mc-text-center"><a href="signin.html" class="ui-btn ui-corner-all ui-shadow ui-btn-b mc-top-margin-1-5">OK</a></div>
-		                    
+		            </div>
+		        </div>
+		        <div data-role="popup" id="dlg-sign-up-error" data-dismissible="false" style="max-width:400px;">
+		            <div data-role="header">
+		                <h1>Error en registro</h1>
+		            </div>
+		            <div role="main" class="ui-content">
+		                <h3></h3>
+		                <p>Ya se encuentra registrada la direccion de correo electronico.</p>
+		                <div class="mc-text-center"><a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-b mc-top-margin-1-5" data-rel="back">OK</a></div>
 		            </div>
 		        </div>
 		    </div><!-- /content -->

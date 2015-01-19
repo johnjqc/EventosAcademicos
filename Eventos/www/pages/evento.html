@@ -36,9 +36,12 @@
     </div>
 
     <div data-role="header" data-position="fixed">
-        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-rel="back" href="../index.html" >Only Icon</a>
+        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-ajax="false" href="../index.html" >Only Icon</a>
         <div id="custom-border-radius" class="ui-btn-right">
-        	<a href="#" class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext">Only Icon</a>
+        	<a href="#" data-ajax="false" id="btn_edit_evento" 
+        		class="ui-btn ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-notext">Only Icon</a>
+        	<a href="crud_evento.html#crud_evento" data-ajax="false" id="btn_edit_evento" 
+        		class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext">Only Icon</a>
             <a href="login.html" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext ">Only Icon</a>
             <a id="btn_popup_server" href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
                 data-display="overlay">Only Icon</a>
@@ -47,6 +50,10 @@
     </div>
     <div data-role="content" >
 		<div id="event_content" ></div>
+		<div data-role="collapsible" data-theme="a" data-content-theme="a">
+		<h4>Descripcion</h4>
+		<p id="description_content"></p>
+		</div>
 		<br />
 		<div class="ui-grid-b">
 		    <div class="ui-block-a">

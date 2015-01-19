@@ -9,23 +9,40 @@
 
         <link rel="stylesheet" type="text/css" href="css/eventos.css" />
 
-        <!--<script type="text/javascript" src="js/cordova.js"></script>-->
+<!--         <script type="text/javascript" src="cordova.js"></script> -->
+        <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript" src="js/i18next-1.7.7.min.js"></script>
         <script type="text/javascript" src="js/eventos.js"></script>
         <script type="text/javascript" src="js/lenguaje.js"></script>
+        
 
         <script type="text/javascript">
             if (!navigator.userAgent.toLowerCase().match('chrome') or !navigator.userAgent.toLowerCase().match('firefox')) {
                 document.write("<script type='text/javascript' src='cordova.js'><\/script>");
             }
         </script>
+		<script>
+         
+         function persistTasks(){
+        	    alert ("is unloading the app");
+        	    offlineTasklist.set("tasks", tasklist); 
+        	    window.localStorage.removeItem('usu_perfil');
+        	}
 
+        	function init() {
+        	    document.addEventListener("unload", persistTasks, false);
+        	    document.addEventListener('pause', persistTasks, false);
+                document.addEventListener("menubutton", persistTasks, false);
+        	}
+
+        	$(document).ready(init);
+</script>
         <title>Eventos Academicos</title>
     </head>
     <body>
-
+		
         <div data-role="page" id="app_home" data-theme="b">
             <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
                 <ul data-role="listview">
@@ -41,7 +58,7 @@
                     <a  href="pages/crud_evento.html#crud_evento" data-ajax="false" class="ui-btn ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-notext ">+</a>
 					<a id="btn_popup_server" href="#popupConnectServer" class="ui-btn ui-btn-b ui-corner-all ui-icon-cloud ui-btn-icon-notext "
 						data-rel="popup" data-position-to="window" data-transition="pop">Only Icon</a>
-                    <a href="pages/login.html" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext ">Only Icon</a>
+                    <a id="btnLogin" href="pages/login.html" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext ">Only Icon</a>
                     <a id="btn_menu_home" href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext "
                        data-display="overlay">Only Icon</a>
 				</div>
