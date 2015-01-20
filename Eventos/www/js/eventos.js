@@ -1,40 +1,209 @@
 var mainloaded = false;
 var text_ip = '';
 var text_puerto = '';
-var activeEvent;
+var activeEvent, activeComite;
 var usu_perfil;
 
 var files;
 
 $(function() {
-
 	security();
 	$('input[type=file]').on('change', prepareUpload);
-	
 	$('#frm_new_evento').on('submit', uploadFiles);
+	$('#frm_new_comite').on('submit', submitForm_newComite);
+});
 
+$(document).on('pageinit','#pageComite',function(e){
+	window.localStorage.setItem('activeComite', -1);
+	getIpPortserver();
+	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_comite.php?jsoncallback=?";
+    var output = "";
+    var div_output= $('#listComites');
+
+    $.ajax({
+        url: archivoValidacion,
+        data: {
+            'accion': 'query_comites'
+        },
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        timeout: 6000,
+        success: function(data, status){
+        	div_output.empty();
+        	
+            if ($.isEmptyObject(data)) {
+            	output = '<br />';
+            	output += '<div class="ui-body ui-body-a ui-corner-all ">';
+            	output += '<p>No se encontraron registros en la Base de Datos para mostrar</p>';
+                output += '</div>';
+                div_output.append(output);
+                div_output.load();
+            }
+            $.each(data, function(i,item){
+            	output = '<li><a href="#">' + item.com_nombre + '</a></li>';
+                div_output.append(output);
+                div_output.listview("refresh");
+//                $('#evento' + (i + 1)).bind('tap', function(e) {
+//                	window.localStorage.setItem('active_event', (i + 1));
+//                	window.location = "./pages/evento.html";
+//                });
+            });
+        },
+        beforeSend: function(){
+            showLoading();
+        },
+        complete: function(){
+            $.mobile.loading( "hide" );
+        },
+        error: function(){
+        	div_output.empty();
+            $.mobile.loading( "hide" );
+            alert('Error conectando al servidor.');
+        }
+    });
+});
+
+function submitForm_newComite(event) {
+    $form = $(event.target);
+    activeComite = window.localStorage.getItem('activeComite');
+    var accion = '&accion=new_comite';
+    if (activeComite != -1) {
+    	accion = '&accion=update_comite&id='+ activeComite;
+    }
+    var formData = $form.serialize() + accion;
+    getIpPortserver();
+    var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_comite.php?jsoncallback=?";
+    
+    $.ajax({
+        url: urlServer,
+        type: 'POST',
+        data: formData,
+        cache: false,
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        success: function(data, textStatus, jqXHR) {
+            if(typeof data.error === 'undefined') {
+            	alert(1);
+            	window.location = "comite.html";
+            } else {
+                console.log('ERRORS: ' + data.error);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log('ERRORS: ' + textStatus);
+            $.mobile.loading( "hide" );
+        },
+        complete: function() {
+        	$.mobile.loading( "hide" );
+        }
+    });
+}
+
+$(document).on('pageinit','#app_home',function(e){
+	window.localStorage.setItem('active_event', -1);
+    $('#saveServer').on('tap', function() {
+        window.localStorage.setItem('text_ip', $('#text_ip').val());
+        window.localStorage.setItem('text_puerto', $('#text_puerto').val());
+        getEvents();
+        $('#app_home').trigger('create');
+    });
     $("#btn_popup_server").bind( "tap", function(e) {
     	getIpPortserver();
+    	if (!$.isEmptyObject(text_ip)) {
+    		$('#text_ip').val(text_ip);
+    	}
+    	if (!$.isEmptyObject(text_puerto)) {
+    		$('#text_puerto').val(text_puerto);
+    	}
+    });
 
-        if (text_ip != null) {
-            if(text_ip.length>0){
-                $('#text_ip').val(text_ip);
-            }
-        }
-
-        if (text_puerto != null) {
-            if(text_puerto.length>0){
-                $('#text_puerto').val(text_puerto);
-            }
-        }
-    } );
-    
-//    $( document ).bind( "mobileinit", function(e) {
-//    	localStorage.removeItem('usu_perfil');
-//    	alert( window.localStorage.getItem('usu_perfil'));
-//    });
-    
+    getEvents();
 });
+
+$(document).on('pageshow','#app_home', function(e) {
+    if(!mainloaded) {
+        showLoading();
+    }
+});
+
+$(document).on('pageinit','#pageEvento',function(e){
+	activeEvent = window.localStorage.getItem('active_event');
+	getEvento();
+	
+	$("#btnSpeaker").bind( "tap", function(e) {
+    	
+    });
+	$("#btnCalendar").bind( "tap", function(e) {
+	    
+    });
+	$("#btnCommittee").bind( "tap", function(e) {
+		window.location = "comite.html";
+	});
+	$("#btnSponsor").bind( "tap", function(e) {
+		
+	});
+	$("#btnPlaces").bind( "tap", function(e) {
+		
+	});
+	$("#btnAttendees").bind( "tap", function(e) {
+		
+	});
+	$("#btnReport").bind( "tap", function(e) {
+		
+	});
+	$("#btnPoll").bind( "tap", function(e) {
+		
+	});
+	$("#btnGallery").bind( "tap", function(e) {
+		
+	});
+
+});
+
+$(document).on('pageshow','#crud_evento',function(e){
+	activeEvent = window.localStorage.getItem('active_event');
+	
+	if (activeEvent != -1) {
+		getIpPortserver();
+	    
+	    var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_evento.php?jsoncallback=?";
+	    var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
+	    
+	    $.ajax({
+	        beforeSend: function(){
+	            showLoading();
+	        },
+	        complete: function(){
+	            $.mobile.loading("hide");
+	        },
+	        url: archivoValidacion,
+	        data: {
+	            'accion': 'queryEvento', 'evento': activeEvent
+	        },
+	        dataType: 'jsonp',
+	        jsonp: 'jsoncallback',
+	        timeout: 6000,
+	        success: function(data, status){
+	        	$.each(data, function(i,item){ 
+	        		$("#t_nombre").val(item.eve_nombre);
+	        		$("#t_fecha_inicio").val(item.eve_fecha_inicio);
+	        		$("#t_fecha_fin").val(item.eve_fecha_fin);
+	        		$("#t_descripcion").val(item.eve_descripcion);
+	        		$("#t_titulo_img").val(item.eve_titulo_imagen);
+	        		
+	        		//Falta garantiza carga de estado activo e imagen
+//	        		$( "input[type='checkbox']" ).prop( "checked", true ).checkboxradio( "refresh" );
+	        	});
+	        },
+	        error: function(){
+	            $.mobile.loading("hide");
+	            alert('Error conectando al servidor.');
+	        }
+	    });
+	}
+	
+});
+
 
 $(document).on('pageinit','#signup',function(e){
 	getIpPortserver();
@@ -124,7 +293,7 @@ $(document).on('pageinit','#signin',function(e){
 	        success: function(data, textStatus, jqXHR) {
 	            if(typeof data.error === 'undefined') {
 	            	usu_perfil = data.usu_perfil;
-	            	window.localStorage.setItem('usu_perfil', data.usu_perfil);
+//	            	window.localStorage.setItem('usu_perfil', data.usu_perfil);
 	            	window.location = "../index.html";
 	            } else {
 	            	$( "#dlg-invalid-credentials" ).popup( "open" );
@@ -143,74 +312,6 @@ $(document).on('pageinit','#signin',function(e){
 	        }
 	    });
     });
-});
-
-$(document).on('pageinit','#app_home',function(e){
-	
-	window.localStorage.setItem('active_event', -1);
-    $('#saveServer').on('tap', function() {
-        window.localStorage.setItem('text_ip', $('#text_ip').val());
-        window.localStorage.setItem('text_puerto', $('#text_puerto').val());
-        getEvents();
-        $('#app_home').trigger('create');
-    });
-
-    getEvents();
-});
-
-$(document).on('pageshow','#app_home', function(e) {
-    if(!mainloaded) {
-        showLoading();
-    }
-});
-
-$(document).on('pageinit','#pageEvento',function(e){
-	activeEvent = window.localStorage.getItem('active_event');
-	getEvento();
-});
-
-$(document).on('pageshow','#crud_evento',function(e){
-	activeEvent = window.localStorage.getItem('active_event');
-	
-	if (activeEvent != -1) {
-		getIpPortserver();
-	    
-	    var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_evento.php?jsoncallback=?";
-	    var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
-	    
-	    $.ajax({
-	        beforeSend: function(){
-	            showLoading();
-	        },
-	        complete: function(){
-	            $.mobile.loading("hide");
-	        },
-	        url: archivoValidacion,
-	        data: {
-	            'accion': 'queryEvento', 'evento': activeEvent
-	        },
-	        dataType: 'jsonp',
-	        jsonp: 'jsoncallback',
-	        timeout: 6000,
-	        success: function(data, status){
-	        	$.each(data, function(i,item){ 
-	        		$("#t_nombre").val(item.eve_nombre);
-	        		$("#t_fecha_inicio").val(item.eve_fecha_inicio);
-	        		$("#t_fecha_fin").val(item.eve_fecha_fin);
-	        		$("#t_descripcion").val(item.eve_descripcion);
-	        		$("#t_titulo_img").val(item.eve_titulo_imagen);
-	        		
-	        		//Falta garantiza carga de estado activo e imagen
-//	        		$( "input[type='checkbox']" ).prop( "checked", true ).checkboxradio( "refresh" );
-	        	});
-	        },
-	        error: function(){
-	            $.mobile.loading("hide");
-	            alert('Error conectando al servidor.');
-	        }
-	    });
-	}
-	
 });
 
 function prepareUpload(event) {
@@ -468,3 +569,5 @@ function security() {
 		}
 	}
 }
+
+
