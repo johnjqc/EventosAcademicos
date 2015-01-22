@@ -25,7 +25,7 @@
 </head>
 <body>
 
-<div data-role="page" id="page_asistentes" data-theme="c">
+<div data-role="page" id="page_asistentes_new" data-theme="c">
     <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
         <ul data-role="listview">
             <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
@@ -36,18 +36,20 @@
     </div>
 
     <div data-role="header" data-position="fixed">
-        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-ajax="false" href="evento.html" >Only Icon</a>
+        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-ajax="false" data-rel="back" href="#" >Only Icon</a>
         <div id="custom-border-radius" class="ui-btn-right">
-        	<a  href="comite_cu.html" data-ajax="false" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext ">+</a>
-            <a href="login.html" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext ">Only Icon</a>
             <a href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
                 data-display="overlay">Only Icon</a>
         </div>
         <span class="ui-title" ></span>
     </div>
     <div data-role="content">
-		<ul id="listAsistentes" data-role="listview" data-inset="true" data-theme="a">
-			
+		<form class="ui-filterable">
+			<input id="autocomplete-input" data-type="search" placeholder="Buscar usuarios">
+		</form>
+		<ul id="listAsistentesAdd" data-role="listview" data-filter="true"
+			data-input="#autocomplete-input" data-theme="a" data-inset="true">
+		
 		</ul>
     </div>
 </div>
