@@ -10,97 +10,10 @@ $(function() {
 	security();
 	$('input[type=file]').on('change', prepareUpload);
 	$('#frm_new_evento').on('submit', uploadFiles);
-	$('#frm_new_comite').on('submit', submitForm_newComite);
 });
-
-$(document).on('pageinit','#pageComite',function(e){
-	window.localStorage.setItem('activeComite', -1);
-	getIpPortserver();
-	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_comite.php?jsoncallback=?";
-    var output = "";
-    var div_output= $('#listComites');
-
-    $.ajax({
-        url: archivoValidacion,
-        data: {
-            'accion': 'query_comites'
-        },
-        dataType: 'jsonp',
-        jsonp: 'jsoncallback',
-        timeout: 6000,
-        success: function(data, status){
-        	div_output.empty();
-        	
-            if ($.isEmptyObject(data)) {
-            	output = '<br />';
-            	output += '<div class="ui-body ui-body-a ui-corner-all ">';
-            	output += '<p>No se encontraron registros en la Base de Datos para mostrar</p>';
-                output += '</div>';
-                div_output.append(output);
-                div_output.load();
-            }
-            $.each(data, function(i,item){
-            	output = '<li><a href="#">' + item.com_nombre + '</a></li>';
-                div_output.append(output);
-                div_output.listview("refresh");
-//                $('#evento' + (i + 1)).bind('tap', function(e) {
-//                	window.localStorage.setItem('active_event', (i + 1));
-//                	window.location = "./pages/evento.html";
-//                });
-            });
-        },
-        beforeSend: function(){
-            showLoading();
-        },
-        complete: function(){
-            $.mobile.loading( "hide" );
-        },
-        error: function(){
-        	div_output.empty();
-            $.mobile.loading( "hide" );
-            alert('Error conectando al servidor.');
-        }
-    });
-});
-
-function submitForm_newComite(event) {
-    $form = $(event.target);
-    activeComite = window.localStorage.getItem('activeComite');
-    var accion = '&accion=new_comite';
-    if (activeComite != -1) {
-    	accion = '&accion=update_comite&id='+ activeComite;
-    }
-    var formData = $form.serialize() + accion;
-    getIpPortserver();
-    var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_comite.php?jsoncallback=?";
-    
-    $.ajax({
-        url: urlServer,
-        type: 'POST',
-        data: formData,
-        cache: false,
-        dataType: 'jsonp',
-        jsonp: 'jsoncallback',
-        success: function(data, textStatus, jqXHR) {
-            if(typeof data.error === 'undefined') {
-            	alert(1);
-            	window.location = "comite.html";
-            } else {
-                console.log('ERRORS: ' + data.error);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log('ERRORS: ' + textStatus);
-            $.mobile.loading( "hide" );
-        },
-        complete: function() {
-        	$.mobile.loading( "hide" );
-        }
-    });
-}
 
 $(document).on('pageinit','#app_home',function(e){
-	window.localStorage.setItem('active_event', -1);
+	window.localStorage.setItem('activeEvent', -1);
     $('#saveServer').on('tap', function() {
         window.localStorage.setItem('text_ip', $('#text_ip').val());
         window.localStorage.setItem('text_puerto', $('#text_puerto').val());
@@ -127,14 +40,14 @@ $(document).on('pageshow','#app_home', function(e) {
 });
 
 $(document).on('pageinit','#pageEvento',function(e){
-	activeEvent = window.localStorage.getItem('active_event');
+	activeEvent = window.localStorage.getItem('activeEvent');
 	getEvento();
 	
 	$("#btnSpeaker").bind( "tap", function(e) {
     	
     });
 	$("#btnCalendar").bind( "tap", function(e) {
-	    
+		window.location = "agenda.html";
     });
 	$("#btnCommittee").bind( "tap", function(e) {
 		window.location = "comite.html";
@@ -146,7 +59,7 @@ $(document).on('pageinit','#pageEvento',function(e){
 		
 	});
 	$("#btnAttendees").bind( "tap", function(e) {
-		
+		window.location = "asistentes.html";
 	});
 	$("#btnReport").bind( "tap", function(e) {
 		
@@ -161,7 +74,7 @@ $(document).on('pageinit','#pageEvento',function(e){
 });
 
 $(document).on('pageshow','#crud_evento',function(e){
-	activeEvent = window.localStorage.getItem('active_event');
+	activeEvent = window.localStorage.getItem('activeEvent');
 	
 	if (activeEvent != -1) {
 		getIpPortserver();
@@ -363,7 +276,7 @@ function uploadFiles(event) {
 
 function submitForm(event, data) {
     $form = $(event.target);
-    activeEvent = window.localStorage.getItem('active_event');
+    activeEvent = window.localStorage.getItem('activeEvent');
     var accion = '&accion=new_evento';
     if (activeEvent != -1) {
     	accion = '&accion=update_evento&id='+ activeEvent;
@@ -527,7 +440,7 @@ function getEvents() {
                 div_output.append(output);
                 $("#event_home").load();
                 $('#evento' + (i + 1)).bind('tap', function(e) {
-                	window.localStorage.setItem('active_event', (i + 1));
+                	window.localStorage.setItem('activeEvent', (i + 1));
 //                    $.mobile.changePage( "./pages/evento.html");
                 	window.location = "./pages/evento.html";
                 });
