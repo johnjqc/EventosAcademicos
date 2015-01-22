@@ -15,10 +15,11 @@
 		$data = array();
 		$rows = array();
 		
-		if ($accion == "query_comites") {
-			$evento = $_GET['evento'];
-			$sth = mysql_query("SELECT * from comite WHERE Evento_idEvento = '$evento'");
+		if ($accion == "query_asistentes") {
 			$rows = array();
+			$evento = $_GET['evento'];
+			$sth = mysql_query("SELECT * FROM asistente a join usuario b on a.idUsuario = b.idUsuario where idEvento = '$evento'") or $rows["error"] =mysql_error();
+			
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
 			}
@@ -27,10 +28,10 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
-		if ($accion == "query_comite" ) {
+		if ($accion == "query_asistente" ) {
+			$usuario = $_GET['usuario'];
 			$rows = array();
-			$comite = $_GET['comite'];
-			$sth = mysql_query("SELECT * from comite WHERE idComite = '$comite'")or $rows["error"] =mysql_error();
+			$sth = mysql_query("SELECT * from usuario WHERE idUsuario = '$usuario'") or $rows["error"] =mysql_error();
 			
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
@@ -41,16 +42,16 @@
 		
 		if ($accion == "new_comite") {
 			$rows = array();
-			$evento = $_REQUEST['evento'];
+			
 			$t_nombre = $_REQUEST['t_nombre'];
 			$t_descripcion = $_REQUEST['t_descripcion'];
 
-			$result = mysql_query("SHOW TABLE STATUS LIKE 'comite'");
+			$result = mysql_query("SHOW TABLE STATUS LIKE 'usuario'");
 			$row = mysql_fetch_array($result);
 			$nextId = $row['Auto_increment'];
 			
-			$res = mysql_query("INSERT INTO comite (com_nombre, com_descripcion, Evento_idEvento)
-				VALUES ('$t_nombre', '$t_descripcion', '$evento') ") or $rows["error"] =mysql_error();
+			$res = mysql_query("INSERT INTO comite (com_nombre, com_descripcion)
+				VALUES ('$t_nombre', '$t_descripcion') ") or $rows["error"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
 			

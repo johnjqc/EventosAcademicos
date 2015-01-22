@@ -1,0 +1,395 @@
+-- phpMyAdmin SQL Dump
+-- version 2.10.3
+-- http://www.phpmyadmin.net
+-- 
+-- Servidor: localhost
+-- Tiempo de generación: 21-01-2015 a las 23:55:01
+-- Versión del servidor: 5.0.51
+-- Versión de PHP: 5.2.6
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+-- 
+-- Base de datos: `event`
+-- 
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `agenda`
+-- 
+
+CREATE TABLE `agenda` (
+  `idAgenda` int(11) NOT NULL auto_increment,
+  `age_fecha` date NOT NULL,
+  `age_hora` time NOT NULL,
+  `age_descripcion` varchar(200) NOT NULL,
+  `Evento_idEvento` int(11) NOT NULL,
+  `Evento_Tipo_Evento_idTipo_Evento` int(11) NOT NULL,
+  PRIMARY KEY  (`idAgenda`,`Evento_idEvento`,`Evento_Tipo_Evento_idTipo_Evento`),
+  KEY `fk_Agenda_Evento1_idx` (`Evento_idEvento`,`Evento_Tipo_Evento_idTipo_Evento`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+-- 
+-- Volcar la base de datos para la tabla `agenda`
+-- 
+
+INSERT INTO `agenda` VALUES (1, '2015-01-21', '10:30:00', 'Recepcion', 1, 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `asistente`
+-- 
+
+CREATE TABLE `asistente` (
+  `IdEvento` int(5) NOT NULL,
+  `idUsuario` int(5) NOT NULL,
+  PRIMARY KEY  (`IdEvento`,`idUsuario`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 
+-- Volcar la base de datos para la tabla `asistente`
+-- 
+
+INSERT INTO `asistente` VALUES (1, 1);
+INSERT INTO `asistente` VALUES (1, 2);
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `comite`
+-- 
+
+CREATE TABLE `comite` (
+  `idComite` int(11) NOT NULL auto_increment,
+  `com_nombre` varchar(45) NOT NULL,
+  `com_descripcion` varchar(200) NOT NULL,
+  `Evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`idComite`,`Evento_idEvento`),
+  KEY `fk_Comite_Evento1_idx` (`Evento_idEvento`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+-- 
+-- Volcar la base de datos para la tabla `comite`
+-- 
+
+INSERT INTO `comite` VALUES (1, 'Aseo', 'los de aseo', 1);
+INSERT INTO `comite` VALUES (2, 'Comite9', 'sd desc 9', 1);
+INSERT INTO `comite` VALUES (3, 'Comite 10', 'asd', 2);
+INSERT INTO `comite` VALUES (4, 'Comite 12', 'sdf', 2);
+INSERT INTO `comite` VALUES (5, 'sdf', 'sdf', 3);
+INSERT INTO `comite` VALUES (6, 'sdf', 'sdf', 3);
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `encuenta`
+-- 
+
+CREATE TABLE `encuenta` (
+  `idEncuenta` int(11) NOT NULL auto_increment,
+  `enc_nombre` varchar(45) NOT NULL,
+  `enc_descripcion` varchar(45) NOT NULL,
+  `Evento_idEvento` int(11) NOT NULL,
+  `Evento_Tipo_Evento_idTipo_Evento` int(11) NOT NULL,
+  PRIMARY KEY  (`idEncuenta`,`Evento_idEvento`,`Evento_Tipo_Evento_idTipo_Evento`),
+  KEY `fk_Encuenta_Evento1_idx` (`Evento_idEvento`,`Evento_Tipo_Evento_idTipo_Evento`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `encuenta`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `evento`
+-- 
+
+CREATE TABLE `evento` (
+  `idEvento` int(11) NOT NULL auto_increment,
+  `eve_nombre` varchar(200) NOT NULL,
+  `eve_descripcion` text NOT NULL,
+  `eve_fecha_inicio` date NOT NULL,
+  `eve_fecha_fin` date NOT NULL,
+  `eve_estado` varchar(45) NOT NULL,
+  `eve_titulo_imagen` varchar(45) default NULL,
+  `eve_imagen` varchar(45) default NULL,
+  `eve_temas` varchar(45) default NULL,
+  `eve_costos` varchar(45) default NULL,
+  `Tipo_Evento_idTipo_Evento` int(11) NOT NULL,
+  PRIMARY KEY  (`idEvento`,`Tipo_Evento_idTipo_Evento`),
+  KEY `fk_Evento_Tipo_Evento1_idx` (`Tipo_Evento_idTipo_Evento`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+-- 
+-- Volcar la base de datos para la tabla `evento`
+-- 
+
+INSERT INTO `evento` VALUES (1, 'Sexta semana tecnologica en la Universidad Distrital Francisco Jose de Caldas que se llevara  a cabo en la sede Tecnologica en el mes asignado', 'aun sin descripcion', '2015-01-01', '2015-01-01', 'on', '', '', NULL, NULL, 0);
+INSERT INTO `evento` VALUES (2, 'Sexta semana tecnologica en la Universidad Distrital Francisco Jose de Caldas', 'aun sin descripcion', '2015-01-02', '2015-01-02', 'on', 'Cartagena', 'eventos/2/portada_evento.jpg', NULL, NULL, 0);
+INSERT INTO `evento` VALUES (3, 'evento3', 'una descripcion', '0000-00-00', '0000-00-00', '', '', '', NULL, NULL, 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `galeria`
+-- 
+
+CREATE TABLE `galeria` (
+  `idGaleria` int(11) NOT NULL auto_increment,
+  `gal_nombre` varchar(45) NOT NULL,
+  `gal_descripcion` varchar(200) NOT NULL,
+  `Evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`idGaleria`,`Evento_idEvento`),
+  KEY `fk_Galeria_Evento1_idx` (`Evento_idEvento`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `galeria`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `imagen`
+-- 
+
+CREATE TABLE `imagen` (
+  `idImagen` int(11) NOT NULL auto_increment,
+  `img_nombre` varchar(45) NOT NULL,
+  `img_imagen` varchar(45) NOT NULL,
+  `Galeria_idGaleria` int(11) NOT NULL,
+  PRIMARY KEY  (`idImagen`,`Galeria_idGaleria`),
+  KEY `fk_Imagen_Galeria_idx` (`Galeria_idGaleria`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `imagen`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `log_eventos`
+-- 
+
+CREATE TABLE `log_eventos` (
+  `idLog_Eventos` int(11) NOT NULL auto_increment,
+  `log_accion` varchar(45) NOT NULL,
+  `log_fecha` varchar(45) NOT NULL,
+  `Evento_idEvento` int(11) NOT NULL,
+  `Evento_Tipo_Evento_idTipo_Evento` int(11) NOT NULL,
+  `Agenda_idAgenda` int(11) NOT NULL,
+  `Agenda_Evento_idEvento` int(11) NOT NULL,
+  `Agenda_Evento_Tipo_Evento_idTipo_Evento` int(11) NOT NULL,
+  `Usuario_idUsuario` int(11) NOT NULL,
+  `Usuario_Evento_idEvento` int(11) NOT NULL,
+  `Encuenta_idEncuenta` int(11) NOT NULL,
+  `Encuenta_Evento_idEvento` int(11) NOT NULL,
+  `Encuenta_Evento_Tipo_Evento_idTipo_Evento` int(11) NOT NULL,
+  `Galeria_idGaleria` int(11) NOT NULL,
+  `Galeria_Evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`idLog_Eventos`,`Evento_idEvento`,`Evento_Tipo_Evento_idTipo_Evento`,`Agenda_idAgenda`,`Agenda_Evento_idEvento`,`Agenda_Evento_Tipo_Evento_idTipo_Evento`,`Usuario_idUsuario`,`Usuario_Evento_idEvento`,`Encuenta_idEncuenta`,`Encuenta_Evento_idEvento`,`Encuenta_Evento_Tipo_Evento_idTipo_Evento`,`Galeria_idGaleria`,`Galeria_Evento_idEvento`),
+  KEY `fk_Log_Eventos_Evento1_idx` (`Evento_idEvento`,`Evento_Tipo_Evento_idTipo_Evento`),
+  KEY `fk_Log_Eventos_Agenda1_idx` (`Agenda_idAgenda`,`Agenda_Evento_idEvento`,`Agenda_Evento_Tipo_Evento_idTipo_Evento`),
+  KEY `fk_Log_Eventos_Usuario1_idx` (`Usuario_idUsuario`,`Usuario_Evento_idEvento`),
+  KEY `fk_Log_Eventos_Encuenta1_idx` (`Encuenta_idEncuenta`,`Encuenta_Evento_idEvento`,`Encuenta_Evento_Tipo_Evento_idTipo_Evento`),
+  KEY `fk_Log_Eventos_Galeria1_idx` (`Galeria_idGaleria`,`Galeria_Evento_idEvento`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `log_eventos`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `lugares`
+-- 
+
+CREATE TABLE `lugares` (
+  `idLugares` int(11) NOT NULL auto_increment,
+  `lug_nombre` varchar(45) NOT NULL,
+  `lug_descripcion` varchar(45) NOT NULL,
+  `lug_ubicacion` varchar(45) NOT NULL,
+  `Evento_idEvento` int(11) NOT NULL,
+  `Log_Eventos_idLog_Eventos` int(11) NOT NULL,
+  `Log_Eventos_Evento_idEvento` int(11) NOT NULL,
+  `Log_Eventos_Evento_Tipo_Evento_idTipo_Evento` int(11) NOT NULL,
+  `Log_Eventos_Agenda_idAgenda` int(11) NOT NULL,
+  `Log_Eventos_Agenda_Evento_idEvento` int(11) NOT NULL,
+  `Log_Eventos_Agenda_Evento_Tipo_Evento_idTipo_Evento` int(11) NOT NULL,
+  PRIMARY KEY  (`idLugares`,`Evento_idEvento`,`Log_Eventos_idLog_Eventos`,`Log_Eventos_Evento_idEvento`,`Log_Eventos_Evento_Tipo_Evento_idTipo_Evento`,`Log_Eventos_Agenda_idAgenda`,`Log_Eventos_Agenda_Evento_idEvento`,`Log_Eventos_Agenda_Evento_Tipo_Evento_idTipo_Evento`),
+  KEY `fk_Lugares_Evento1_idx` (`Evento_idEvento`),
+  KEY `fk_Lugares_Log_Eventos1_idx` (`Log_Eventos_idLog_Eventos`,`Log_Eventos_Evento_idEvento`,`Log_Eventos_Evento_Tipo_Evento_idTipo_Evento`,`Log_Eventos_Agenda_idAgenda`,`Log_Eventos_Agenda_Evento_idEvento`,`Log_Eventos_Agenda_Evento_Tipo_Evento_idTipo_Evento`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `lugares`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `patrocinador`
+-- 
+
+CREATE TABLE `patrocinador` (
+  `idPatrocinador` int(11) NOT NULL auto_increment,
+  `pat_nombre` varchar(45) NOT NULL,
+  `pat_descripcion` text NOT NULL,
+  `pat_imagen` varchar(45) NOT NULL,
+  `Evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`idPatrocinador`,`Evento_idEvento`),
+  KEY `fk_Patrocinador_Evento1_idx` (`Evento_idEvento`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `patrocinador`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `pregunta`
+-- 
+
+CREATE TABLE `pregunta` (
+  `idPregunta` int(11) NOT NULL auto_increment,
+  `pre_pregunta` varchar(45) NOT NULL,
+  `pre_tipo` varchar(45) NOT NULL,
+  `pre_respuesta` varchar(45) NOT NULL,
+  `Encuenta_idEncuenta` int(11) NOT NULL,
+  PRIMARY KEY  (`idPregunta`,`Encuenta_idEncuenta`),
+  KEY `fk_Pregunta_Encuenta1_idx` (`Encuenta_idEncuenta`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `pregunta`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `publicaciones`
+-- 
+
+CREATE TABLE `publicaciones` (
+  `idpublicaciones` int(11) NOT NULL auto_increment,
+  `pub_autor_principal` varchar(45) NOT NULL,
+  `pub_resumen` varchar(45) NOT NULL,
+  `pub_archivo` varchar(45) NOT NULL,
+  `pub_otros_autores` varchar(45) default NULL,
+  `Usuario_idUsuario` int(11) NOT NULL,
+  PRIMARY KEY  (`idpublicaciones`,`Usuario_idUsuario`),
+  KEY `fk_publicaciones_Usuario1_idx` (`Usuario_idUsuario`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `publicaciones`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `redes_sociales`
+-- 
+
+CREATE TABLE `redes_sociales` (
+  `idRedes_Sociales` int(11) NOT NULL auto_increment,
+  `red_pagina_web` varchar(45) default NULL,
+  `red_twitter` varchar(45) default NULL,
+  `red_facebook` varchar(45) default NULL,
+  `red_lindkedin` varchar(45) default NULL,
+  `red_google` varchar(45) default NULL,
+  `red_youtube` varchar(45) default NULL,
+  `red_otra` varchar(45) default NULL,
+  `Evento_idEvento` int(11) NOT NULL,
+  `Evento_Tipo_Evento_idTipo_Evento` int(11) NOT NULL,
+  PRIMARY KEY  (`idRedes_Sociales`,`Evento_idEvento`,`Evento_Tipo_Evento_idTipo_Evento`),
+  KEY `fk_Redes_Sociales_Evento1_idx` (`Evento_idEvento`,`Evento_Tipo_Evento_idTipo_Evento`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `redes_sociales`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `reporte`
+-- 
+
+CREATE TABLE `reporte` (
+  `idReporte` int(11) NOT NULL auto_increment,
+  `rep_nombre` varchar(45) NOT NULL,
+  `rep_descripcion` varchar(200) NOT NULL,
+  `Evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`idReporte`,`Evento_idEvento`),
+  KEY `fk_Reporte_Evento1_idx` (`Evento_idEvento`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `reporte`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `tipo_evento`
+-- 
+
+CREATE TABLE `tipo_evento` (
+  `idTipo_Evento` int(11) NOT NULL auto_increment,
+  `tip_nombre` varchar(45) NOT NULL,
+  `tip_descripcion` varchar(45) NOT NULL,
+  PRIMARY KEY  (`idTipo_Evento`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `tipo_evento`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `usuario`
+-- 
+
+CREATE TABLE `usuario` (
+  `idUsuario` int(11) NOT NULL auto_increment,
+  `usu_identificacion` varchar(45) NOT NULL,
+  `usu_nombre` varchar(45) NOT NULL,
+  `usu_apellido` varchar(45) NOT NULL,
+  `usu_nacionalidad` varchar(45) NOT NULL,
+  `usu_email` varchar(45) NOT NULL,
+  `usu_contrasena` varchar(45) NOT NULL,
+  `usu_imagen` varchar(45) NOT NULL,
+  `usu_bio` text NOT NULL,
+  `usu_perfil` varchar(45) NOT NULL,
+  `usu_estado` varchar(5) NOT NULL,
+  `Evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`idUsuario`,`Evento_idEvento`),
+  UNIQUE KEY `usu_email` (`usu_email`),
+  KEY `fk_Usuario_Evento1_idx` (`Evento_idEvento`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+-- 
+-- Volcar la base de datos para la tabla `usuario`
+-- 
+
+INSERT INTO `usuario` VALUES (1, '', 'John', 'Quiroga', '', 'j@j.com', '123', 'usuarios/1/me.jpg', '1', '1', '1', 0);
+INSERT INTO `usuario` VALUES (2, '123', 'Milena', 'Suarez', 'CO', 'katsumi2803@gmail.com', '123', 'usuarios/2/me.jpg', '1', '1', '1', 0);
