@@ -10,6 +10,7 @@ $(function() {
 	security();
 	$('input[type=file]').on('change', prepareUpload);
 	$('#frm_new_evento').on('submit', uploadFiles);
+	$("#list_menu").listview("refresh");
 });
 
 $(document).on('pageinit','#app_home',function(e){
@@ -53,7 +54,7 @@ $(document).on('pageinit','#pageEvento',function(e){
 		window.location = "comite.html";
 	});
 	$("#btnSponsor").bind( "tap", function(e) {
-		
+		window.location = "patrocinador.html";
 	});
 	$("#btnPlaces").bind( "tap", function(e) {
 		
@@ -415,7 +416,7 @@ function getEvents() {
                 if (i != 0) {
                     output = '<br />';
                 }
-                output += '<div id="evento'+ (i + 1) +'" class="ui-body ui-body-a ui-corner-all ">';
+                output += '<div id="evento'+ item.idEvento +'" class="ui-body ui-body-a ui-corner-all ">';
                 if ($.isEmptyObject(item.eve_imagen)) {
                     output += '<div class="banner2">';
                 } else {
@@ -439,8 +440,8 @@ function getEvents() {
                 output += '</div>';
                 div_output.append(output);
                 $("#event_home").load();
-                $('#evento' + (i + 1)).bind('tap', function(e) {
-                	window.localStorage.setItem('activeEvent', (i + 1));
+                $('#evento' + item.idEvento).bind('tap', function(e) {
+                	window.localStorage.setItem('activeEvent', item.idEvento);
 //                    $.mobile.changePage( "./pages/evento.html");
                 	window.location = "./pages/evento.html";
                 });
@@ -477,7 +478,7 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
-		if (usu_perfil != -1) {
+		if (usu_perfil != -1 && usu_perfil != 0) {
 			$("#btnLogin").hide();
 		}
 	}

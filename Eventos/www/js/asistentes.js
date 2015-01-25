@@ -1,3 +1,4 @@
+var mainloaded = false;
 var text_ip = '';
 var text_puerto = '';
 var activeAsistente;
@@ -9,11 +10,12 @@ var files;
 $(function() {
 	security();
 	$(document).on("pagehide", "div[data-role=page]", function(event){
-  $(event.target).remove();
-});
+		$(event.target).remove();
+	});
 	//$('#listAsistentes').listview("refresh");
-//	$('#frm_new_comite').on('submit', submitForm_newComite);
 });
+
+
 
 $(document).on('pageinit','#page_asistentes',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
@@ -36,8 +38,7 @@ $(document).on('pageinit','#page_asistentes',function(e){
         	div_output.empty();
         	
             if ($.isEmptyObject(data)) {
-            	output = '<br />';
-            	output += '<div class="ui-body ui-body-a ui-corner-all ">';
+            	output = '<div class="ui-body ui-body-a ui-corner-all ">';
             	output += '<p>No se encontraron registros en la Base de Datos para mostrar</p>';
                 output += '</div>';
                 div_output.append(output);
@@ -176,14 +177,12 @@ $(document).on('pageinit','#page_asistentes_new',function(e){
         	div_output.empty();
         	
             $.each(data, function(i,item){
-            	output = '<li id="asistente' + item.idUsuario + '"><a href="#">';
+            	output = '<li id="asistente' + item.idUsuario + '" data-icon="plus"><a href="#">';
         		output += '' + item.usu_nombre + ' ' + item.usu_apellido + '</a>';
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
 				$('#asistente' + (item.idUsuario)).bind('tap', function(e) {
-                	//window.localStorage.setItem('activeAsistente', item.idUsuario);
-					
 					$.ajax({
 						url: urlServer,
 						type: 'POST',
@@ -194,6 +193,7 @@ $(document).on('pageinit','#page_asistentes_new',function(e){
 						success: function(data, textStatus, jqXHR) {
 							if(typeof data.error === 'undefined') {
 								alert("Usuario agregado exitosamente");
+								window.location = "asistentes_cu.html";
 							} else {
 								console.log('ERRORS: ' + data.error);
 							}

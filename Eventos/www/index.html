@@ -17,45 +17,36 @@
         <script type="text/javascript" src="js/eventos.js"></script>
         <script type="text/javascript" src="js/lenguaje.js"></script>
         
-
         <script type="text/javascript">
             if (!navigator.userAgent.toLowerCase().match('chrome') or !navigator.userAgent.toLowerCase().match('firefox')) {
                 document.write("<script type='text/javascript' src='cordova.js'><\/script>");
             }
         </script>
-		<script>
-         
-         function persistTasks(){
-        	    alert ("is unloading the app");
-        	    offlineTasklist.set("tasks", tasklist); 
-        	    window.localStorage.removeItem('usu_perfil');
-        	}
-
-        	function init() {
-        	    document.addEventListener("unload", persistTasks, false);
-        	    document.addEventListener('pause', persistTasks, false);
-                document.addEventListener("menubutton", persistTasks, false);
-        	}
-
-        	$(document).ready(init);
-</script>
+		
         <title>Eventos Academicos</title>
     </head>
     <body>
 		
         <div data-role="page" id="app_home" data-theme="b">
-            <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
-                <ul data-role="listview">
-                    <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
-                    <li><a href="crud_evento.html">Gestion Eventos</a></li>
-                    <li><a href="#">List item</a></li>
-                    <li><a href="#">List item</a></li>
+        	<div data-role="panel" id="mypanel" data-display="overlay">
+                <ul data-role="listview" id="list_menu" data-theme="f">
+                    <li data-icon="delete" data-theme="c"><a href="#" data-rel="close" >Close</a></li>
+                    <li><a href="#">Mi Perfil</a></li>
+                    <li><a href="pages/g_comite.html" data-ajax="false">Comites</a></li>
+                    <li><a href="pages/g_encuesta.html" data-ajax="false">Encuestas</a></li>
+                    <li><a href="pages/g_lugar.html" data-ajax="false">Lugares</a></li>
+                    <li><a href="pages/g_patrocinador.html" data-ajax="false">Patrocinadores</a></li>
+                    <li><a href="pages/g_publicacion.html" data-ajax="false">Publicaciones</a></li>
+                    <li><a href="pages/g_usuario.html" data-ajax="false">Usuarios</a></li>
+                    <li data-icon="power"><a href="#" data-ajax="false">Logout</a></li>
                 </ul>
+<!--                 <br /> -->
+<!--                 <img alt="Escudo UD" src="images/escudo_ud.png" style="width: 80%; display: block; margin: 0 auto"> -->
             </div>
-
+            
             <div data-role="header" data-position="fixed">
 				<div id="custom-border-radius" class="ui-btn-right">
-                    <a  href="pages/crud_evento.html#crud_evento" data-ajax="false" class="ui-btn ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-notext ">+</a>
+                    <a  href="pages/evento_cu.html" data-ajax="false" class="ui-btn ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-notext ">+</a>
 					<a id="btn_popup_server" href="#popupConnectServer" class="ui-btn ui-btn-b ui-corner-all ui-icon-cloud ui-btn-icon-notext "
 						data-rel="popup" data-position-to="window" data-transition="pop">Only Icon</a>
                     <a id="btnLogin" href="pages/login.html" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext ">Only Icon</a>
@@ -67,20 +58,7 @@
             <div data-role="content" id="event_home">
 
             </div>
-			<div data-role="popup" id="popupLogin" data-theme="b" class="ui-corner-all" >
-                <div data-role="header">
-                    <h1 data-i18n>app.login</h1>
-                    <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-                </div>
-				<form id="formulario_login">
-                    <div data-role="content">
-						<input type="text" name="user" id="un" value="" placeholder="username" data-theme="a" />
-						<label for="pw" class="ui-hidden-accessible">Password:</label>
-						<input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a" />
-						<button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-icon-left ui-icon-check" data-i18n>app.signin</button>
-					</div>
-				</form>
-			</div>
+			
 			<div data-role="popup" id="popupConnectServer" data-theme="b" class="ui-corner-all" data-history="false" >
                 <div data-role="header">
                     <h1 data-i18n>app.server</h1>
