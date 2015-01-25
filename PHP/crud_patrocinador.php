@@ -15,8 +15,8 @@
 		$data = array();
 		$rows = array();
 		
-		if ($accion == "queryEventos") {
-			$sth = mysql_query("SELECT * from evento ");
+		if ($accion == "query_patrocinadores") {
+			$sth = mysql_query("SELECT * from patrocinador ");
 			$rows = array();
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
@@ -26,9 +26,9 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
-		if ($accion == "queryEvento" ) {
-			$evento = $_GET['evento'];
-			$sth = mysql_query("SELECT * from evento WHERE idEvento = '$evento'") or $rows["error"] =mysql_error();
+		if ($accion == "query_patrocinador" ) {
+			$idPatrocinador = $_GET['idPatrocinador'];
+			$sth = mysql_query("SELECT * from patrocinador WHERE idPatrocinador = '$idPatrocinador'");
 			$rows = array();
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
@@ -41,26 +41,26 @@
 			$error = false;
 			$files = array();
 			
-			$result = mysql_query("SHOW TABLE STATUS LIKE 'evento'");
+			$result = mysql_query("SHOW TABLE STATUS LIKE 'patrocinador'");
 			$row = mysql_fetch_array($result);
 			$nextId = $row['Auto_increment'];
 			
-			if (isset( $_REQUEST['id'])){
-				$nextId = $_REQUEST['id'];
+			if (isset( $_REQUEST['idPatrocinador'])){
+				$nextId = $_REQUEST['idPatrocinador'];
 			}
-			if(!file_exists('./eventos/')) {
-				mkdir ('./eventos/', 0777);
+			if(!file_exists('./patrocinadores/')) {
+				mkdir ('./patrocinadores/', 0777);
 			} 
-			if(!file_exists('./eventos/'.$nextId)) {
-				mkdir ('./eventos/'.$nextId, 0777);
+			if(!file_exists('./patrocinadores/'.$nextId)) {
+				mkdir ('./patrocinadores/'.$nextId, 0777);
 			} 
 						
-			$uploaddir = './eventos/'.$nextId.'/';
+			$uploaddir = './patrocinadores/'.$nextId.'/';
 			
 			foreach($_FILES as $file) {
 				$ext = explode (".",basename($file['name']));
-				if(move_uploaded_file($file['tmp_name'], $uploaddir."evento_img.".$ext[1])) {
-					$files[] = '/eventos/'.$nextId.'/'."evento_img.".$ext[1];
+				if(move_uploaded_file($file['tmp_name'], $uploaddir."patrocinador_img.".$ext[1])) {
+					$files[] = '/patrocinadores/'.$nextId.'/'."patrocinador_img.".$ext[1];
 				} else {
 					$error = true;
 				}
@@ -69,14 +69,11 @@
 			echo json_encode($data);
 		} 
 		
-		if ($accion == "new_evento") {
+		if ($accion == "new_patrocinador") {
 			$rows = array();
 			
 			$t_nombre = $_REQUEST['t_nombre'];
-			$t_fecha_inicio = $_REQUEST['t_fecha_inicio']; 
-			$t_fecha_fin = $_REQUEST['t_fecha_fin']; 
 			$t_descripcion = $_REQUEST['t_descripcion'];
-			$t_titulo_img = $_REQUEST['t_titulo_img'];
 			if (isset($_REQUEST['filenames'])) {
 				if  (isset($_REQUEST['filenames'][0])) {
 					$t_img_path = $_REQUEST['filenames'][0];
@@ -85,14 +82,12 @@
 				$t_img_path = "";
 			}
 			
-			$is_active = $_REQUEST['is_active']; 
-
-			$result = mysql_query("SHOW TABLE STATUS LIKE 'evento'");
+			$result = mysql_query("SHOW TABLE STATUS LIKE 'patrocinador'");
 			$row = mysql_fetch_array($result);
 			$nextId = $row['Auto_increment'];
 			
-			$res = mysql_query("INSERT INTO evento (eve_nombre, eve_fecha_inicio, eve_fecha_fin, eve_estado, eve_descripcion, eve_titulo_imagen, eve_imagen)
-				VALUES ('$t_nombre', '$t_fecha_inicio', '$t_fecha_fin', '$is_active', '$t_descripcion', '$t_titulo_img', '$t_img_path') ") or $rows["respuesta"] =mysql_error();
+			$res = mysql_query("INSERT INTO patrocinador (pat_nombre, pat_descripcion, pat_imagen)
+				VALUES ('$t_nombre', '$t_descripcion', '$t_img_path') ") or $rows["respuesta"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
 			$rows["id"] = "$nextId";
@@ -103,14 +98,11 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
-		if ($accion == "update_evento") {
+		if ($accion == "update_patrocinador") {
 			$rows = array();
 			
 			$t_nombre = $_REQUEST['t_nombre'];
-			$t_fecha_inicio = $_REQUEST['t_fecha_inicio']; 
-			$t_fecha_fin = $_REQUEST['t_fecha_fin']; 
 			$t_descripcion = $_REQUEST['t_descripcion'];
-			$t_titulo_img = $_REQUEST['t_titulo_img'];
 			if (isset($_REQUEST['filenames'])) {
 				if  (isset($_REQUEST['filenames'][0])) {
 					$t_img_path = $_REQUEST['filenames'][0];
@@ -118,16 +110,27 @@
 			} else {
 				$t_img_path = "";
 			}
+						
+			$nextId = $_REQUEST['idPatrocinador']; 
 			
-			$is_active = $_REQUEST['is_active']; 
-
-			$nextId = $_REQUEST['id']; 
-			
-			$res = mysql_query("UPDATE evento SET eve_nombre='$t_nombre', eve_fecha_inicio='$t_fecha_inicio', eve_fecha_fin='$t_fecha_fin', eve_estado='$is_active', eve_descripcion='$t_descripcion', eve_titulo_imagen='$t_titulo_img', eve_imagen='$t_img_path' WHERE idEvento=$nextId") or $rows["respuesta"] =mysql_error();
+			$res = mysql_query("UPDATE patrocinador SET pat_nombre='$t_nombre', pat_descripcion='$t_descripcion', pat_imagen='$t_img_path' WHERE idPatrocinador=$nextId") or $rows["respuesta"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
 			$rows["id"] = "$nextId";
 			$rows["name"] = $t_img_path;
+			
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "delete_patrocinador") {
+			$rows = array();
+			$idPatrocinador = $_REQUEST['idPatrocinador'];
+			
+			$res = mysql_query("DELETE FROM patrocinador WHERE idPatrocinador='$idPatrocinador'") or $rows["error"] =mysql_error();
+
+			$rows["respuesta"] = "ok";
 			
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';

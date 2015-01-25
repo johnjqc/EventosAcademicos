@@ -15,8 +15,8 @@
 		$data = array();
 		$rows = array();
 		
-		if ($accion == "queryEventos") {
-			$sth = mysql_query("SELECT * from evento ");
+		if ($accion == "query_lugares") {
+			$sth = mysql_query("SELECT * from lugar ");
 			$rows = array();
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
@@ -26,9 +26,9 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
-		if ($accion == "queryEvento" ) {
-			$evento = $_GET['evento'];
-			$sth = mysql_query("SELECT * from evento WHERE idEvento = '$evento'") or $rows["error"] =mysql_error();
+		if ($accion == "query_lugar" ) {
+			$idLugar = $_GET['idLugar'];
+			$sth = mysql_query("SELECT * from lugar WHERE idLugar = '$idLugar'");
 			$rows = array();
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
@@ -41,26 +41,26 @@
 			$error = false;
 			$files = array();
 			
-			$result = mysql_query("SHOW TABLE STATUS LIKE 'evento'");
+			$result = mysql_query("SHOW TABLE STATUS LIKE 'lugar'");
 			$row = mysql_fetch_array($result);
 			$nextId = $row['Auto_increment'];
 			
-			if (isset( $_REQUEST['id'])){
-				$nextId = $_REQUEST['id'];
+			if (isset( $_REQUEST['idLugar'])){
+				$nextId = $_REQUEST['idLugar'];
 			}
-			if(!file_exists('./eventos/')) {
-				mkdir ('./eventos/', 0777);
-			} 
-			if(!file_exists('./eventos/'.$nextId)) {
-				mkdir ('./eventos/'.$nextId, 0777);
+			if(!file_exists('./lugares/')) {
+				mkdir ('./lugares/', 0777);
+			}
+			if(!file_exists('./lugares/'.$nextId)) {
+				mkdir ('./lugares/'.$nextId, 0777);
 			} 
 						
-			$uploaddir = './eventos/'.$nextId.'/';
+			$uploaddir = './lugares/'.$nextId.'/';
 			
 			foreach($_FILES as $file) {
 				$ext = explode (".",basename($file['name']));
-				if(move_uploaded_file($file['tmp_name'], $uploaddir."evento_img.".$ext[1])) {
-					$files[] = '/eventos/'.$nextId.'/'."evento_img.".$ext[1];
+				if(move_uploaded_file($file['tmp_name'], $uploaddir."lugar_img.".$ext[1])) {
+					$files[] = '/lugares/'.$nextId.'/'."lugar_img.".$ext[1];
 				} else {
 					$error = true;
 				}
@@ -69,14 +69,15 @@
 			echo json_encode($data);
 		} 
 		
-		if ($accion == "new_evento") {
+		if ($accion == "new_lugar") {
 			$rows = array();
 			
 			$t_nombre = $_REQUEST['t_nombre'];
-			$t_fecha_inicio = $_REQUEST['t_fecha_inicio']; 
-			$t_fecha_fin = $_REQUEST['t_fecha_fin']; 
 			$t_descripcion = $_REQUEST['t_descripcion'];
-			$t_titulo_img = $_REQUEST['t_titulo_img'];
+			$t_direccion = $_REQUEST['t_direccion'];
+			$t_latitud = $_REQUEST['t_latitud'];
+			$t_longitud = $_REQUEST['t_longitud'];
+			
 			if (isset($_REQUEST['filenames'])) {
 				if  (isset($_REQUEST['filenames'][0])) {
 					$t_img_path = $_REQUEST['filenames'][0];
@@ -85,14 +86,12 @@
 				$t_img_path = "";
 			}
 			
-			$is_active = $_REQUEST['is_active']; 
-
-			$result = mysql_query("SHOW TABLE STATUS LIKE 'evento'");
+			$result = mysql_query("SHOW TABLE STATUS LIKE 'lugar'");
 			$row = mysql_fetch_array($result);
 			$nextId = $row['Auto_increment'];
 			
-			$res = mysql_query("INSERT INTO evento (eve_nombre, eve_fecha_inicio, eve_fecha_fin, eve_estado, eve_descripcion, eve_titulo_imagen, eve_imagen)
-				VALUES ('$t_nombre', '$t_fecha_inicio', '$t_fecha_fin', '$is_active', '$t_descripcion', '$t_titulo_img', '$t_img_path') ") or $rows["respuesta"] =mysql_error();
+			$res = mysql_query("INSERT INTO lugar (lug_nombre, lug_descripcion, lug_imagen, lug_direccion, lug_latitud, lug_longitud)
+				VALUES ('$t_nombre', '$t_descripcion', '$t_img_path', '$t_direccion', '$t_latitud', '$t_longitud') ") or $rows["error"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
 			$rows["id"] = "$nextId";
@@ -103,14 +102,15 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
-		if ($accion == "update_evento") {
+		if ($accion == "update_lugar") {
 			$rows = array();
 			
 			$t_nombre = $_REQUEST['t_nombre'];
-			$t_fecha_inicio = $_REQUEST['t_fecha_inicio']; 
-			$t_fecha_fin = $_REQUEST['t_fecha_fin']; 
 			$t_descripcion = $_REQUEST['t_descripcion'];
-			$t_titulo_img = $_REQUEST['t_titulo_img'];
+			$t_direccion = $_REQUEST['t_direccion'];
+			$t_latitud = $_REQUEST['t_latitud'];
+			$t_longitud = $_REQUEST['t_longitud'];
+			
 			if (isset($_REQUEST['filenames'])) {
 				if  (isset($_REQUEST['filenames'][0])) {
 					$t_img_path = $_REQUEST['filenames'][0];
@@ -118,16 +118,22 @@
 			} else {
 				$t_img_path = "";
 			}
+						
+			$nextId = $_REQUEST['idLugar']; 
 			
-			$is_active = $_REQUEST['is_active']; 
+			$res = mysql_query("UPDATE lugar SET lug_nombre='$t_nombre', lug_descripcion='$t_descripcion', lug_imagen='$t_img_path', lug_direccion='$t_direccion', lug_latitud='$t_latitud', lug_longitud='$t_longitud' WHERE idLugar=$nextId") or $rows["error"] =mysql_error();
 
-			$nextId = $_REQUEST['id']; 
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "delete_lugar") {
+			$rows = array();
+			$idLugar = $_REQUEST['idLugar'];
 			
-			$res = mysql_query("UPDATE evento SET eve_nombre='$t_nombre', eve_fecha_inicio='$t_fecha_inicio', eve_fecha_fin='$t_fecha_fin', eve_estado='$is_active', eve_descripcion='$t_descripcion', eve_titulo_imagen='$t_titulo_img', eve_imagen='$t_img_path' WHERE idEvento=$nextId") or $rows["respuesta"] =mysql_error();
+			$res = mysql_query("DELETE FROM lugar WHERE idLugar='$idLugar'") or $rows["error"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
-			$rows["id"] = "$nextId";
-			$rows["name"] = $t_img_path;
 			
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';

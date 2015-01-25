@@ -17,7 +17,7 @@
 		
 		if ($accion == "query_comites") {
 			$evento = $_GET['evento'];
-			$sth = mysql_query("SELECT * from comite WHERE Evento_idEvento = '$evento'");
+			$sth = mysql_query("SELECT * from comite");
 			$rows = array();
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
@@ -49,8 +49,8 @@
 			$row = mysql_fetch_array($result);
 			$nextId = $row['Auto_increment'];
 			
-			$res = mysql_query("INSERT INTO comite (com_nombre, com_descripcion, Evento_idEvento)
-				VALUES ('$t_nombre', '$t_descripcion', '$evento') ") or $rows["error"] =mysql_error();
+			$res = mysql_query("INSERT INTO comite (com_nombre, com_descripcion)
+				VALUES ('$t_nombre', '$t_descripcion') ") or $rows["error"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
 			
