@@ -11,7 +11,12 @@
 	}else {
 		mysql_select_db($db_name, $enlace) or die('Could not select database.');
 		
-		$accion = $_GET['accion'];
+		if (isset($_GET['accion'])) {
+			$accion = $_GET['accion'];
+		} else {
+			$accion = "empty";
+		}
+		
 		$data = array();
 		$rows = array();
 		
@@ -85,7 +90,12 @@
 				$t_img_path = "";
 			}
 			
-			$is_active = $_REQUEST['is_active']; 
+			if (isset($_GET['is_active'])) {
+				$is_active = $_REQUEST['is_active']; 
+			} else {
+				$is_active = "off";
+			}
+			
 
 			$result = mysql_query("SHOW TABLE STATUS LIKE 'evento'");
 			$row = mysql_fetch_array($result);
