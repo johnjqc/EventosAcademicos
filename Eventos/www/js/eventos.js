@@ -69,7 +69,7 @@ $(document).on('pageinit','#pageEvento',function(e){
 		
 	});
 	$("#btnGallery").bind( "tap", function(e) {
-		
+		window.location = "g_galeria.html";
 	});
 
 });

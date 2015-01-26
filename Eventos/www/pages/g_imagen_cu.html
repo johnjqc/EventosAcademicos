@@ -13,19 +13,15 @@
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="../js/i18next-1.7.7.min.js"></script>
-    <script type="text/javascript" src="../js/usuario.js"></script>
+    <script type="text/javascript" src="../js/imagen.js"></script>
     <script type="text/javascript" src="../js/lenguaje.js"></script>
 
-    <script type="text/javascript">
-        if (!navigator.userAgent.toLowerCase().match('chrome') or !navigator.userAgent.toLowerCase().match('firefox')) {
-                document.write("<script type='text/javascript' src='cordova.js'><\/script>");
-        }
-    </script>
+    
     <title>Eventos Academicos</title>
 </head>
 <body>
 
-<div data-role="page" id="page_usuarios" data-theme="c">
+<div data-role="page" id="crud_imagen" data-theme="c">
     <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
         <ul data-role="listview">
             <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
@@ -36,18 +32,27 @@
     </div>
 
     <div data-role="header" data-position="fixed">
-        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-ajax="false" data-rel="back" href="evento.html" >Only Icon</a>
+        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-rel="back" href="../index.html" >Only Icon</a>
         <div id="custom-border-radius" class="ui-btn-right">
-        	<a  href="g_usuario_cu.html" data-ajax="false" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext ">+</a>
-            <a href="login.html" data-ajax="false" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext ">Only Icon</a>
-            <a href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext" data-display="overlay">Only Icon</a>
+            <a id="btn_popup_server" href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
+                data-display="overlay">Only Icon</a>
         </div>
         <span class="ui-title" ></span>
     </div>
-    <div data-role="content">
-		<ul id="listusuarios" data-role="listview" data-inset="true" data-theme="a">
-			
-		</ul>
+    <div data-role="content" >
+		<form id="frm_new_imagen" class="ui-body ui-body-a ui-corner-all" data-ajax="false" enctype="multipart/form-data">
+            <label for="t_nombre">Nombre del imagen:</label>
+            <input data-clear-btn="true" name="t_nombre" id="t_nombre" value="" type="text">
+
+            <label for="t_descripcion">Descripcion del imagen:</label>
+            <input data-clear-btn="true" name="t_descripcion" id="t_descripcion" value="" type="text">
+            
+            <label for="t_img_path">Archivo Imagen</label>
+            <input data-clear-btn="true" name="t_img_path" id="t_img_path" value="" type="file" accept="image/*">
+            
+            <input type="submit" data-theme="b" name="submit" id="submit_new_imagen" value="Submit">
+
+        </form>		
     </div>
 </div>
 </body>

@@ -13,7 +13,7 @@
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="../js/i18next-1.7.7.min.js"></script>
-    <script type="text/javascript" src="../js/publicacion.js"></script>
+    <script type="text/javascript" src="../js/usuario.js"></script>
     <script type="text/javascript" src="../js/lenguaje.js"></script>
 
     <script type="text/javascript">
@@ -25,7 +25,7 @@
 </head>
 <body>
 
-<div data-role="page" id="page_publicacion_query" data-theme="c">
+<div data-role="page" id="page_usuario_query" data-theme="c">
     <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
         <ul data-role="listview">
             <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
@@ -40,7 +40,7 @@
         <div id="custom-border-radius" class="ui-btn-right">
 			<a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop"
         		class="ui-btn ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-notext">Only Icon</a>
-        	<a href="g_publicacion_cu.html" data-ajax="false" id="btn_edit_comite"
+        	<a href="g_usuario_cu.html" data-ajax="false" id="btn_edit_comite"
         		class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext">Only Icon</a>
         	<a href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext" data-display="overlay">Only Icon</a>
         </div>
@@ -48,15 +48,15 @@
     </div>
     <div data-role="content">
 		
-		<div id="publicacion_content">
+		<div id="usuario_content">
 			
 		</div>
 		
 		<div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
 			<div role="main" class="ui-content">
-				<h3 class="ui-title">Esta seguro de eliminar el publicacion?</h3>
+				<h3 class="ui-title">Esta seguro de eliminar el usuario?</h3>
 				<p>Esta accion no se puede deshacer.</p>
-				<a href="#" id="btn_delete_publicacion" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-ajax="false" data-transition="flow">Eliminar</a>
+				<a href="#" id="btn_delete_usuario" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-ajax="false" data-transition="flow">Eliminar</a>
 				<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancelar</a>
 			</div>
 		</div>

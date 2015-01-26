@@ -13,7 +13,7 @@
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="../js/i18next-1.7.7.min.js"></script>
-    <script type="text/javascript" src="../js/publicacion.js"></script>
+    <script type="text/javascript" src="../js/usuario.js"></script>
     <script type="text/javascript" src="../js/lenguaje.js"></script>
 
     <script type="text/javascript">
@@ -25,7 +25,7 @@
 </head>
 <body>
 
-<div data-role="page" id="page_publicacion_new" data-theme="c">
+<div data-role="page" id="page_usuario_new" data-theme="c">
     <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
         <ul data-role="listview">
             <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
@@ -44,20 +44,51 @@
         <span class="ui-title" ></span>
     </div>
     <div data-role="content">
-		<form id="frm_new_publicacion" class="ui-body ui-body-a ui-corner-all" data-ajax="false" enctype="multipart/form-data">
-            <label for="t_titulo">Titulo</label>
-            <textarea name="t_titulo" id="t_titulo" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
-
-            <label for="t_resumen">Resumen</label>
-            <textarea name="t_resumen" id="t_resumen" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
-
-            <label for="t_file_path">Archivo</label>
+		<form id="frm_new_usuario" class="ui-body ui-body-a ui-corner-all" data-ajax="false" enctype="multipart/form-data">
+            
+            <label for="t_identificacion">Identificaion</label>
+            <input data-clear-btn="true" name="t_identificacion" id="t_identificacion" value="" type="text">
+            
+            <label for="t_nombre">Nombre</label>
+            <input data-clear-btn="true" name="t_nombre" id="t_nombre" value="" type="text">
+            
+            <label for="t_apellido">Apellido</label>
+            <input data-clear-btn="true" name="t_apellido" id="t_apellido" value="" type="text">
+            
+            <label for="t_nacionalidad">Nacionalidad</label>
+            <input data-clear-btn="true" name="t_nacionalidad" id="t_nacionalidad" value="" type="text">
+            
+            <label for="t_email">Email</label>
+            <input data-clear-btn="true" name="t_email" id="t_email" value="" type="text">
+            
+            <label for="t_telefono">Telefono</label>
+            <input data-clear-btn="true" name="t_telefono" id="t_telefono" value="" type="text">
+            
+            <label for="t_contrasena">Contrasena</label>
+            <input data-clear-btn="true" name="t_contrasena" id="t_contrasena" value="" type="text">
+            
+            <label for="t_imagen">Imagen</label>
             <input data-clear-btn="true" name="t_file_path" id="t_file_path" value="" type="file" accept="*/*">
             
-            <label for="t_otros_autores">Otros Autores</label>
-            <input data-clear-btn="true" name="t_otros_autores" id="t_otros_autores" value="" type="text">
+            <label for="t_perfil">Perfil</label>
+            <input data-clear-btn="true" name="t_perfil" id="t_perfil" value="" type="text">
             
-            <input type="submit" data-theme="b" name="submit" id="submit_new_publicacion" value="Submit">
+            <label for="t_estado">Estado</label>
+            <input data-clear-btn="true" name="t_estado" id="t_estado" value="" type="text">
+            
+            <label for="t_institucion">Instaticion</label>
+            <input data-clear-btn="true" name="t_institucion" id="t_institucion" value="" type="text">
+            
+            <label for="t_nivel_academico">Nivel Acandemico</label>
+            <input data-clear-btn="true" name="t_nivel_academico" id="t_nivel_academico" value="" type="text">
+            
+            <label for="t_biografia">Biografia</label>
+            <textarea name="t_biografia" id="t_biografia" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
+            
+            <label for="t_profesion">Profesion</label>
+            <input data-clear-btn="true" name="t_profesion" id="t_profesion" value="" type="text">
+            
+            <input type="submit" data-theme="b" name="submit" id="submit_new_usuario" value="Submit">
         </form>
     </div>
 </div>
