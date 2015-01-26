@@ -66,23 +66,35 @@ $(document).on('pageinit','#page_imagen_query',function(e){
 	activeImagen = localStorage.getItem('activeImagen');
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_imagen.php?jsoncallback=?";
-
+	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos";
+	var div_output= $('#imagen_content');
+	var output = "";
+	
     $.ajax({
         url: archivoValidacion,
         data: {
-            'accion': 'query_imagen', imagen: activeImagen
+            'accion': 'query_imagen', idImagen: activeImagen
         },
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
         timeout: 6000,
         success: function(data, status){
-        	$('#nombre').empty();
-        	$('#descripcion').empty();
+        	div_output.empty();
             $.each(data, function(i,item){
-            	$('#nombre').append(item.img_nombre);
-            	$('#nombre').load();
-            	$('#descripcion').append(item.img_descripcion);
-            	$('#descripcion').load();
+            	//output = '<div class="ui-body ui-body-a ui-corner-all ">';
+                if (!$.isEmptyObject(item.img_imagen)) {
+                    output += '<div class="card-image">';
+                    output += '<img alt="home" src="' + httpImagen + item.img_imagen + '" />';
+                    
+                    output += '</div>';
+                    output += '<div class="card-separator"></div>';
+                }
+				output += '<div class="ui-body ui-body-a ui-corner-all ">';
+                output += '<p><h1>' + item.img_nombre + '</h1></p>';
+                output += '<p>' + item.img_descripcion + '</p>';
+                output += '</div>';
+                div_output.append(output);
+            	div_output.load();
             });
         },
         beforeSend: function(){
@@ -92,8 +104,7 @@ $(document).on('pageinit','#page_imagen_query',function(e){
             $.mobile.loading( "hide" );
         },
         error: function(){
-        	$('#nombre').empty();
-        	$('#descripcion').empty();
+        	div_output.empty();
             $.mobile.loading( "hide" );
             alert('Error conectando al servidor.');
         }
@@ -211,7 +222,7 @@ function uploadFiles(event) {
 			}
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			console.log('ERRORS: ' + textStatus);
+			console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
 		}
     });
     

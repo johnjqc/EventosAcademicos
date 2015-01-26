@@ -128,13 +128,17 @@ $(document).on('pageinit','#page_galeria_query',function(e){
 //            		posicionGrid = 'd';
 //            	}
             	
-        		output = '<div class="ui-block-' + posicionGrid + '" id="btnSpeaker">';
+        		output = '<div class="ui-block-' + posicionGrid + '" id="imagen' + item.idImagen + '">';
         		output += '<div class="ui-body ui-body-' + posicionGrid + '">';
         		output += '<img alt="speaker" src="' + httpImagen + item.img_imagen + '" style="width: auto; max-width: 100%;" />';
         		output += '</div>';
         		output += '</div>';
         		grid.append(output);
         		grid.load();
+				$('#imagen' + item.idImagen).bind('tap', function(e) {
+                	window.localStorage.setItem('activeImagen', item.idImagen);
+                	window.location = "g_imagen_q.html";
+                });
             });
 //        	grid.append('</div>');
         	grid.load();
