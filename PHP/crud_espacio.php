@@ -11,8 +11,17 @@
 	}else {
 		mysql_select_db($db_name, $enlace) or die('Could not select database.');
 		
-		$accion = $_GET['accion'];
-		$idLugar = $_REQUEST['idLugar'];
+		if (isset($_GET['accion'])) {
+			$accion = $_GET['accion'];
+		} else {
+			$accion = "empty";
+		}
+		if (isset($_GET['idLugar'])) {
+			$idLugar = $_REQUEST['idLugar'];
+		} else {
+			$idLugar = "empty";
+		}
+		
 		$data = array();
 		$rows = array();
 		
