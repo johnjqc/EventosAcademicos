@@ -13,19 +13,15 @@
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="../js/i18next-1.7.7.min.js"></script>
-    <script type="text/javascript" src="../js/imagen.js"></script>
+    <script type="text/javascript" src="../js/agenda.js"></script>
     <script type="text/javascript" src="../js/lenguaje.js"></script>
-	
-    <script type="text/javascript">
-        if (!navigator.userAgent.toLowerCase().match('chrome') or !navigator.userAgent.toLowerCase().match('firefox')) {
-                document.write("<script type='text/javascript' src='cordova.js'><\/script>");
-        }
-    </script>
+
+    
     <title>Eventos Academicos</title>
 </head>
 <body>
 
-<div data-role="page" id="page_imagen_query" data-theme="c">
+<div data-role="page" id="crud_agenda" data-theme="c">
     <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
         <ul data-role="listview">
             <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
@@ -38,40 +34,32 @@
     <div data-role="header" data-position="fixed">
         <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-rel="back" href="../index.html" >Only Icon</a>
         <div id="custom-border-radius" class="ui-btn-right">
-        	<a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop"
-        		class="ui-btn ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-notext">Only Icon</a>
-        	<a href="g_imagen_cu.html" data-ajax="false" id="btn_edit_imagen"
-        		class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext">Only Icon</a>
             <a id="btn_popup_server" href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
                 data-display="overlay">Only Icon</a>
         </div>
         <span class="ui-title" ></span>
     </div>
     <div data-role="content" >
-		<div id="imagen_content">
-			
-		</div>
-		
-		<div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
-			<div data-role="header" data-theme="a">
-				<h1>Eliminar imagen</h1>
-			</div>
-			<div role="main" class="ui-content">
-				<h3 class="ui-title">Esta seguro de eliminar la imagen?</h3>
-				<p>Esta accion no se puede deshacer.</p>
-				<a href="#" id="btn_delete_imagen" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-ajax="false" data-transition="flow">Eliminar</a>
-				<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancelar</a>
-			</div>
-		</div>
+		<form id="frm_new_agenda" class="ui-body ui-body-a ui-corner-all" data-ajax="false" enctype="multipart/form-data">
+            <label for="t_actividad">Nombre del agenda:</label>
+            <input data-clear-btn="true" name="t_actividad" id="t_actividad" value="" type="text">
+
+            <label for="t_fecha">Fecha Inicio</label>
+            <input data-clear-btn="true" name="t_fecha" id="t_fecha" value="" type="date">
+            
+            <label for="t_hora_inicio">Fecha Inicio</label>
+            <input data-clear-btn="true" name="t_hora_inicio" id="t_hora_inicio" value="" type="time">
+
+            <label for="t_hora_fin">Fecha Fin</label>
+            <input data-clear-btn="true" name="t_hora_fin" id="t_hora_fin" value="" type="time">
+            
+            <label for="t_descripcion">Descripcion</label>
+            <textarea name="t_descripcion" id="t_descripcion"></textarea>
+            
+            <input type="submit" data-theme="b" name="submit" id="submit_new_agenda" value="Submit">
+
+        </form>		
     </div>
-<!-- 	<div data-role="footer" data-theme="a" data-position="fixed"> -->
-<!-- 		<div data-role="navbar"> -->
-<!-- 			<ul> -->
-<!-- 				<li><a href="#" data-icon="arrow-l">Anterior</a></li> -->
-<!-- 				<li><a href="#" data-icon="arrow-r">Siguiente</a></li> -->
-<!-- 			</ul> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
 </div>
 </body>
 </html>

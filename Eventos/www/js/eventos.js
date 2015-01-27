@@ -48,7 +48,7 @@ $(document).on('pageinit','#pageEvento',function(e){
     	
     });
 	$("#btnCalendar").bind( "tap", function(e) {
-		window.location = "agenda.html";
+		window.location = "g_agenda.html";
     });
 	$("#btnCommittee").bind( "tap", function(e) {
 		window.location = "comite.html";

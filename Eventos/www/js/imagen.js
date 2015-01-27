@@ -13,55 +13,6 @@ $(function() {
 	$('input[type=file]').on('change', prepareUpload);
 });
 
-//$(document).on('pageinit','#pageimagen',function(e) {
-//	window.localStorage.setItem('activeImagen', -1);
-//	activeEvent = window.localStorage.getItem('activeEvent');
-//	getIpPortserver();
-//	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_imagen.php?jsoncallback=?";
-//    var output = "";
-//    var div_output= $('#listimagenes');
-//    
-//    $.ajax({
-//        url: archivoValidacion,
-//        data: {
-//            'accion': 'query_imagenes', 'evento': activeEvent
-//        },
-//        dataType: 'jsonp',
-//        jsonp: 'jsoncallback',
-//        timeout: 6000,
-//        success: function(data, status){
-//        	div_output.empty();
-//        	
-//            if ($.isEmptyObject(data)) {
-//            	output += '<div class="ui-body ui-body-a ui-corner-all ">';
-//            	output += '<p>No se encontraron registros en la Base de Datos para mostrar</p>';
-//                output += '</div>';
-//                div_output.append(output);
-//                div_output.load();
-//            }
-//            $.each(data, function(i,item){
-//            	output = '<li><a data-ajax="false" id="imagen' + item.idImagen + '" href="g_imagen_q.html">' + item.img_nombre + '</a></li>';
-//                div_output.append(output);
-//                div_output.listview("refresh");
-//                $('#imagen' + item.idImagen).bind('tap', function(e) {
-//                	window.localStorage.setItem('activeImagen', item.idImagen);
-//                });
-//            });
-//        },
-//        beforeSend: function(){
-//            showLoading();
-//        },
-//        complete: function(){
-//            $.mobile.loading( "hide" );
-//        },
-//        error: function(){
-//        	div_output.empty();
-//            $.mobile.loading( "hide" );
-//            alert('Error conectando al servidor.');
-//        }
-//    });
-//});
-
 $(document).on('pageinit','#page_imagen_query',function(e){
 	activeImagen = localStorage.getItem('activeImagen');
 	getIpPortserver();
@@ -81,9 +32,8 @@ $(document).on('pageinit','#page_imagen_query',function(e){
         success: function(data, status){
         	div_output.empty();
             $.each(data, function(i,item){
-            	//output = '<div class="ui-body ui-body-a ui-corner-all ">';
                 if (!$.isEmptyObject(item.img_imagen)) {
-                    output += '<div class="card-image">';
+                    output += '<div class="card-image-img">';
                     output += '<img alt="home" src="' + httpImagen + item.img_imagen + '" />';
                     
                     output += '</div>';
@@ -153,7 +103,7 @@ $(document).on('pageinit','#crud_imagen',function(e){
 	    $.ajax({
 	        url: archivoValidacion,
 	        data: {
-	            'accion': 'query_imagen', 'imagen': activeImagen
+	            'accion': 'query_imagen', 'idImagen': activeImagen
 	        },
 	        dataType: 'jsonp',
 	        jsonp: 'jsoncallback',

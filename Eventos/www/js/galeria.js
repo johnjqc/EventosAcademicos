@@ -115,13 +115,13 @@ $(document).on('pageinit','#page_galeria_query',function(e){
         	
             $.each(data, function(i,item) {
             	var posicionGrid;
-            	if (item.idImagen % 3 == 1) {
+            	if ((i+1) % 3 == 1) {
             		posicionGrid = 'a';
             	}
-            	if (item.idImagen % 3 == 2) {
+            	if ((i+1) % 3 == 2) {
             		posicionGrid = 'b';
             	}
-            	if (item.idImagen % 3 == 0) {
+            	if ((i+1) % 3 == 0) {
             		posicionGrid = 'c';
             	}
 //            	if (i % 4 == 0) {
