@@ -57,7 +57,7 @@ $(document).on('pageinit','#pageEvento',function(e){
 		window.location = "patrocinador.html";
 	});
 	$("#btnPlaces").bind( "tap", function(e) {
-		
+		window.location = "r_lugar.html";
 	});
 	$("#btnAttendees").bind( "tap", function(e) {
 		window.location = "asistentes.html";
@@ -308,7 +308,7 @@ function submitForm(event, data) {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log('ERRORS: ' + textStatus);
+            console.log('ERRORS: ' + textStatus+ " " + jqXHR.responseText);
             $.mobile.loading( "hide" );
         },
         complete: function() {

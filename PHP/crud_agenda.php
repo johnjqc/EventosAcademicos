@@ -20,7 +20,7 @@
 			$sth = mysql_query("SELECT a.*, c.* from agenda a
 								left join  espacio_has_agenda b on a.idAgenda = b.agenda_idAgenda
 								left join  espacio c on b.espacio_idEspacio = c.idEspacio
-								WHERE evento_idEvento= $idEvento");
+								WHERE evento_idEvento= $idEvento order by a.age_fecha");
 			$rows = array();
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;

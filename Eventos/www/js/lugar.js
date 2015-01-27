@@ -242,7 +242,7 @@ function uploadFiles(event) {
 			}
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			console.log('ERRORS: ' + textStatus);
+			console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
 		}
     });
     
@@ -282,7 +282,7 @@ function submitForm(event, data) {
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log('ERRORS: ' + textStatus);
+            console.log('ERRORS: ' + textStatus+ " " + jqXHR.responseText);
             $.mobile.loading( "hide" );
         },
         complete: function() {

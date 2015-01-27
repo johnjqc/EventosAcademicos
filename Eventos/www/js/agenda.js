@@ -2,11 +2,92 @@ var text_ip = '';
 var text_puerto = '';
 var activeAgenda; //id del agenda seleccionado para ver detalles o edicion
 var activeEvent; //id del evento seleccionado para ver detalles 
+var activeEspacio;
 var usu_perfil;
 
 $(function() {
 	security();
 	$('#frm_new_agenda').on('submit', submitForm_newagenda);
+	$(document).on("pagehide", "div[data-role=page]", function(event){
+		$(event.target).remove();
+	});
+});
+
+function contains(a, b) {
+	for(var i=0; i < a.length; i++) {
+		if(a[i].getTime() == b.getTime()) {
+			return true;
+		}
+	}
+	return false;
+}
+
+
+$(document).on('pageinit','#page_r_espacio_agenda',function(e){
+	activeEvent = window.localStorage.getItem('activeEvent');
+	activeAgenda = localStorage.getItem('activeAgenda');
+	
+	getIpPortserver();
+	var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_agenda.php?jsoncallback=?";
+    var output = "";
+    var div_output= $('#listEspaciosAdd');
+
+    $.ajax({
+        url: urlServer,
+        data: {
+            'accion': 'query_espacios_to_add', 'evento': activeEvent
+        },
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        timeout: 6000,
+        success: function(data, status){
+        	div_output.empty();
+        	
+            $.each(data, function(i,item){
+            	output = '<li id="asistente' + item.idUsuario + '" data-icon="plus"><a href="#">';
+        		output += '' + item.usu_nombre + ' ' + item.usu_apellido + '</a>';
+				output += '</li>';
+                div_output.append(output);
+                div_output.listview("refresh");
+				$('#asistente' + (item.idUsuario)).bind('tap', function(e) {
+					$.ajax({
+						url: urlServer,
+						type: 'POST',
+						data: {'accion': 'new_asistente', idEvento: activeEvent, idUsuario: item.idUsuario},
+						cache: false,
+						dataType: 'jsonp',
+						jsonp: 'jsoncallback',
+						success: function(data, textStatus, jqXHR) {
+							if(typeof data.error === 'undefined') {
+								alert("Usuario agregado exitosamente");
+								window.location = "asistentes_cu.html";
+							} else {
+								console.log('ERRORS: ' + data.error);
+							}
+						},
+						error: function(jqXHR, textStatus, errorThrown) {
+							console.log('ERRORS: ' + textStatus);
+							$.mobile.loading( "hide" );
+						},
+						complete: function() {
+							$.mobile.loading( "hide" );
+						}
+					});
+                });
+            });
+        },
+        beforeSend: function(){
+            showLoading();
+        },
+        complete: function(){
+            $.mobile.loading( "hide" );
+        },
+        error: function(){
+        	div_output.empty();
+            $.mobile.loading( "hide" );
+            alert('Error conectando al servidor.');
+        }
+    });
 });
 
 $(document).on('pageinit','#page_agenda',function(e) {
@@ -60,49 +141,57 @@ $(document).on('pageinit','#page_agenda',function(e) {
                 div_output.append(output);
                 div_output.load();
             }
-            var repeat = true;
-            var veces = 1;
-            var date = null;
-            while(repeat) {
-            	veces--;
-            	if (veces == 0) repeat = false;
-            	
-            	$.each(data, function(i,item){
-            		var nodo = $( item );
+			var fechas = new Array();
+			var countFechas = new Array();
+			var tempData = data;
+			$.each(tempData, function(i,item){
+				var fecha = new Date(item.age_fecha);
+				if (!contains(fechas,fecha)) {
+					fechas.push(fecha); 
+				}
+			});
+			fechas.sort(); 
+			for(var j=0; j < fechas.length; j++) {
+				var tempData = data;
+				var count = 0;
+				$.each(tempData, function(i,item){
+					var fecha = new Date(item.age_fecha);
+					if (fecha.getDate() == fechas[j].getDate()) {
+						count++;
+					}
+				});
+				countFechas.push(count);
+			}
+            for(var j=0; j < fechas.length; j++) {
+				tempDate = data;
+				var barFecha = true;
+				$.each(tempData, function(i,item) {
                 	var fecha = new Date(item.age_fecha);
-                	var dia = weekday[fecha.getDay()]; 
-                	var mes = month[fecha.getMonth()];
-                	
-                	if (date == null) { 
-                		date = fecha;
-                		output1 = '<li data-role="list-divider">' + dia + ', ' + mes + ' ' + fecha.getUTCDate() + ', ' + fecha.getFullYear() + ' <span class="ui-li-count">1</span></li>';
+					output = "";
+                	if (barFecha) {
+						var fecha1 = fechas[j];
+						var dia = weekday[fecha1.getDay()]; 
+						var mes = month[fecha1.getMonth()];
+						barFecha = false;
+                		output1 = '<li data-role="list-divider">' + dia + ', ' + mes + ' ' + fecha1.getUTCDate() + ', ' + fecha1.getFullYear() + ' <span class="ui-li-count">' + countFechas[j] + '</span></li>';
+						div_output.append(output1);
                 	}
-                	if (date.getTime() == fecha.getTime()) {
-                		alert("fecha igual");
+                	if (fechas[j].getTime() == fecha.getTime()) {
                 		output = '<li id="agenda' + item.idAgenda + '"><a data-ajax="false" href="g_agenda_q.html">';
                     	output += '<h2>' + item.age_actividad + '</h2>';
                     	output += '<p><strong>' + ((item.esp_nombre == null)?"Sin espacio asignado":item.esp_nombre) + '</strong></p>';
                     	output += '<p>Hasta: ' + item.age_hora_fin + '</p>';
                     	output += '<p class="ui-li-aside"><strong>Desde: ' + item.age_hora_inicio + '</strong>PM</p>';
                     	output += '</a></li>';
-                	} else {
-                		alert("fecha diferente");
-//                		veces++;
-                		repeat = true;
+						div_output.append(output);
+						div_output.listview("refresh");
+						$('#agenda' + item.idAgenda).bind('tap', function(e) {
+							
+							window.localStorage.setItem('activeAgenda', item.idAgenda);
+						});
                 	}
-                	if (!nodo.next() === 'undefined') {
-                		repeat = true;
-                		veces++;
-                	}
-                    div_output.append(output1);
-                    div_output.append(output);
-                    div_output.listview("refresh");
-                    $('#agenda' + item.idAgenda).bind('tap', function(e) {
-                    	window.localStorage.setItem('activeAgenda', item.idAgenda);
-                    });
                 });
-            }
-            
+			}
         },
         beforeSend: function(){
             showLoading();
@@ -122,7 +211,8 @@ $(document).on('pageinit','#page_agenda_query',function(e){
 	activeAgenda = localStorage.getItem('activeAgenda');
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_agenda.php?jsoncallback=?";
-
+	var div_output = $('#agenda_content');
+	var output;
     $.ajax({
         url: archivoValidacion,
         data: {
@@ -132,13 +222,36 @@ $(document).on('pageinit','#page_agenda_query',function(e){
         jsonp: 'jsoncallback',
         timeout: 6000,
         success: function(data, status){
-        	$('#nombre').empty();
-        	$('#descripcion').empty();
-            $.each(data, function(i,item){
-            	
-            	$('#descripcion').append(item.age_descripcion);
-            	$('#descripcion').load();
+        	div_output.empty();
+            $.each(data, function(i,item) {
+				output = '<div class="ui-body ui-body-a ui-corner-all ">';
+            	output += '<h1>' + item.age_actividad + '</h1>';
+				output += '<span class="ui-btn-c ui-btn-icon-notext ui-icon-calendar" style="position:relative;padding-left:2em;" />  ' + item.age_fecha + ' ';
+				output += '<span class="ui-btn-b ui-btn-icon-notext ui-icon-clock" style="position:relative;padding-left:2em;" /> ' + item.age_hora_inicio + ' ' + ' - ' + item.age_hora_fin + '';
+				output += '</div>';
+				
+				if (!$.isEmptyObject(item.age_descripcion)) {
+					output += '<br>';
+					output += '<div class="ui-body ui-body-a ui-corner-all ">';
+					output += '' + item.age_descripcion + '';
+					output += '</div>';
+				}
+				output += '<div class="card-separator"></div>';
+				//output += '<span class="ui-btn-c ui-btn-icon-notext ui-icon-location" style="position:relative;padding-left:2em;" />  <b>Lugares</b>';
             });
+			div_output.append(output);
+			
+			output = '<li><a href="index.html">';
+			output += '<img src="../_assets/img/album-bb.jpg">';
+			output += '<h3>Broken Bells</h3>';
+			output += '</a><a href="index.html" data-rel="dialog" data-transition="slideup">Purchase album</a>';
+			output += '</li>';
+			
+			$("#espacio1").append(output);
+			
+			
+			div_output.load();
+			$("#espacio1").listview("refresh");
         },
         beforeSend: function(){
             showLoading();
@@ -147,8 +260,7 @@ $(document).on('pageinit','#page_agenda_query',function(e){
             $.mobile.loading( "hide" );
         },
         error: function(){
-        	$('#nombre').empty();
-        	$('#descripcion').empty();
+        	div_output.empty();
             $.mobile.loading( "hide" );
             alert('Error conectando al servidor.');
         }
