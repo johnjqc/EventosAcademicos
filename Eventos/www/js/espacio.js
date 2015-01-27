@@ -245,7 +245,7 @@ function uploadFiles(event) {
 			}
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			console.log('ERRORS: ' + textStatus);
+			console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
 		}
     });
     

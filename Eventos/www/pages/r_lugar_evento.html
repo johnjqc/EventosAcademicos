@@ -13,9 +13,9 @@
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="../js/i18next-1.7.7.min.js"></script>
-    <script type="text/javascript" src="../js/agenda.js"></script>
+    <script type="text/javascript" src="../js/r_lugar.js"></script>
     <script type="text/javascript" src="../js/lenguaje.js"></script>
-	
+
     <script type="text/javascript">
         if (!navigator.userAgent.toLowerCase().match('chrome') or !navigator.userAgent.toLowerCase().match('firefox')) {
                 document.write("<script type='text/javascript' src='cordova.js'><\/script>");
@@ -25,7 +25,7 @@
 </head>
 <body>
 
-<div data-role="page" id="page_agenda_query" data-theme="c">
+<div data-role="page" id="page_r_lugar_evento" data-theme="c">
     <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
         <ul data-role="listview">
             <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
@@ -36,42 +36,21 @@
     </div>
 
     <div data-role="header" data-position="fixed">
-        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-rel="back" href="../index.html" >Only Icon</a>
+        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-ajax="false" data-rel="back" href="#" >Only Icon</a>
         <div id="custom-border-radius" class="ui-btn-right">
-			<a href="g_agenda_cu.html" data-ajax="false" id="btn_r_espacio"
-        		class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext">Only Icon</a>
-        	<a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop"
-        		class="ui-btn ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-notext">Only Icon</a>
-        	<a href="g_agenda_cu.html" data-ajax="false" id="btn_edit_agenda"
-        		class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext">Only Icon</a>
-            <a id="btn_popup_server" href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
+            <a href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
                 data-display="overlay">Only Icon</a>
         </div>
         <span class="ui-title" ></span>
     </div>
-    <div data-role="content" >
-		<div id="agenda_content">
-			
-		</div>
+    <div data-role="content">
+		<form class="ui-filterable">
+			<input id="autocomplete-input" data-type="search" placeholder="Buscar Lugares">
+		</form>
+		<ul id="listLugaresAdd" data-role="listview" data-filter="true"
+			data-input="#autocomplete-input" data-theme="a" data-inset="true">
 		
-		<div data-role="collapsible" data-theme="a" data-content-theme="a">
-		<h4>Lugares</h4>
-		<ul id="espacio1" data-role="listview" data-split-icon="location" data-split-theme="a">
 		</ul>
-		</div>
-		
-		<div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
-			<div data-role="header" data-theme="a">
-				<h1>Eliminar agenda</h1>
-			</div>
-			<div role="main" class="ui-content">
-				<h3 class="ui-title">Esta seguro de eliminar la agenda?</h3>
-				<p>Esta accion no se puede deshacer.</p>
-				<a href="#" id="btn_delete_agenda" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-ajax="false" data-transition="flow">Eliminar</a>
-				<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancelar</a>
-			</div>
-		</div>
-		
     </div>
 </div>
 </body>

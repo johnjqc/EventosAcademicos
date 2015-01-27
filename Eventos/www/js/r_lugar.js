@@ -1,7 +1,7 @@
 var mainloaded = false;
 var text_ip = '';
 var text_puerto = '';
-var activeAsistente;
+var activeLugar;
 var activeEvent;
 var usu_perfil;
 
@@ -14,11 +14,9 @@ $(function() {
 	});
 });
 
-
-
 $(document).on('pageinit','#page_asistentes',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
-	window.localStorage.setItem('activeAsistente', -1);
+	window.localStorage.setItem('activeLugar', -1);
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_asistentes.php?jsoncallback=?";
 	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
@@ -52,7 +50,7 @@ $(document).on('pageinit','#page_asistentes',function(e){
                 div_output.append(output);
                 div_output.listview("refresh");
 				$('#asistente' + (item.idUsuario)).bind('tap', function(e) {
-                	window.localStorage.setItem('activeAsistente', item.idUsuario);
+                	window.localStorage.setItem('activeLugar', item.idUsuario);
                 });
             });
         },
@@ -70,104 +68,19 @@ $(document).on('pageinit','#page_asistentes',function(e){
     });
 });
 
-$(document).on('pageinit','#page_asistentes_query',function(e){
-	activeAsistente = localStorage.getItem('activeAsistente');
+$(document).on('pageinit','#page_r_lugar_evento',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
+	activeLugar = localStorage.getItem('activeLugar');
 	
 	getIpPortserver();
-	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_asistentes.php?jsoncallback=?";
-	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
-	var output = "";
-	var div_output= $('#listAsistente');
-	
-    $.ajax({
-        url: archivoValidacion,
-        data: {
-            'accion': 'query_asistente', usuario: activeAsistente
-        },
-        dataType: 'jsonp',
-        jsonp: 'jsoncallback',
-        timeout: 6000,
-        success: function(data, status){
-        	$('#listAsistente').empty();
-        	
-            $.each(data, function(i,item){
-            	output = '<li id="asistente' + item.idUsuario + '">';
-            	output += '<img src="' + httpImagen + item.usu_imagen + '">';
-        		output += '<h2>' + item.usu_nombre + ' ' + item.usu_apellido + '</h2>';
-    			output += '<p>' + item.usu_email + '</p>';
-				output += '</li>';
-				
-                div_output.append(output);
-                div_output.listview("refresh");
-				
-				if (!$.isEmptyObject(item.usu_nacionalidad)) {
-					$('#nacionalidad').html("<B>Nacionalidad:</B> " + item.usu_nacionalidad);
-					$('#nacionalidad').load();
-				}
-				
-				$('#bio').html("<B>BIO</B>: <br /><br />" + item.usu_bio);
-				$('#bio').load();
-            });
-        },
-        beforeSend: function(){
-            showLoading();
-        },
-        complete: function(){
-            $.mobile.loading( "hide" );
-        },
-        error: function(){
-        	$('#listAsistente').empty();
-			$('#listAsistente').listview("refresh");
-            $.mobile.loading( "hide" );
-            alert('Error conectando al servidor.');
-        }
-    });
-    
-    $('#btn_delete_asistente').bind('tap', function(e) {
-    	$.ajax({
-            url: archivoValidacion,
-            data: {
-                'accion': 'delete_asistente', idUsuario: activeAsistente, idEvento: activeEvent
-            },
-            dataType: 'jsonp',
-            jsonp: 'jsoncallback',
-            timeout: 6000,
-            success: function(data, status){
-            	if(typeof data.error === 'undefined') {
-            		alert("Asistente eliminado exitosamente");
-                	window.location = "asistentes.html";
-            	} else {
-                    console.log('ERRORS: ' + data.error);
-                }
-           },
-            beforeSend: function(){
-                showLoading();
-            },
-            complete: function(){
-                $.mobile.loading( "hide" );
-            },
-            error: function(){
-                $.mobile.loading( "hide" );
-                alert('Error conectando al servidor.');
-            }
-       });
-    });
-});
-
-$(document).on('pageinit','#page_asistentes_new',function(e){
-	activeEvent = window.localStorage.getItem('activeEvent');
-	activeAsistente = localStorage.getItem('activeAsistente');
-	
-	getIpPortserver();
-	var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_asistentes.php?jsoncallback=?";
+	var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_lugar.php?jsoncallback=?";
     var output = "";
-    var div_output= $('#listAsistentesAdd');
+    var div_output= $('#listLugaresAdd');
 
     $.ajax({
         url: urlServer,
         data: {
-            'accion': 'query_asistentes_to_add', 'evento': activeEvent
+            'accion': 'query_lugar_to_add', 'idEvento': activeEvent
         },
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
@@ -176,12 +89,12 @@ $(document).on('pageinit','#page_asistentes_new',function(e){
         	div_output.empty();
         	
             $.each(data, function(i,item){
-            	output = '<li id="asistente' + item.idUsuario + '" data-icon="plus"><a href="#">';
-        		output += '' + item.usu_nombre + ' ' + item.usu_apellido + '</a>';
+            	output = '<li id="asistente' + item.idLugar + '" data-icon="plus"><a href="#">';
+        		output += '' + item.lug_nombre + '</a>';
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
-				$('#asistente' + (item.idUsuario)).bind('tap', function(e) {
+				$('#asistente' + (item.idLugar)).bind('tap', function(e) {
 					$.ajax({
 						url: urlServer,
 						type: 'POST',
@@ -214,10 +127,10 @@ $(document).on('pageinit','#page_asistentes_new',function(e){
         complete: function(){
             $.mobile.loading( "hide" );
         },
-        error: function(){
+        error: function(jqXHR, textStatus, errorThrown){
         	div_output.empty();
             $.mobile.loading( "hide" );
-            alert('Error conectando al servidor.');
+            alert('Error conectando al servidor. ' + jqXHR.responseText);
         }
     });
 });
