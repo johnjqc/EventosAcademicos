@@ -44,22 +44,22 @@ $(document).on('pageinit','#page_r_espacio_agenda',function(e){
         	div_output.empty();
         	
             $.each(data, function(i,item){
-            	output = '<li id="asistente' + item.idUsuario + '" data-icon="plus"><a href="#">';
-        		output += '' + item.usu_nombre + ' ' + item.usu_apellido + '</a>';
+            	output = '<li id="r_espacio' + item.idEspacio + '" data-icon="plus"><a href="#">';
+        		output += '' + item.esp_nombre + '</a>';
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
-				$('#asistente' + (item.idUsuario)).bind('tap', function(e) {
+				$('#r_espacio' + (item.idUsuario)).bind('tap', function(e) {
 					$.ajax({
 						url: urlServer,
 						type: 'POST',
-						data: {'accion': 'new_asistente', idEvento: activeEvent, idUsuario: item.idUsuario},
+						data: {'accion': 'new_espacio_agenda', idEvento: activeEvent, idEspacio: item.idESpacio, isAgenda: activeAgenda},
 						cache: false,
 						dataType: 'jsonp',
 						jsonp: 'jsoncallback',
 						success: function(data, textStatus, jqXHR) {
 							if(typeof data.error === 'undefined') {
-								alert("Usuario agregado exitosamente");
+								alert("Espacio agregado exitosamente");
 								window.location = "asistentes_cu.html";
 							} else {
 								console.log('ERRORS: ' + data.error);
@@ -101,13 +101,13 @@ $(document).on('pageinit','#page_agenda',function(e) {
     var div_output= $('#listagenda');
     
     var weekday = new Array(7);
-    weekday[0]=  "Domingo";
-    weekday[1] = "Lunes";
-    weekday[2] = "Martes";
-    weekday[3] = "Miercoles";
-    weekday[4] = "Jueves";
-    weekday[5] = "Viernes";
-    weekday[6] = "Sabado";
+    weekday[6]=  "Domingo";
+    weekday[0] = "Lunes";
+    weekday[1] = "Martes";
+    weekday[2] = "Miercoles";
+    weekday[3] = "Jueves";
+    weekday[4] = "Viernes";
+    weekday[5] = "Sabado";
 
     var month = new Array();
     month[0] = "Enero";
@@ -237,21 +237,84 @@ $(document).on('pageinit','#page_agenda_query',function(e){
 					output += '</div>';
 				}
 				output += '<div class="card-separator"></div>';
-				//output += '<span class="ui-btn-c ui-btn-icon-notext ui-icon-location" style="position:relative;padding-left:2em;" />  <b>Lugares</b>';
             });
 			div_output.append(output);
 			
-			output = '<li><a href="index.html">';
-			output += '<img src="../_assets/img/album-bb.jpg">';
-			output += '<h3>Broken Bells</h3>';
-			output += '</a><a href="index.html" data-rel="dialog" data-transition="slideup">Purchase album</a>';
-			output += '</li>';
+			var list_output= $('#list_espacios');
+
+		    $.ajax({
+		        url: archivoValidacion,
+		        data: {
+		            'accion': 'query_r_espacios', 'idEvento': activeEvent
+		        },
+		        dataType: 'jsonp',
+		        jsonp: 'jsoncallback',
+		        timeout: 6000,
+		        success: function(data, status){
+		        	list_output.empty();
+		        	
+		            if ($.isEmptyObject(data)) {
+		            	output = '<p> No se encontraron espacios relacionados</p>';
+		                list_output.append(output);
+		                list_output.load();
+		            }
+		            $.each(data, function(i,item){
+		            	output = '<li id="r_espacio' + item.idEspacio + '"><a data-ajax="false" href="g_espacio_q.html">';
+//		            	output += '<img src="' + httpImagen + item.usu_imagen + '">';
+		        		output += '<h2>' + item.esp_nombre + '</h2></a>';
+		    			output += '<a id="delete_r_espacio' + item.idESpacio + '" href="#" >Elimina Relacion</a>';
+						output += '</li>';
+						list_output.append(output);
+						list_output.listview("refresh");
+						$('#r_espacio' + (item.idLugar)).bind('tap', function(e) {
+		                	window.localStorage.setItem('activeEspacio', item.idEspacio);
+		                });
+						$('#delete_r_espacio' + (item.idEspacio)).bind('tap', function(e) {
+							$.ajax({
+						        url: archivoValidacion,
+						        data: {
+						            accion: 'delete_r_espacio', idEvento: activeEvent, idEspacio: item.idLugar
+						        },
+						        dataType: 'jsonp',
+						        jsonp: 'jsoncallback',
+						        timeout: 6000,
+						        success: function(data, status){
+						        	alert("Se elimino relacion de espacio con agenda exitosamente");
+						        	location.reload();
+						        },
+						        beforeSend: function(){
+						            showLoading();
+						        },
+						        complete: function(){
+						            $.mobile.loading( "hide" );
+						        },
+						        error: function(jqXHR, textStatus, errorThrown){
+						        	console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
+						        	div_output.empty();
+						            $.mobile.loading( "hide" );
+						            alert('Error conectando al servidor.');
+						        }
+						    });
+		                });
+		            });
+		        },
+		        beforeSend: function(){
+		            showLoading();
+		        },
+		        complete: function(){
+		            $.mobile.loading( "hide" );
+		        },
+		        error: function(jqXHR, textStatus, errorThrown){
+		        	console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
+		        	list_output.empty();
+		            $.mobile.loading( "hide" );
+		            alert('Error conectando al servidor.');
+		        }
+		    });
 			
-			$("#espacio1").append(output);
-			
-			
+//			$("#list_espacios").append(output);
 			div_output.load();
-			$("#espacio1").listview("refresh");
+//			$("#list_espacios").listview("refresh");
         },
         beforeSend: function(){
             showLoading();

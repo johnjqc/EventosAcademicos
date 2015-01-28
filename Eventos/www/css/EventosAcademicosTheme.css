@@ -1057,9 +1057,9 @@ html body .ui-group-theme-f .ui-bar-inherit {
 .ui-page-theme-f,
 .ui-page-theme-f .ui-panel-wrapper {
 	background-color: #f9f9f9 /*{f-page-background-color}*/;
-	border-color: #bbbbbb /*{f-page-border}*/;
-	color: #333333 /*{f-page-color}*/;
-	text-shadow: 0 /*{f-page-shadow-x}*/ 1px /*{f-page-shadow-y}*/ 0 /*{f-page-shadow-radius}*/ #f3f3f3 /*{f-page-shadow-color}*/;
+	border-color: #ededed /*{f-page-border}*/;
+	color: #000000 /*{f-page-color}*/;
+	text-shadow: 0 /*{f-page-shadow-x}*/ 1px /*{f-page-shadow-y}*/ 0 /*{f-page-shadow-radius}*/ #eeeeee /*{f-page-shadow-color}*/;
 }
 /* Body: Read-only lists, text inputs, collapsible content */
 .ui-body-f,
@@ -1068,10 +1068,10 @@ html .ui-bar-f .ui-body-inherit,
 html .ui-body-f .ui-body-inherit,
 html body .ui-group-theme-f .ui-body-inherit,
 html .ui-panel-page-container-f {
-	background-color: #ffffff /*{f-body-background-color}*/;
-	border-color: #dddddd /*{f-body-border}*/;
-	color: #333333 /*{f-body-color}*/;
-	text-shadow: 0 /*{f-body-shadow-x}*/ 1px /*{f-body-shadow-y}*/ 0 /*{f-body-shadow-radius}*/ #f3f3f3 /*{f-body-shadow-color}*/;
+	background-color: #757575 /*{f-body-background-color}*/;
+	border-color: #707070 /*{f-body-border}*/;
+	color: #eeeeee /*{f-body-color}*/;
+	text-shadow: 0 /*{f-body-shadow-x}*/ 1px /*{f-body-shadow-y}*/ 0 /*{f-body-shadow-radius}*/ #eeeeee /*{f-body-shadow-color}*/;
 }
 .ui-body-f {
 	border-width: 1px;

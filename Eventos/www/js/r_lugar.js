@@ -1,4 +1,3 @@
-var mainloaded = false;
 var text_ip = '';
 var text_puerto = '';
 var activeLugar;
@@ -14,19 +13,19 @@ $(function() {
 	});
 });
 
-$(document).on('pageinit','#page_asistentes',function(e){
+$(document).on('pageinit','#page_r_lugar',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
 	window.localStorage.setItem('activeLugar', -1);
 	getIpPortserver();
-	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_asistentes.php?jsoncallback=?";
+	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_lugar.php?jsoncallback=?";
 	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
     var output = "";
-    var div_output= $('#listAsistentes');
+    var div_output= $('#list_lugares');
 
     $.ajax({
         url: archivoValidacion,
         data: {
-            'accion': 'query_asistentes', 'evento': activeEvent
+            'accion': 'query_r_lugares', 'idEvento': activeEvent
         },
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
@@ -42,15 +41,42 @@ $(document).on('pageinit','#page_asistentes',function(e){
                 div_output.load();
             }
             $.each(data, function(i,item){
-            	output = '<li id="asistente' + item.idUsuario + '"><a href="asistentes_q.html">';
-            	output += '<img src="' + httpImagen + item.usu_imagen + '">';
-        		output += '<h2>' + item.usu_nombre + ' ' + item.usu_apellido + '</h2>';
-    			output += '<p>' + item.usu_email + '</p></a>';
+            	output = '<li id="r_lugar' + item.idLugar + '"><a data-ajax="false" href="g_lugar_q.html">';
+//            	output += '<img src="' + httpImagen + item.usu_imagen + '">';
+        		output += '<h2>' + item.lug_nombre + '</h2></a>';
+    			output += '<a id="delete_r_lugar' + item.idLugar + '" href="#" >Elimina Relacion</a>';
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
-				$('#asistente' + (item.idUsuario)).bind('tap', function(e) {
-                	window.localStorage.setItem('activeLugar', item.idUsuario);
+				$('#r_lugar' + (item.idLugar)).bind('tap', function(e) {
+                	window.localStorage.setItem('activeLugar', item.idLugar);
+                });
+				$('#delete_r_lugar' + (item.idLugar)).bind('tap', function(e) {
+					$.ajax({
+				        url: archivoValidacion,
+				        data: {
+				            accion: 'delete_r_lugar', idEvento: activeEvent, idLugar: item.idLugar
+				        },
+				        dataType: 'jsonp',
+				        jsonp: 'jsoncallback',
+				        timeout: 6000,
+				        success: function(data, status){
+				        	alert("Se elimino relacion de lugar con evento exitosamente");
+				        	location.reload();
+				        },
+				        beforeSend: function(){
+				            showLoading();
+				        },
+				        complete: function(){
+				            $.mobile.loading( "hide" );
+				        },
+				        error: function(jqXHR, textStatus, errorThrown){
+				        	console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
+				        	div_output.empty();
+				            $.mobile.loading( "hide" );
+				            alert('Error conectando al servidor.');
+				        }
+				    });
                 });
             });
         },
@@ -60,7 +86,8 @@ $(document).on('pageinit','#page_asistentes',function(e){
         complete: function(){
             $.mobile.loading( "hide" );
         },
-        error: function(){
+        error: function(jqXHR, textStatus, errorThrown){
+        	console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
         	div_output.empty();
             $.mobile.loading( "hide" );
             alert('Error conectando al servidor.');
@@ -98,14 +125,14 @@ $(document).on('pageinit','#page_r_lugar_evento',function(e){
 					$.ajax({
 						url: urlServer,
 						type: 'POST',
-						data: {'accion': 'new_asistente', idEvento: activeEvent, idUsuario: item.idUsuario},
+						data: {'accion': 'new_lugar_evento', idEvento: activeEvent, idLugar: item.idLugar},
 						cache: false,
 						dataType: 'jsonp',
 						jsonp: 'jsoncallback',
 						success: function(data, textStatus, jqXHR) {
 							if(typeof data.error === 'undefined') {
 								alert("Usuario agregado exitosamente");
-								window.location = "asistentes_cu.html";
+								window.history.back();
 							} else {
 								console.log('ERRORS: ' + data.error);
 							}
