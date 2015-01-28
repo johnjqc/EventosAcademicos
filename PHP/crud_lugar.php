@@ -58,6 +58,19 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
+		if ($accion == "query_lugar_to_add") {
+			$rows = array();
+			$idEvento = $_GET['idEvento'];
+			$sth = mysql_query("SELECT * FROM lugar a where a.idLugar not in (select lugar_idLugar from lugar_has_evento where evento_idEvento = '$idEvento')") or $rows["error"] =mysql_error();
+			
+			while($r = mysql_fetch_assoc($sth)) {
+				$rows[] = $r;
+			}
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
 		if(isset($_GET['files'])) {  
 			$error = false;
 			$files = array();

@@ -39,6 +39,35 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
+		if ($accion == "query_r_comites") {
+			$rows = array();
+			$idEvento = $_GET['idEvento'];
+			$sth = mysql_query("SELECT * FROM comite a 
+				join comite_has_evento b on a.idComite = b.comite_idComite
+				join evento c on c.idEvento = b.evento_idEvento
+				WHERE c.idEvento = $idEvento") or $rows["error"] =mysql_error();
+			
+			while($r = mysql_fetch_assoc($sth)) {
+				$rows[] = $r;
+			}
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "query_comite_to_add") {
+			$rows = array();
+			$idEvento = $_GET['idEvento'];
+			$sth = mysql_query("SELECT * FROM comite a where a.idComite not in (select comite_idComite from comite_has_evento where evento_idEvento = '$idEvento')") or $rows["error"] =mysql_error();
+			
+			while($r = mysql_fetch_assoc($sth)) {
+				$rows[] = $r;
+			}
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
 		if ($accion == "new_comite") {
 			$rows = array();
 			$evento = $_REQUEST['evento'];
@@ -53,6 +82,19 @@
 				VALUES ('$t_nombre', '$t_descripcion') ") or $rows["error"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "new_comite_evento") {
+			$rows = array();
+			
+			$idEvento = $_REQUEST['idEvento'];
+			$idComite = $_REQUEST['idComite'];
+			
+			$res = mysql_query("INSERT INTO comite_has_evento ( comite_idComite, evento_idEvento)
+				VALUES ('$idComite', '$idEvento') ") or $rows["error"] =mysql_error();
 			
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
@@ -78,6 +120,19 @@
 			$comiteId = $_REQUEST['id']; 
 			
 			$res = mysql_query("DELETE FROM comite WHERE idComite=$comiteId") or $rows["error"] =mysql_error();
+
+			$rows["respuesta"] = "ok";
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "delete_r_comite") {
+			$rows = array();
+			$idComite = $_REQUEST['idComite'];
+			$idEvento = $_REQUEST['idEvento'];
+			
+			$res = mysql_query("DELETE FROM comite_has_evento WHERE comite_idComite='$idComite' and evento_idEvento='$idEvento'") or $rows["error"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
 			

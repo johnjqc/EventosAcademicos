@@ -35,7 +35,7 @@ $(document).on('pageinit','#page_r_espacio_agenda',function(e){
     $.ajax({
         url: urlServer,
         data: {
-            'accion': 'query_espacios_to_add', 'evento': activeEvent
+            'accion': 'query_espacios_to_add', 'idEvento': activeEvent, idAgenda: activeAgenda
         },
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
@@ -49,18 +49,18 @@ $(document).on('pageinit','#page_r_espacio_agenda',function(e){
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
-				$('#r_espacio' + (item.idUsuario)).bind('tap', function(e) {
+				$('#r_espacio' + (item.idEspacio)).bind('tap', function(e) {
 					$.ajax({
 						url: urlServer,
 						type: 'POST',
-						data: {'accion': 'new_espacio_agenda', idEvento: activeEvent, idEspacio: item.idESpacio, isAgenda: activeAgenda},
+						data: {'accion': 'new_espacio_agenda', idEvento: activeEvent, idEspacio: item.idEspacio, idAgenda: activeAgenda},
 						cache: false,
 						dataType: 'jsonp',
 						jsonp: 'jsoncallback',
 						success: function(data, textStatus, jqXHR) {
 							if(typeof data.error === 'undefined') {
 								alert("Espacio agregado exitosamente");
-								window.location = "asistentes_cu.html";
+								location.reload();
 							} else {
 								console.log('ERRORS: ' + data.error);
 							}
@@ -209,6 +209,8 @@ $(document).on('pageinit','#page_agenda',function(e) {
 
 $(document).on('pageinit','#page_agenda_query',function(e){
 	activeAgenda = localStorage.getItem('activeAgenda');
+	activeEvent = localStorage.getItem('activeEvent');
+	
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_agenda.php?jsoncallback=?";
 	var div_output = $('#agenda_content');
@@ -262,18 +264,18 @@ $(document).on('pageinit','#page_agenda_query',function(e){
 		            	output = '<li id="r_espacio' + item.idEspacio + '"><a data-ajax="false" href="g_espacio_q.html">';
 //		            	output += '<img src="' + httpImagen + item.usu_imagen + '">';
 		        		output += '<h2>' + item.esp_nombre + '</h2></a>';
-		    			output += '<a id="delete_r_espacio' + item.idESpacio + '" href="#" >Elimina Relacion</a>';
+		    			output += '<a id="delete_r_espacio' + item.idEspacio + '" href="#" >Elimina Relacion</a>';
 						output += '</li>';
 						list_output.append(output);
 						list_output.listview("refresh");
-						$('#r_espacio' + (item.idLugar)).bind('tap', function(e) {
+						$('#r_espacio' + (item.idEspacio)).bind('tap', function(e) {
 		                	window.localStorage.setItem('activeEspacio', item.idEspacio);
 		                });
 						$('#delete_r_espacio' + (item.idEspacio)).bind('tap', function(e) {
 							$.ajax({
 						        url: archivoValidacion,
 						        data: {
-						            accion: 'delete_r_espacio', idEvento: activeEvent, idEspacio: item.idLugar
+						            accion: 'delete_r_espacio', idEvento: activeEvent, idEspacio: item.idEspacio, idAgenda: activeAgenda
 						        },
 						        dataType: 'jsonp',
 						        jsonp: 'jsoncallback',

@@ -43,6 +43,7 @@
 		
 		if ($accion == "query_r_espacios" ) {
 			$idEvento = $_GET['idEvento'];
+			
 			$sth = mysql_query("SELECT * FROM espacio a 
 				join espacio_has_agenda b on a.idEspacio = b.espacio_idEspacio
 				join evento c on c.idEvento = b.agenda_evento_idEvento
@@ -58,7 +59,18 @@
 		if ($accion == "query_espacios_to_add") {
 			$rows = array();
 			$idAgenda = $_GET['idAgenda'];
-			$sth = mysql_query("SELECT * FROM espacio a where a.idEspacio not in (select espacio_idEspacio from espacio_has_agenda where agenda_idAgenda = '$idAgenda')") or $rows["error"] =mysql_error();
+			$idEvento = $_GET['idEvento'];
+			
+			$sth = mysql_query("select * from (
+				select * from espacio where lugar_idLugar in (
+							SELECT idLugar FROM lugar a 
+							join lugar_has_evento b on a.idLugar = b.lugar_idLugar
+							join evento c on c.idEvento = b.evento_idEvento
+							WHERE c.idEvento = '$idEvento'
+						)
+				) espacios where idEspacio not in (
+				select espacio_idEspacio from espacio_has_agenda where agenda_idAgenda= '$idAgenda' and agenda_evento_idEvento= '$idEvento'
+				)") or $rows["error"] =mysql_error();
 			
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
@@ -88,6 +100,19 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
+		if ($accion == "new_espacio_agenda") {
+			$rows = array();
+			
+			$idAgenda = $_GET['idAgenda'];
+			$idEspacio = $_GET['idEspacio'];
+			$idEvento = $_REQUEST['idEvento'];
+			
+			$res = mysql_query("INSERT INTO espacio_has_agenda (espacio_idEspacio, agenda_idAgenda, agenda_evento_idEvento) VALUES ('$idEspacio','$idAgenda', '$idEvento') ") or $rows["error"] =mysql_error();
+
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
 		if ($accion == "update_agenda") {
 			$rows = array();
 			
@@ -109,6 +134,18 @@
 			$agendaId = $_REQUEST['id']; 
 			
 			$res = mysql_query("DELETE FROM agenda WHERE idAgenda=$agendaId") or $rows["error"] =mysql_error();
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "delete_r_espacio") {
+			$rows = array();
+			$idAgenda = $_REQUEST['idAgenda']; 
+			$idEspacio = $_REQUEST['idEspacio']; 
+			$idEvento = $_REQUEST['idEvento']; 
+			
+			$res = mysql_query("DELETE FROM espacio_has_agenda WHERE espacio_idEspacio='$idEspacio' and agenda_idAgenda='$idAgenda' and agenda_evento_idEvento = '$idEvento'") or $rows["error"] =mysql_error();
 			
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';

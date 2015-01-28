@@ -51,10 +51,10 @@ $(document).on('pageinit','#pageEvento',function(e){
 		window.location = "g_agenda.html";
     });
 	$("#btnCommittee").bind( "tap", function(e) {
-		window.location = "comite.html";
+		window.location = "r_comite.html";
 	});
 	$("#btnSponsor").bind( "tap", function(e) {
-		window.location = "patrocinador.html";
+		window.location = "r_patrocinador.html";
 	});
 	$("#btnPlaces").bind( "tap", function(e) {
 		window.location = "r_lugar.html";
@@ -66,7 +66,7 @@ $(document).on('pageinit','#pageEvento',function(e){
 		
 	});
 	$("#btnPoll").bind( "tap", function(e) {
-		
+		window.location = "r_encuesta.html";
 	});
 	$("#btnGallery").bind( "tap", function(e) {
 		window.location = "g_galeria.html";
