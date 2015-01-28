@@ -42,10 +42,13 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
-		if ($accion == "query_lugar_to_add") {
+		if ($accion == "query_r_lugares") {
 			$rows = array();
 			$idEvento = $_GET['idEvento'];
-			$sth = mysql_query("SELECT * FROM lugar a where a.idLugar not in (select lugar_idLugar from lugar_has_evento where evento_idEvento = '$idEvento')") or $rows["error"] =mysql_error();
+			$sth = mysql_query("SELECT * FROM lugar a 
+				join lugar_has_evento b on a.idLugar = b.lugar_idLugar
+				join evento c on c.idEvento = b.evento_idEvento
+				WHERE c.idEvento = $idEvento") or $rows["error"] =mysql_error();
 			
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
@@ -120,6 +123,19 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
+		if ($accion == "new_lugar_evento") {
+			$rows = array();
+			
+			$idEvento = $_REQUEST['idEvento'];
+			$idLugar = $_REQUEST['idLugar'];
+			
+			$res = mysql_query("INSERT INTO lugar_has_evento ( lugar_idLugar, evento_idEvento)
+				VALUES ('$idLugar', '$idEvento') ") or $rows["error"] =mysql_error();
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
 		if ($accion == "update_lugar") {
 			$rows = array();
 			
@@ -150,6 +166,19 @@
 			$idLugar = $_REQUEST['idLugar'];
 			
 			$res = mysql_query("DELETE FROM lugar WHERE idLugar='$idLugar'") or $rows["error"] =mysql_error();
+
+			$rows["respuesta"] = "ok";
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "delete_r_lugar") {
+			$rows = array();
+			$idLugar = $_REQUEST['idLugar'];
+			$idEvento = $_REQUEST['idEvento'];
+			
+			$res = mysql_query("DELETE FROM lugar_has_evento WHERE lugar_idLugar='$idLugar' and evento_idEvento='$idEvento'") or $rows["error"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
 			

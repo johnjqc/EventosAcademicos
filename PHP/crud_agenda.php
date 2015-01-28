@@ -20,7 +20,7 @@
 			$sth = mysql_query("SELECT a.*, c.* from agenda a
 								left join  espacio_has_agenda b on a.idAgenda = b.agenda_idAgenda
 								left join  espacio c on b.espacio_idEspacio = c.idEspacio
-								WHERE evento_idEvento= $idEvento order by a.age_fecha");
+								WHERE evento_idEvento= $idEvento order by a.age_fecha DESC");
 			$rows = array();
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
@@ -37,6 +37,33 @@
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
 			}
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "query_r_espacios" ) {
+			$idEvento = $_GET['idEvento'];
+			$sth = mysql_query("SELECT * FROM espacio a 
+				join espacio_has_agenda b on a.idEspacio = b.espacio_idEspacio
+				join evento c on c.idEvento = b.agenda_evento_idEvento
+				WHERE c.idEvento = '$idEvento'")or $rows["error"] =mysql_error();
+			$rows = array();
+			while($r = mysql_fetch_assoc($sth)) {
+				$rows[] = $r;
+			}
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "query_espacios_to_add") {
+			$rows = array();
+			$idAgenda = $_GET['idAgenda'];
+			$sth = mysql_query("SELECT * FROM espacio a where a.idEspacio not in (select espacio_idEspacio from espacio_has_agenda where agenda_idAgenda = '$idAgenda')") or $rows["error"] =mysql_error();
+			
+			while($r = mysql_fetch_assoc($sth)) {
+				$rows[] = $r;
+			}
+			
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
