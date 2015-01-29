@@ -16,10 +16,9 @@
 			$txtLastName = $_REQUEST['txt-last-name'];
 			$txtEmail = $_REQUEST['txt-email'];
 			$txtPassword = $_REQUEST['txt-password'];
+			$perfil = $_REQUEST['perfil'];
 			
-			$res = mysql_query(" INSERT INTO usuario (usu_nombre, usu_apellido, usu_email , usu_contrasena, usu_tipo , usu_perfil , usu_estado )  values ( '".$txtFirstName."', '".$txtLastName."', '".$txtEmail."', '".$txtPassword."','1','1','1')") or $rows["error"] =mysql_error(); 
-			
-			$rows["respuesta"] = "ok";
+			$res = mysql_query(" INSERT INTO usuario (usu_nombre, usu_apellido, usu_email , usu_contrasena, usu_perfil , usu_estado )  values ( '".$txtFirstName."', '".$txtLastName."', '".$txtEmail."', '".$txtPassword."','$perfil','1')") or $rows["error"] =mysql_error(); 
 			
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
@@ -36,7 +35,6 @@
 			}
 			
 			if (empty($rows)){
-			
 				$rows["error"] = "not user found";
 			}
 					

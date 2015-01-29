@@ -190,7 +190,7 @@ $(document).on('pageinit','#page_usuario_new',function(e){
 	        		$("#t_telefono").val(item.usu_telefono);
 	        		$("#t_contrasena").val(item.usu_contrasena);
 	        		$("#t_imagen").val(item.usu_imagen);
-	        		$("#t_perfil").val(item.usu_perfil);
+	        		$("#t_perfil").val(item.usu_perfil).selectmenu('refresh');;
 	        		$("#t_estado").val(item.usu_estado);
 	        		$("#t_institucion").val(item.usu_institucion);
 	        		$("#t_nivel_academico").val(item.usu_nivel_academico);

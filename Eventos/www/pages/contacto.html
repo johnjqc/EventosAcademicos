@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/EventosAcademicosTheme.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="../css/eventos.css" />
+
+    <!--<script type="text/javascript" src="js/cordova.js"></script>-->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="../js/i18next-1.7.7.min.js"></script>
+    <script type="text/javascript" src="../js/contacto.js"></script>
+    <script type="text/javascript" src="../js/lenguaje.js"></script>
+
+    <script type="text/javascript">
+        if (!navigator.userAgent.toLowerCase().match('chrome') or !navigator.userAgent.toLowerCase().match('firefox')) {
+                document.write("<script type='text/javascript' src='cordova.js'><\/script>");
+        }
+    </script>
+    <title>Eventos Academicos</title>
+</head>
+<body>
+
+<div data-role="page" id="page_contacto_new" data-theme="c">
+    <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
+        <ul data-role="listview">
+            <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
+            <li><a href="#">Gestion Usuarios</a></li>
+            <li><a href="#">Gestion ...</a></li>
+            <li><a href="#">Acerca de...</a></li>
+        </ul>
+    </div>
+
+    <div data-role="header" data-position="fixed">
+        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-ajax="false" data-rel="back" href="#" >Only Icon</a>
+        <div id="custom-border-radius" class="ui-btn-right">
+            <a href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
+                data-display="overlay">Only Icon</a>
+        </div>
+        <span class="ui-title" ></span>
+    </div>
+    <div data-role="content">
+		<form id="frm_new_contacto" class="ui-body ui-body-a ui-corner-all" data-ajax="false" enctype="multipart/form-data">
+            <label for="t_asunto">Asunto</label>
+            <input data-clear-btn="true" name="t_asunto" id="t_asunto" value="" type="text">
+
+            <label for="t_mensaje">Mensaje</label>
+            <textarea name="t_mensaje" id="t_mensaje" style="height:300px" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>
+            
+            <input type="submit" data-theme="b" name="submit" id="submit_new_contacto" value="Submit">
+        </form>
+    </div>
+</div>
+</body>
+</html>

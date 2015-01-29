@@ -38,6 +38,32 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
+		if ($accion == "query_r_publicaciones") {
+			$rows = array();
+			$idEvento = $_GET['idEvento'];
+			$sth = mysql_query("SELECT * FROM publicacion a WHERE a.evento_idEvento = $idEvento") or $rows["error"] =mysql_error();
+			
+			while($r = mysql_fetch_assoc($sth)) {
+				$rows[] = $r;
+			}
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "query_publicacion_to_add") {
+			$rows = array();
+			$idEvento = $_GET['idEvento'];
+			$sth = mysql_query("SELECT * FROM publicacion a where a.evento_idEvento = 0") or $rows["error"] =mysql_error();
+			
+			while($r = mysql_fetch_assoc($sth)) {
+				$rows[] = $r;
+			}
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
 		if(isset($_GET['files'])) {  
 			$error = false;
 			$files = array();
@@ -102,6 +128,18 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
+		if ($accion == "new_publicacion_evento") {
+			$rows = array();
+			
+			$idEvento = $_REQUEST['idEvento'];
+			$idPublicacion = $_REQUEST['idPublicacion'];
+			
+			$res = mysql_query("UPDATE publicacion SET evento_idEvento = '$idEvento' WHERE idPublicacion='$idPublicacion' ") or $rows["error"] =mysql_error();
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
 		if ($accion == "update_publicacion") {
 			$rows = array();
 			
@@ -130,6 +168,19 @@
 			$idPublicacion = $_REQUEST['idPublicacion'];
 			
 			$res = mysql_query("DELETE FROM publicacion WHERE idPublicacion='$idPublicacion'") or $rows["error"] =mysql_error();
+
+			$rows["respuesta"] = "ok";
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "delete_r_publicacion") {
+			$rows = array();
+			$idPublicacion = $_REQUEST['idPublicacion'];
+			$idEvento = $_REQUEST['idEvento'];
+			
+			$res = mysql_query("UPDATE publicacion SET evento_idEvento = '0' WHERE idPublicacion='$idPublicacion'") or $rows["error"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
 			

@@ -43,11 +43,11 @@
 		
 		if ($accion == "query_r_espacios" ) {
 			$idEvento = $_GET['idEvento'];
-			$idAgenda = $_GET['idAgenda'];
 			
 			$sth = mysql_query("SELECT * FROM espacio a 
 				join espacio_has_agenda b on a.idEspacio = b.espacio_idEspacio
-				and b.agenda_evento_idEvento = '$idEvento' and b.agenda_idAgenda = '$idAgenda'")or $rows["error"] =mysql_error();
+				join evento c on c.idEvento = b.agenda_evento_idEvento
+				WHERE c.idEvento = '$idEvento'")or $rows["error"] =mysql_error();
 			$rows = array();
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;

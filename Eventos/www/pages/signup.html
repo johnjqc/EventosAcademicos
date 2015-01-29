@@ -35,17 +35,28 @@
 		    <div role="main" class="ui-content">
 		        <h3>Registro de nuevo Usuario</h3>
 		        <form id="frmSignup">
-		        <label id="lblName" for="txt-first-name">Nombres</label>
-		        <input type="text" name="txt-first-name" id="txt-first-name" value="">
-		        <label id="lblLastName" for="txt-last-name">Apellidos</label>
-		        <input type="text" name="txt-last-name" id="txt-last-name" value="">
-		        <label id="lblEmail" for="txt-email">Email</label>
-		        <input type="email" name="txt-email" id="txt-email" value="">
-		        <label id="lblClave" for="txt-password">Clave</label>
-		        <input type="password" name="txt-password" id="txt-password" value="">
-		        <label id="lblConfirmClave" for="txt-password-confirm">Confirmar Clave</label>
-		        <input class="data-theme-e" type="password" name="txt-password-confirm" id="txt-password-confirm" value="">
+					<label id="lblName" for="txt-first-name">Nombres</label>
+					<input type="text" name="txt-first-name" id="txt-first-name" value="">
+					
+					<label id="lblLastName" for="txt-last-name">Apellidos</label>
+					<input type="text" name="txt-last-name" id="txt-last-name" value="">
+					
+					<label id="lblEmail" for="txt-email">Email</label>
+					<input type="email" name="txt-email" id="txt-email" value="">
+					
+					<label for="perfil" class="select">Perfil</label>
+					<select name="perfil" id="perfil">
+						<option value="1">ASISTENTE</option>
+						<option value="2">PONENTE</option>
+					</select>
+					
+					<label id="lblClave" for="txt-password">Clave</label>
+					<input type="password" name="txt-password" id="txt-password" value="">
+					
+					<label id="lblConfirmClave" for="txt-password-confirm">Confirmar Clave</label>
+					<input class="data-theme-e" type="password" name="txt-password-confirm" id="txt-password-confirm" value="">
 		        </form>
+				
 		        <a href="#dlg-sign-up-sent" data-transition="pop" data-position-to="window" id="btn-submit" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Enviar</a>
 		        <div data-role="popup" id="dlg-sign-up-sent" data-dismissible="false" style="max-width:400px;">
 		            <div data-role="header">

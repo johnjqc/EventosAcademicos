@@ -71,7 +71,15 @@ $(document).on('pageinit','#pageEvento',function(e){
 	$("#btnGallery").bind( "tap", function(e) {
 		window.location = "g_galeria.html";
 	});
-
+	$("#btnFiles").bind( "tap", function(e) {
+		window.location = "r_publicacion.html";
+	});
+	$("#btnInfo").bind( "tap", function(e) {
+		//window.location = "informacion.html";
+	});
+	$("#btnContac").bind( "tap", function(e) {
+		window.location = "contacto.html";
+	});
 });
 
 $(document).on('pageshow','#crud_evento',function(e){
@@ -159,7 +167,7 @@ $(document).on('pageinit','#signup',function(e){
     	    var accion = '&accion=signup';
     	    var formData = $("#frmSignup").serialize() + accion;
     	    var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/login.php?jsoncallback=?";
-
+			alert(urlServer);
     	    $.ajax({
     	        url: urlServer,
     	        type: 'POST',

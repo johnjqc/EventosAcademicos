@@ -37,35 +37,6 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
-		if ($accion == "query_r_patrocinadores") {
-			$rows = array();
-			$idEvento = $_GET['idEvento'];
-			$sth = mysql_query("SELECT * FROM patrocinador a 
-				join patrocinador_has_evento b on a.idPatrocinador = b.patrocinador_idPatrocinador
-				join evento c on c.idEvento = b.evento_idEvento
-				WHERE c.idEvento = $idEvento") or $rows["error"] =mysql_error();
-			
-			while($r = mysql_fetch_assoc($sth)) {
-				$rows[] = $r;
-			}
-			
-			$resultadosJson= json_encode($rows);
-			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
-		}
-		
-		if ($accion == "query_patrocinador_to_add") {
-			$rows = array();
-			$idEvento = $_GET['idEvento'];
-			$sth = mysql_query("SELECT * FROM patrocinador a where a.idPatrocinador not in (select patrocinador_idPatrocinador from patrocinador_has_evento where evento_idEvento = '$idEvento')") or $rows["error"] =mysql_error();
-			
-			while($r = mysql_fetch_assoc($sth)) {
-				$rows[] = $r;
-			}
-			
-			$resultadosJson= json_encode($rows);
-			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
-		}
-		
 		if(isset($_GET['files'])) {  
 			$error = false;
 			$files = array();
@@ -127,19 +98,6 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
-		if ($accion == "new_patrocinador_evento") {
-			$rows = array();
-			
-			$idEvento = $_REQUEST['idEvento'];
-			$idPatrocinador = $_REQUEST['idPatrocinador'];
-			
-			$res = mysql_query("INSERT INTO patrocinador_has_evento ( patrocinador_idPatrocinador, evento_idEvento)
-				VALUES ('$idPatrocinador', '$idEvento') ") or $rows["error"] =mysql_error();
-			
-			$resultadosJson= json_encode($rows);
-			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
-		}
-		
 		if ($accion == "update_patrocinador") {
 			$rows = array();
 			
@@ -171,19 +129,6 @@
 			$idPatrocinador = $_REQUEST['idPatrocinador'];
 			
 			$res = mysql_query("DELETE FROM patrocinador WHERE idPatrocinador='$idPatrocinador'") or $rows["error"] =mysql_error();
-
-			$rows["respuesta"] = "ok";
-			
-			$resultadosJson= json_encode($rows);
-			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
-		}
-		
-		if ($accion == "delete_r_patrocinador") {
-			$rows = array();
-			$idPatrocinador = $_REQUEST['idPatrocinador'];
-			$idEvento = $_REQUEST['idEvento'];
-			
-			$res = mysql_query("DELETE FROM patrocinador_has_evento WHERE patrocinador_idPatrocinador='$idPatrocinador' and evento_idEvento='$idEvento'") or $rows["error"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
 			
