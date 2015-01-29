@@ -104,7 +104,6 @@ $(document).on('pageinit','#page_espacio_query',function(e){
                 if (!$.isEmptyObject(item.esp_imagen)) {
                     output += '<div class="card-image">';
                     output += '<img alt="home" src="' + httpImagen + item.esp_imagen + '" />';
-                    
                     output += '</div>';
                     output += '<div class="card-separator"></div>';
                 }

@@ -42,8 +42,10 @@ $(document).on('pageinit','#page_r_lugar',function(e){
             }
             $.each(data, function(i,item){
             	output = '<li id="r_lugar' + item.idLugar + '"><a data-ajax="false" href="g_lugar_q.html">';
-//            	output += '<img src="' + httpImagen + item.usu_imagen + '">';
-        		output += '<h2>' + item.lug_nombre + '</h2></a>';
+            	if (!$.isEmptyObject(item.lug_imagen)) {
+            		output += '<img src="' + httpImagen + item.lug_imagen + '">';
+            	}
+            	output += '<h2>' + item.lug_nombre + '</h2></a>';
     			output += '<a id="delete_r_lugar' + item.idLugar + '" href="#" >Elimina Relacion</a>';
 				output += '</li>';
                 div_output.append(output);
@@ -101,6 +103,7 @@ $(document).on('pageinit','#page_r_lugar_evento',function(e){
 	
 	getIpPortserver();
 	var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_lugar.php?jsoncallback=?";
+	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
     var output = "";
     var div_output= $('#listLugaresAdd');
 
@@ -116,12 +119,15 @@ $(document).on('pageinit','#page_r_lugar_evento',function(e){
         	div_output.empty();
         	
             $.each(data, function(i,item){
-            	output = '<li id="asistente' + item.idLugar + '" data-icon="plus"><a href="#">';
+            	output = '<li id="lugar' + item.idLugar + '" data-icon="plus"><a href="#">';
+            	if (!$.isEmptyObject(item.lug_imagen)) {
+            		output += '<img src="' + httpImagen + item.lug_imagen + '">';
+            	}
         		output += '' + item.lug_nombre + '</a>';
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
-				$('#asistente' + (item.idLugar)).bind('tap', function(e) {
+				$('#lugar' + (item.idLugar)).bind('tap', function(e) {
 					$.ajax({
 						url: urlServer,
 						type: 'POST',

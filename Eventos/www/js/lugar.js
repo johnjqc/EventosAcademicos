@@ -8,7 +8,7 @@ var usu_perfil;
 var files;
 
 $(function() {
-	security();
+	security(); 
 	$(document).on("pagehide", "div[data-role=page]", function(event){
 		$(event.target).remove();
 	});
@@ -78,12 +78,17 @@ $(document).on('pageinit','#page_lugares',function(e){
 $(document).on('pageinit','#page_lugar_query',function(e){
 	activeLugar = localStorage.getItem('activeLugar');
 	activeEvent = window.localStorage.getItem('activeEvent');
-	
+//	$('#map_canvas').gmap({ 'center': '42.345573,-71.098326' });
+//	$('#map_canvas').gmap('option', 'zoom', 12);
+//	$('#map_canvas').gmap('addMarker', { /*id:'m_1',*/ 'position': '42.345573,-71.098326', 'bounds': false } );
+
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_lugar.php?jsoncallback=?";
 	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
 	var output = "";
 	var div_output= $('#lugar_content');
+	var latitud;
+    var longitud;
 	
     $.ajax({
         url: archivoValidacion,
@@ -110,6 +115,13 @@ $(document).on('pageinit','#page_lugar_query',function(e){
                 output += '</div>';
                 div_output.append(output);
                 div_output.load();
+                
+                if (!$.isEmptyObject(item.lug_latitud) && !$.isEmptyObject(item.lug_longitud)) {
+                	var location = new google.maps.LatLng(item.lug_latitud, item.lug_longitud);
+                    var mapOptions = { zoom: 16, mapTypeId: google.maps.MapTypeId.ROADMAP, center: location };
+                    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+                    var marker = new google.maps.Marker({map:map, animation: google.maps.Animation.DROP, position: location });
+                } 
             });
         },
         beforeSend: function(){
@@ -125,6 +137,9 @@ $(document).on('pageinit','#page_lugar_query',function(e){
             alert('Error conectando al servidor.');
         }
     });
+    
+    
+    
     
     $('#btn_delete_lugar').bind('tap', function(e) {
     	$.ajax({

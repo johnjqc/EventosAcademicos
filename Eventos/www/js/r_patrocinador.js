@@ -1,6 +1,6 @@
 var text_ip = '';
 var text_puerto = '';
-var activeLugar;
+var activePatrocinador;
 var activeEvent;
 var usu_perfil;
 
@@ -13,19 +13,19 @@ $(function() {
 	});
 });
 
-$(document).on('pageinit','#page_r_lugar',function(e){
+$(document).on('pageinit','#page_r_patrocinador',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
-	window.localStorage.setItem('activeLugar', -1);
+	window.localStorage.setItem('activePatrocinador', -1);
 	getIpPortserver();
-	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_lugar.php?jsoncallback=?";
+	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_patrocinador.php?jsoncallback=?";
 	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
     var output = "";
-    var div_output= $('#list_lugares');
+    var div_output= $('#list_patrocinadores');
 
     $.ajax({
         url: archivoValidacion,
         data: {
-            'accion': 'query_r_lugares', 'idEvento': activeEvent
+            'accion': 'query_r_patrocinadores', 'idEvento': activeEvent
         },
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
@@ -41,27 +41,30 @@ $(document).on('pageinit','#page_r_lugar',function(e){
                 div_output.load();
             }
             $.each(data, function(i,item){
-            	output = '<li id="r_lugar' + item.idLugar + '"><a data-ajax="false" href="g_lugar_q.html">';
+            	output = '<li id="r_patrocinador' + item.idPatrocinador + '"><a data-ajax="false" href="g_patrocinador_q.html">';
 //            	output += '<img src="' + httpImagen + item.usu_imagen + '">';
-        		output += '<h2>' + item.lug_nombre + '</h2></a>';
-    			output += '<a id="delete_r_lugar' + item.idLugar + '" href="#" >Elimina Relacion</a>';
+            	if (!$.isEmptyObject(item.pat_imagen)) {
+            		output += '<img src="' + httpImagen + item.pat_imagen + '">';
+            	}
+        		output += '<h2>' + item.pat_nombre + '</h2></a>';
+    			output += '<a id="delete_r_patrocinador' + item.idPatrocinador + '" href="#" >Elimina Relacion</a>';
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
-				$('#r_lugar' + (item.idLugar)).bind('tap', function(e) {
-                	window.localStorage.setItem('activeLugar', item.idLugar);
+				$('#r_patrocinador' + (item.idPatrocinador)).bind('tap', function(e) {
+                	window.localStorage.setItem('activePatrocinador', item.idPatrocinador);
                 });
-				$('#delete_r_lugar' + (item.idLugar)).bind('tap', function(e) {
+				$('#delete_r_patrocinador' + (item.idPatrocinador)).bind('tap', function(e) {
 					$.ajax({
 				        url: archivoValidacion,
 				        data: {
-				            accion: 'delete_r_lugar', idEvento: activeEvent, idLugar: item.idLugar
+				            accion: 'delete_r_patrocinador', idEvento: activeEvent, idPatrocinador: item.idPatrocinador
 				        },
 				        dataType: 'jsonp',
 				        jsonp: 'jsoncallback',
 				        timeout: 6000,
 				        success: function(data, status){
-				        	alert("Se elimino relacion de lugar con evento exitosamente");
+				        	alert("Se elimino relacion de patrocinador con evento exitosamente");
 				        	location.reload();
 				        },
 				        beforeSend: function(){
@@ -95,19 +98,20 @@ $(document).on('pageinit','#page_r_lugar',function(e){
     });
 });
 
-$(document).on('pageinit','#page_r_lugar_evento',function(e){
+$(document).on('pageinit','#page_r_patrocinador_evento',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
-	activeLugar = localStorage.getItem('activeLugar');
+	activePatrocinador = localStorage.getItem('activePatrocinador');
 	
 	getIpPortserver();
-	var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_lugar.php?jsoncallback=?";
+	var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_patrocinador.php?jsoncallback=?";
+	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
     var output = "";
-    var div_output= $('#listLugaresAdd');
+    var div_output= $('#listpatrocinadoresAdd');
 
     $.ajax({
         url: urlServer,
         data: {
-            'accion': 'query_lugar_to_add', 'idEvento': activeEvent
+            'accion': 'query_patrocinador_to_add', 'idEvento': activeEvent
         },
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
@@ -116,22 +120,25 @@ $(document).on('pageinit','#page_r_lugar_evento',function(e){
         	div_output.empty();
         	
             $.each(data, function(i,item){
-            	output = '<li id="asistente' + item.idLugar + '" data-icon="plus"><a href="#">';
-        		output += '' + item.lug_nombre + '</a>';
+            	output = '<li id="patrocinador' + item.idPatrocinador + '" data-icon="plus"><a href="#">';
+            	if (!$.isEmptyObject(item.pat_imagen)) {
+            		output += '<img src="' + httpImagen + item.pat_imagen + '">';
+            	}
+        		output += '' + item.pat_nombre + '</a>';
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
-				$('#asistente' + (item.idLugar)).bind('tap', function(e) {
+				$('#patrocinador' + (item.idPatrocinador)).bind('tap', function(e) {
 					$.ajax({
 						url: urlServer,
 						type: 'POST',
-						data: {'accion': 'new_lugar_evento', idEvento: activeEvent, idLugar: item.idLugar},
+						data: {'accion': 'new_patrocinador_evento', idEvento: activeEvent, idPatrocinador: item.idPatrocinador},
 						cache: false,
 						dataType: 'jsonp',
 						jsonp: 'jsoncallback',
 						success: function(data, textStatus, jqXHR) {
 							if(typeof data.error === 'undefined') {
-								alert("Usuario agregado exitosamente");
+								alert("Patrocinador agregado exitosamente");
 								window.history.back();
 							} else {
 								console.log('ERRORS: ' + data.error);

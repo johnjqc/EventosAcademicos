@@ -29,6 +29,7 @@ $(document).on('pageinit','#page_r_espacio_agenda',function(e){
 	
 	getIpPortserver();
 	var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_agenda.php?jsoncallback=?";
+	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
     var output = "";
     var div_output= $('#listEspaciosAdd');
 
@@ -45,6 +46,9 @@ $(document).on('pageinit','#page_r_espacio_agenda',function(e){
         	
             $.each(data, function(i,item){
             	output = '<li id="r_espacio' + item.idEspacio + '" data-icon="plus"><a href="#">';
+            	if (!$.isEmptyObject(item.esp_imagen)) {
+            		output += '<img src="' + httpImagen + item.esp_imagen + '">';
+            	}
         		output += '' + item.esp_nombre + '</a>';
 				output += '</li>';
                 div_output.append(output);
@@ -177,7 +181,7 @@ $(document).on('pageinit','#page_agenda',function(e) {
 						div_output.append(output1);
                 	}
                 	if (fechas[j].getTime() == fecha.getTime()) {
-                		output = '<li id="agenda' + item.idAgenda + '"><a data-ajax="false" href="g_agenda_q.html">';
+                		output = '<li id="' + i + 'agenda' + item.idAgenda + '"><a data-ajax="false" href="g_agenda_q.html">';
                     	output += '<h2>' + item.age_actividad + '</h2>';
                     	output += '<p><strong>' + ((item.esp_nombre == null)?"Sin espacio asignado":item.esp_nombre) + '</strong></p>';
                     	output += '<p>Hasta: ' + item.age_hora_fin + '</p>';
@@ -185,7 +189,7 @@ $(document).on('pageinit','#page_agenda',function(e) {
                     	output += '</a></li>';
 						div_output.append(output);
 						div_output.listview("refresh");
-						$('#agenda' + item.idAgenda).bind('tap', function(e) {
+						$('#' + i + 'agenda' + item.idAgenda).bind('tap', function(e) {
 							
 							window.localStorage.setItem('activeAgenda', item.idAgenda);
 						});
@@ -213,6 +217,7 @@ $(document).on('pageinit','#page_agenda_query',function(e){
 	
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_agenda.php?jsoncallback=?";
+	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
 	var div_output = $('#agenda_content');
 	var output;
     $.ajax({
@@ -247,7 +252,7 @@ $(document).on('pageinit','#page_agenda_query',function(e){
 		    $.ajax({
 		        url: archivoValidacion,
 		        data: {
-		            'accion': 'query_r_espacios', 'idEvento': activeEvent
+		            'accion': 'query_r_espacios', 'idEvento': activeEvent, idAgenda: activeAgenda
 		        },
 		        dataType: 'jsonp',
 		        jsonp: 'jsoncallback',
@@ -262,7 +267,9 @@ $(document).on('pageinit','#page_agenda_query',function(e){
 		            }
 		            $.each(data, function(i,item){
 		            	output = '<li id="r_espacio' + item.idEspacio + '"><a data-ajax="false" href="g_espacio_q.html">';
-//		            	output += '<img src="' + httpImagen + item.usu_imagen + '">';
+		            	if (!$.isEmptyObject(item.esp_imagen)) {
+		            		output += '<img src="' + httpImagen + item.esp_imagen + '">';
+		            	}
 		        		output += '<h2>' + item.esp_nombre + '</h2></a>';
 		    			output += '<a id="delete_r_espacio' + item.idEspacio + '" href="#" >Elimina Relacion</a>';
 						output += '</li>';

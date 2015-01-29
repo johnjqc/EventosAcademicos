@@ -302,7 +302,8 @@ function submitForm(event, data) {
         jsonp: 'jsoncallback',
         success: function(data, textStatus, jqXHR) {
             if(typeof data.error === 'undefined') {
-                $.mobile.changePage("../index.html");
+//                $.mobile.changePage("../index.html");
+            	window.history.back();
             } else {
                 console.log('ERRORS: ' + data.error);
             }
@@ -315,6 +316,7 @@ function submitForm(event, data) {
         	$.mobile.loading( "hide" );
         }
     });
+    return false;
 }
 
 function getEvento() {
