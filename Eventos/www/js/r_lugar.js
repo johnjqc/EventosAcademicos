@@ -137,7 +137,7 @@ $(document).on('pageinit','#page_r_lugar_evento',function(e){
 						jsonp: 'jsoncallback',
 						success: function(data, textStatus, jqXHR) {
 							if(typeof data.error === 'undefined') {
-								alert("Usuario agregado exitosamente");
+								alert("Lugar agregado exitosamente");
 								window.history.back();
 							} else {
 								console.log('ERRORS: ' + data.error);

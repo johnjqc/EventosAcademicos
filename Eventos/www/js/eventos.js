@@ -11,6 +11,11 @@ $(function() {
 	$('input[type=file]').on('change', prepareUpload);
 	$('#frm_new_evento').on('submit', uploadFiles);
 	$("#list_menu").listview("refresh");
+	
+	$('#logout').bind('tap', function(e) {
+		window.localStorage.setItem('usu_perfil', -1);
+		window.location = "../index.html";
+    });
 });
 
 $(document).on('pageinit','#app_home',function(e){
@@ -167,7 +172,7 @@ $(document).on('pageinit','#signup',function(e){
     	    var accion = '&accion=signup';
     	    var formData = $("#frmSignup").serialize() + accion;
     	    var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/login.php?jsoncallback=?";
-			alert(urlServer);
+
     	    $.ajax({
     	        url: urlServer,
     	        type: 'POST',
@@ -215,7 +220,7 @@ $(document).on('pageinit','#signin',function(e){
 	        success: function(data, textStatus, jqXHR) {
 	            if(typeof data.error === 'undefined') {
 	            	usu_perfil = data.usu_perfil;
-//	            	window.localStorage.setItem('usu_perfil', data.usu_perfil);
+	            	window.localStorage.setItem('usu_perfil', data.usu_perfil);
 	            	window.location = "../index.html";
 	            } else {
 	            	$( "#dlg-invalid-credentials" ).popup( "open" );
@@ -488,8 +493,16 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
+		if (usu_perfil != 1) {
+//			$("#logout").hide();
+		}
+		if (usu_perfil == -1) {
+			$("#btn_menu_home").hide();
+			$("#btnNewEvento").hide();
+//			$("#list_menu").listview("refresh");
+		}
 		if (usu_perfil != -1 && usu_perfil != 0) {
-			$("#btnLogin").hide();
+//			$("#btnLogin").hide();
 		}
 	}
 }

@@ -31,22 +31,20 @@
         	<div data-role="panel" id="mypanel" data-display="overlay" data-theme="f">
                 <ul data-role="listview" id="list_menu" data-theme="f">
                     <li data-icon="delete" data-theme="c"><a href="#" data-rel="close" >Close</a></li>
-                    <li><a href="#">Mi Perfil</a></li>
-                    <li><a href="pages/g_comite.html" data-ajax="false">Comites</a></li>
-                    <li><a href="pages/g_encuesta.html" data-ajax="false">Encuestas</a></li>
-                    <li><a href="pages/g_lugar.html" data-ajax="false">Lugares</a></li>
-                    <li><a href="pages/g_patrocinador.html" data-ajax="false">Patrocinadores</a></li>
-                    <li><a href="pages/g_publicacion.html" data-ajax="false">Publicaciones</a></li>
-                    <li><a href="pages/g_usuario.html" data-ajax="false">Usuarios</a></li>
-                    <li data-icon="power"><a href="#" data-ajax="false">Logout</a></li>
+                    <li><a id="mnuPerfil" href="#">Mi Perfil</a></li>
+                    <li><a id="mnuComites" href="pages/g_comite.html" data-ajax="false">Comites</a></li>
+                    <li><a id="mnuEncuestas" href="pages/g_encuesta.html" data-ajax="false">Encuestas</a></li>
+                    <li><a id="mnuLugares" href="pages/g_lugar.html" data-ajax="false">Lugares</a></li>
+                    <li><a id="mnuPatrocinadores" href="pages/g_patrocinador.html" data-ajax="false">Patrocinadores</a></li>
+                    <li><a id="mnuPublicaciones" href="pages/g_publicacion.html" data-ajax="false">Publicaciones</a></li>
+                    <li><a id="mnuUsuarios" href="pages/g_usuario.html" data-ajax="false">Usuarios</a></li>
+                    <li data-icon="power"><a id="logout" href="#" data-ajax="false">Logout</a></li>
                 </ul>
-<!--                 <br /> -->
-<!--                 <img alt="Escudo UD" src="images/escudo_ud.png" style="width: 80%; display: block; margin: 0 auto"> -->
             </div>
             
             <div data-role="header" data-position="fixed">
 				<div id="custom-border-radius" class="ui-btn-right">
-                    <a  href="pages/evento_cu.html" data-ajax="false" class="ui-btn ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-notext ">+</a>
+                    <a id="btnNewEvento" href="pages/evento_cu.html" data-ajax="false" class="ui-btn ui-btn-b ui-corner-all ui-icon-plus ui-btn-icon-notext ">+</a>
 					<a id="btn_popup_server" href="#popupConnectServer" class="ui-btn ui-btn-b ui-corner-all ui-icon-cloud ui-btn-icon-notext "
 						data-rel="popup" data-position-to="window" data-transition="pop">Only Icon</a>
                     <a id="btnLogin" href="pages/login.html" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext ">Only Icon</a>

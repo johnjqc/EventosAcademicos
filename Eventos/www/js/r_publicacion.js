@@ -133,7 +133,7 @@ $(document).on('pageinit','#page_r_publicacion_evento',function(e){
 						jsonp: 'jsoncallback',
 						success: function(data, textStatus, jqXHR) {
 							if(typeof data.error === 'undefined') {
-								alert("Usuario agregado exitosamente");
+								alert("Memoria agregada exitosamente");
 								window.history.back();
 							} else {
 								console.log('ERRORS: ' + data.error);
