@@ -3,6 +3,7 @@ var text_ip = '';
 var text_puerto = '';
 var activeEvent, activeComite;
 var usu_perfil;
+var idUsuario;
 
 var files;
 
@@ -14,6 +15,7 @@ $(function() {
 	
 	$('#logout').bind('tap', function(e) {
 		window.localStorage.setItem('usu_perfil', -1);
+		window.localStorage.setItem('idUsuario', -1);
 		window.location = "../index.html";
     });
 });
@@ -220,7 +222,9 @@ $(document).on('pageinit','#signin',function(e){
 	        success: function(data, textStatus, jqXHR) {
 	            if(typeof data.error === 'undefined') {
 	            	usu_perfil = data.usu_perfil;
+	            	idUsuario = data.idUsuario;
 	            	window.localStorage.setItem('usu_perfil', data.usu_perfil);
+	            	window.localStorage.setItem('idUsuario', data.idUsuario);
 	            	window.location = "../index.html";
 	            } else {
 	            	$( "#dlg-invalid-credentials" ).popup( "open" );
@@ -493,12 +497,34 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
+		if (usu_perfil == -1) {
+//			$("#menu_organizador").hide();
+			$("#menu_asistente_ponente").hide();
+			$("#menu_coordinador").hide();
+		}
+		if (usu_perfil == 1) {
+			$("#menu_invitado").hide();
+			$("#menu_asistente_ponente").hide();
+//			$("#menu_organizador").hide();
+		}
+		if (usu_perfil == 2) {
+			$("#menu_invitado").hide();
+			$("#menu_asistente_ponente").hide();
+//			$("#menu_coordinador").hide();
+		}
+		if (usu_perfil == 3 || usu_perfil == 4) {
+			$("#menu_invitado").hide();
+			$("#menu_organizador").hide();
+			$("#menu_coordinador").hide();
+		}
 		if (usu_perfil != 1) {
 //			$("#logout").hide();
 		}
 		if (usu_perfil == -1) {
 			$("#btn_menu_home").hide();
 			$("#btnNewEvento").hide();
+			$("#btn_edit_evento").hide();
+			$("#btn_deleteEvento").hide();
 //			$("#list_menu").listview("refresh");
 		}
 		if (usu_perfil != -1 && usu_perfil != 0) {

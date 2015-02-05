@@ -43,12 +43,12 @@
     <div data-role="header" data-position="fixed">
         <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-ajax="false" href="../index.html" >Only Icon</a>
         <div id="custom-border-radius" class="ui-btn-right">
-        	<a href="#" data-ajax="false" id="btn_delete_evento" 
+        	<a id="btn_deleteEvento" href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop" 
         		class="ui-btn ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-notext">Only Icon</a>
         	<a href="evento_cu.html" data-ajax="false" id="btn_edit_evento" 
         		class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext">Only Icon</a>
             <a href="login.html" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext ">Only Icon</a>
-            <a href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
+            <a id="btn_menu_home" href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
                 data-display="overlay">Only Icon</a>
         </div>
         <span class="ui-title" ></span>
@@ -60,7 +60,7 @@
 		<p id="description_content"></p>
 		</div>
 		<br />
-		<div class="ui-grid-b">
+		<div id="menu_coordinador" class="ui-grid-b">
 		    <div class="ui-block-a" id="btnSpeaker">
 		    	<div class="ui-body ui-body-a ui-corner-all">
 		    		<img alt="speaker" src="../images/speaker.png" style="width: auto; max-width: 100%;" />
@@ -132,7 +132,126 @@
 			</div>
 			
 		</div>
+		
+		<div id="menu_asistente_ponente" class="ui-grid-b">
+		    <div class="ui-block-a" id="btnSponsor">
+		    	<div class="ui-body ui-body-a ui-corner-all">
+		    		<img alt="sponsor" src="../images/sponsor.png" style="width: auto; max-width: 100%;">
+		    		<div >Patrocinadores</div>
+		    	</div>
+		    </div>
+			<div class="ui-block-b" id="btnCalendar">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="calendar" src="../images/calendar.png" style="width: auto; max-width: 100%;">
+					<div >Agenda</div>
+				</div>
+			</div>
+			<div class="ui-block-c" id="btnCommittee">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="committee" src="../images/committee.png" style="width: auto; max-width: 100%;">
+					<div >Comite</div>
+				</div>
+			</div>
+			
+			<div class="ui-block-a" id="btnFiles">
+		    	<div class="ui-body ui-body-a ui-corner-all">
+		    		<img alt="report" src="../images/files.png" style="width: auto; max-width: 100%;">
+		    		<div >Memorias</div>
+		    	</div>
+		    </div>
+			<div class="ui-block-b" id="btnPlaces">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="places" src="../images/places.png" style="width: auto; max-width: 100%;">
+					<div >Lugares</div>
+				</div>
+			</div>
+			<div class="ui-block-c" id="btnGallery">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="gallery" src="../images/gallery.png" style="width: auto; max-width: 100%;">
+					<div >Galeria</div>
+				</div>
+			</div>
+			
+			<div class="ui-block-a" id="btnContac">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="gallery" src="../images/contac.png" style="width: auto; max-width: 100%;">
+					<div >Contacto</div>
+				</div>
+			</div>
+			<div class="ui-block-b" id="btnPoll">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="poll" src="../images/poll.png" style="width: auto; max-width: 100%;">
+					<div >Encuesta</div>
+				</div>
+			</div>
+			<div class="ui-block-c" id="btnInfo">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="poll" src="../images/info.png" style="width: auto; max-width: 100%;">
+					<div >Informacion</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="menu_invitado" class="ui-grid-b">
+		    <div class="ui-block-a" id="btnSponsor">
+		    	<div class="ui-body ui-body-a ui-corner-all">
+		    		<img alt="sponsor" src="../images/sponsor.png" style="width: auto; max-width: 100%;">
+		    		<div >Patrocinadores</div>
+		    	</div>
+		    </div>
+			<div class="ui-block-b" id="btnCalendar">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="calendar" src="../images/calendar.png" style="width: auto; max-width: 100%;">
+					<div >Agenda</div>
+				</div>
+			</div>
+			<div class="ui-block-c" id="btnCommittee">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="committee" src="../images/committee.png" style="width: auto; max-width: 100%;">
+					<div >Comite</div>
+				</div>
+			</div>
+			
+			<div class="ui-block-a" id="btnInfo">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="poll" src="../images/info.png" style="width: auto; max-width: 100%;">
+					<div >Informacion</div>
+				</div>
+			</div>
+			<div class="ui-block-b" id="btnPlaces">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="places" src="../images/places.png" style="width: auto; max-width: 100%;">
+					<div >Lugares</div>
+				</div>
+			</div>
+			<div class="ui-block-c" id="btnGallery">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="gallery" src="../images/gallery.png" style="width: auto; max-width: 100%;">
+					<div >Galeria</div>
+				</div>
+			</div>
+			
+			<div class="ui-block-a" id="btnContac">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<img alt="gallery" src="../images/contac.png" style="width: auto; max-width: 100%;">
+					<div >Contacto</div>
+				</div>
+			</div>
+			
+		</div>
     </div>
+    
+    <div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+		<div data-role="header" data-theme="a">
+			<h1>Eliminar evento</h1>
+		</div>
+		<div role="main" class="ui-content">
+			<h3 class="ui-title">Esta seguro de eliminar el evento?</h3>
+			<p>Esta accion no se puede deshacer.</p>
+			<a href="#" id="btn_delete_evento" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-ajax="false" data-transition="flow">Eliminar</a>
+			<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancelar</a>
+		</div>
+	</div>
 </div>
 </body>
 </html>
