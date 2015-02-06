@@ -498,37 +498,34 @@ function security() {
 	
 	if (!$.isEmptyObject(usu_perfil)) {
 		if (usu_perfil == -1) {
-//			$("#menu_organizador").hide();
 			$("#menu_asistente_ponente").hide();
 			$("#menu_coordinador").hide();
 		}
 		if (usu_perfil == 1) {
 			$("#menu_invitado").hide();
 			$("#menu_asistente_ponente").hide();
-//			$("#menu_organizador").hide();
 		}
 		if (usu_perfil == 2) {
 			$("#menu_invitado").hide();
 			$("#menu_asistente_ponente").hide();
-//			$("#menu_coordinador").hide();
 		}
 		if (usu_perfil == 3 || usu_perfil == 4) {
 			$("#menu_invitado").hide();
 			$("#menu_organizador").hide();
 			$("#menu_coordinador").hide();
 		}
-		if (usu_perfil != 1) {
-//			$("#logout").hide();
+		if (usu_perfil != -1) {
+
 		}
 		if (usu_perfil == -1) {
 			$("#btn_menu_home").hide();
 			$("#btnNewEvento").hide();
 			$("#btn_edit_evento").hide();
 			$("#btn_deleteEvento").hide();
-//			$("#list_menu").listview("refresh");
+			$("#btn_subscribe").hide();
 		}
 		if (usu_perfil != -1 && usu_perfil != 0) {
-//			$("#btnLogin").hide();
+			$("#btnLogin").hide();
 		}
 	}
 }

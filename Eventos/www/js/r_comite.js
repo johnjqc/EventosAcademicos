@@ -41,7 +41,7 @@ $(document).on('pageinit','#page_r_comite',function(e){
                 div_output.load();
             }
             $.each(data, function(i,item){
-            	output = '<li id="r_comite' + item.idComite + '"><a data-ajax="false" href="g_comite_q.html">';
+            	output = '<li id="r_comite' + item.idComite + '"><a data-ajax="false" href="r_comite_usuarios.html">';
 //            	output += '<img src="' + httpImagen + item.usu_imagen + '">';
         		output += '<h2>' + item.com_nombre + '</h2></a>';
     			output += '<a id="delete_r_comite' + item.idComite + '" href="#" >Elimina Relacion</a>';

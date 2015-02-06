@@ -98,7 +98,7 @@
 			$row = mysql_fetch_array($result);
 			$nextId = $row['Auto_increment'];
 			
-			$res = mysql_query("INSERT INTO usuario (usu_identificacion ,usu_nombre ,usu_apellido ,usu_nacionalidad ,usu_email ,usu_telefono ,usu_contrasena ,usu_imagen ,usu_perfil ,usu_estado ,usu_institucion ,usu_nivel_academico ,'usu_biografia' ,usu_profesion) VALUES ('$t_identificacion', '$t_nombre', '$t_apellido', '$t_nacionalidad', '$t_email', '$t_telefono', '$t_contrasena', '$t_archivo_path' ,'$t_perfil', '$t_estado', '$t_institucion', '$t_nivel_academico', '$t_biografia', '$t_profesion') ") or $rows["error"] =mysql_error();
+			$res = mysql_query("INSERT INTO usuario (usu_identificacion ,usu_nombre ,usu_apellido ,usu_nacionalidad ,usu_email ,usu_telefono ,usu_contrasena ,usu_imagen ,usu_perfil ,usu_estado ,usu_institucion ,usu_nivel_academico ,usu_biografia ,usu_profesion) VALUES ('$t_identificacion', '$t_nombre', '$t_apellido', '$t_nacionalidad', '$t_email', '$t_telefono', '$t_contrasena', '$t_archivo_path' ,'$t_perfil', '$t_estado', '$t_institucion', '$t_nivel_academico', '$t_biografia', '$t_profesion') ") or $rows["error"] =mysql_error();
 			
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';

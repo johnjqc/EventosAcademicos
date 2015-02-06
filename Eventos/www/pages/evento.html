@@ -30,12 +30,12 @@
         <ul data-role="listview" id="list_menu" data-theme="f">
             <li data-icon="delete" data-theme="c"><a href="#" data-rel="close" >Close</a></li>
             <li><a href="#">Mi Perfil</a></li>
-            <li><a href="pages/g_comite.html" data-ajax="false">Comites</a></li>
-            <li><a href="pages/g_encuesta.html" data-ajax="false">Encuestas</a></li>
-            <li><a href="pages/g_lugar.html" data-ajax="false">Lugares</a></li>
-            <li><a href="pages/g_patrocinador.html" data-ajax="false">Patrocinadores</a></li>
-            <li><a href="pages/g_publicacion.html" data-ajax="false">Publicaciones</a></li>
-            <li><a href="pages/g_usuario.html" data-ajax="false">Usuarios</a></li>
+            <li><a href="g_comite.html" data-ajax="false">Comites</a></li>
+            <li><a href="g_encuesta.html" data-ajax="false">Encuestas</a></li>
+            <li><a href="g_lugar.html" data-ajax="false">Lugares</a></li>
+            <li><a href="g_patrocinador.html" data-ajax="false">Patrocinadores</a></li>
+            <li><a href="g_publicacion.html" data-ajax="false">Publicaciones</a></li>
+            <li><a href="g_usuario.html" data-ajax="false">Usuarios</a></li>
             <li data-icon="power"><a id="logout" href="#" data-ajax="false">Logout</a></li>
         </ul>
     </div>
@@ -43,11 +43,13 @@
     <div data-role="header" data-position="fixed">
         <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-ajax="false" href="../index.html" >Only Icon</a>
         <div id="custom-border-radius" class="ui-btn-right">
+        	<a id="btn_subscribe" href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop" 
+        		class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext">Only Icon</a>
         	<a id="btn_deleteEvento" href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop" 
         		class="ui-btn ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-notext">Only Icon</a>
         	<a href="evento_cu.html" data-ajax="false" id="btn_edit_evento" 
         		class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext">Only Icon</a>
-            <a href="login.html" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext ">Only Icon</a>
+            <a id="btnLogin" href="login.html" class="ui-btn ui-corner-all ui-icon-user ui-btn-icon-notext ">Only Icon</a>
             <a id="btn_menu_home" href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
                 data-display="overlay">Only Icon</a>
         </div>
