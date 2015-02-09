@@ -1,439 +1,482 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+-- phpMyAdmin SQL Dump
+-- version 2.10.3
+-- http://www.phpmyadmin.net
+-- 
+-- Servidor: localhost
+-- Tiempo de generación: 08-02-2015 a las 20:56:15
+-- Versión del servidor: 5.0.51
+-- Versión de PHP: 5.2.6
 
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
-USE `mydb`;
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
--- -----------------------------------------------------
--- Table `mydb`.`evento`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`evento` (
-  `idEvento` INT(11) NOT NULL AUTO_INCREMENT ,
-  `eve_nombre` VARCHAR(150) NOT NULL ,
-  `eve_descripcion` TEXT NOT NULL ,
-  `eve_fecha_inicio` DATE NOT NULL ,
-  `eve_fecha_fin` DATE NOT NULL ,
-  `eve_estado` INT NOT NULL ,
-  `eve_titulo_imagen` VARCHAR(100) NULL DEFAULT NULL ,
-  `eve_imagen` VARCHAR(100) NULL DEFAULT NULL ,
-  `eve_temas` TEXT NULL DEFAULT NULL ,
-  `eve_costos` TEXT NULL DEFAULT NULL ,
-  `eve_recepcion de articulos` DATE NOT NULL ,
-  `eve_pagina_web` VARCHAR(45) NOT NULL ,
-  `eve_facebook` VARCHAR(45) NULL ,
-  `eve_twitter` VARCHAR(45) NULL ,
-  PRIMARY KEY (`idEvento`) )
-ENGINE = MyISAM
-AUTO_INCREMENT = 4
-DEFAULT CHARACTER SET = utf8;
+-- 
+-- Base de datos: `eventos`
+-- 
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `mydb`.`agenda`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`agenda` (
-  `idAgenda` INT(11) NOT NULL AUTO_INCREMENT ,
-  `age_fecha` DATE NOT NULL ,
-  `age_hora_fin` TIME NOT NULL ,
-  `age_hora_inicio` TIME NOT NULL ,
-  `age_actividad` VARCHAR(200) NOT NULL ,
-  `evento_idEvento` INT(11) NOT NULL ,
-  PRIMARY KEY (`idAgenda`, `evento_idEvento`) ,
-  INDEX `fk_agenda_evento1` (`evento_idEvento` ASC) ,
-  CONSTRAINT `fk_agenda_evento1`
-    FOREIGN KEY (`evento_idEvento` )
-    REFERENCES `mydb`.`evento` (`idEvento` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-AUTO_INCREMENT = 2
-DEFAULT CHARACTER SET = utf8;
+-- 
+-- Estructura de tabla para la tabla `agenda`
+-- 
 
+CREATE TABLE `agenda` (
+  `idAgenda` int(11) NOT NULL auto_increment,
+  `age_fecha` date NOT NULL,
+  `age_hora_fin` time NOT NULL,
+  `age_hora_inicio` time NOT NULL,
+  `age_actividad` varchar(200) NOT NULL,
+  `age_descripcion` text NOT NULL,
+  `evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`idAgenda`,`evento_idEvento`),
+  KEY `fk_agenda_evento1` (`evento_idEvento`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
--- -----------------------------------------------------
--- Table `mydb`.`comite`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`comite` (
-  `idComite` INT(11) NOT NULL AUTO_INCREMENT ,
-  `com_nombre` VARCHAR(45) NOT NULL ,
-  `com_descripcion` VARCHAR(200) NOT NULL ,
-  PRIMARY KEY (`idComite`) )
-ENGINE = MyISAM
-AUTO_INCREMENT = 7
-DEFAULT CHARACTER SET = utf8;
+-- 
+-- Volcar la base de datos para la tabla `agenda`
+-- 
 
+INSERT INTO `agenda` VALUES (2, '2015-01-30', '23:57:00', '03:02:00', 'Recepcion', 'un evento de recepcion ', 1);
+INSERT INTO `agenda` VALUES (3, '2015-01-31', '23:59:00', '23:59:00', 'Primera Ponencia', 'otra ponencia de prueba', 1);
+INSERT INTO `agenda` VALUES (4, '2015-01-31', '00:00:00', '00:00:00', 'segunda ponencia', '', 1);
 
--- -----------------------------------------------------
--- Table `mydb`.`encuesta`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`encuesta` (
-  `idEncuesta` INT(11) NOT NULL AUTO_INCREMENT ,
-  `enc_nombre` VARCHAR(90) NOT NULL ,
-  `enc_descripcion` VARCHAR(200) NOT NULL ,
-  PRIMARY KEY (`idEncuesta`) )
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
+-- --------------------------------------------------------
 
+-- 
+-- Estructura de tabla para la tabla `comite`
+-- 
 
--- -----------------------------------------------------
--- Table `mydb`.`galeria`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`galeria` (
-  `idGaleria` INT(11) NOT NULL AUTO_INCREMENT ,
-  `gal_nombre` VARCHAR(45) NOT NULL ,
-  `gal_descripcion` VARCHAR(200) NOT NULL ,
-  `evento_idEvento` INT(11) NOT NULL ,
-  PRIMARY KEY (`idGaleria`, `evento_idEvento`) ,
-  INDEX `fk_galeria_evento1` (`evento_idEvento` ASC) ,
-  CONSTRAINT `fk_galeria_evento1`
-    FOREIGN KEY (`evento_idEvento` )
-    REFERENCES `mydb`.`evento` (`idEvento` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
+CREATE TABLE `comite` (
+  `idComite` int(11) NOT NULL auto_increment,
+  `com_nombre` varchar(45) NOT NULL,
+  `com_descripcion` varchar(200) NOT NULL,
+  PRIMARY KEY  (`idComite`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
+-- 
+-- Volcar la base de datos para la tabla `comite`
+-- 
 
--- -----------------------------------------------------
--- Table `mydb`.`imagen`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`imagen` (
-  `idImagen` INT(11) NOT NULL AUTO_INCREMENT ,
-  `img_nombre` VARCHAR(60) NOT NULL ,
-  `img_descripcion` VARCHAR(150) NULL ,
-  `img_imagen` VARCHAR(60) NOT NULL ,
-  `galeria_idGaleria` INT(11) NOT NULL ,
-  `galeria_evento_idEvento` INT(11) NOT NULL ,
-  PRIMARY KEY (`idImagen`, `galeria_idGaleria`, `galeria_evento_idEvento`) ,
-  INDEX `fk_imagen_galeria1` (`galeria_idGaleria` ASC, `galeria_evento_idEvento` ASC) ,
-  CONSTRAINT `fk_imagen_galeria1`
-    FOREIGN KEY (`galeria_idGaleria` , `galeria_evento_idEvento` )
-    REFERENCES `mydb`.`galeria` (`idGaleria` , `evento_idEvento` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
+INSERT INTO `comite` VALUES (7, 'Comite Logistrica', 'La descripcion');
+INSERT INTO `comite` VALUES (8, 'Comite aseo', '');
+INSERT INTO `comite` VALUES (9, 'Comite comida', '');
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `mydb`.`patrocinador`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`patrocinador` (
-  `idPatrocinador` INT(11) NOT NULL AUTO_INCREMENT ,
-  `pat_nombre` VARCHAR(45) NOT NULL ,
-  `pat_descripcion` TEXT NOT NULL ,
-  `pat_imagen` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`idPatrocinador`) )
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
+-- 
+-- Estructura de tabla para la tabla `comite_has_evento`
+-- 
 
+CREATE TABLE `comite_has_evento` (
+  `comite_idComite` int(11) NOT NULL,
+  `evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`comite_idComite`,`evento_idEvento`),
+  KEY `fk_comite_has_evento_comite1` (`comite_idComite`),
+  KEY `fk_comite_has_evento_evento1` (`evento_idEvento`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- -----------------------------------------------------
--- Table `mydb`.`pregunta`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`pregunta` (
-  `idPregunta` INT(11) NOT NULL AUTO_INCREMENT ,
-  `pre_pregunta` VARCHAR(45) NOT NULL ,
-  `pre_tipo` VARCHAR(45) NOT NULL ,
-  `encuesta_idEncuesta` INT(11) NOT NULL ,
-  PRIMARY KEY (`idPregunta`, `encuesta_idEncuesta`) ,
-  INDEX `fk_pregunta_encuesta1` (`encuesta_idEncuesta` ASC) ,
-  CONSTRAINT `fk_pregunta_encuesta1`
-    FOREIGN KEY (`encuesta_idEncuesta` )
-    REFERENCES `mydb`.`encuesta` (`idEncuesta` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
+-- 
+-- Volcar la base de datos para la tabla `comite_has_evento`
+-- 
 
+INSERT INTO `comite_has_evento` VALUES (7, 1);
+INSERT INTO `comite_has_evento` VALUES (7, 2);
+INSERT INTO `comite_has_evento` VALUES (9, 1);
 
--- -----------------------------------------------------
--- Table `mydb`.`usuario`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`usuario` (
-  `idUsuario` INT(11) NOT NULL AUTO_INCREMENT ,
-  `usu_identificacion` VARCHAR(30) NOT NULL ,
-  `usu_nombre` VARCHAR(50) NOT NULL ,
-  `usu_apellido` VARCHAR(50) NOT NULL ,
-  `usu_nacionalidad` VARCHAR(30) NOT NULL ,
-  `usu_email` VARCHAR(40) NOT NULL ,
-  `usu_telefono` INT NOT NULL ,
-  `usu_contrasena` VARCHAR(20) NOT NULL ,
-  `usu_imagen` VARCHAR(45) NOT NULL ,
-  `usu_perfil` INT NOT NULL ,
-  `usu_estado` VARCHAR(5) NOT NULL ,
-  `usu_institucion` VARCHAR(90) NOT NULL ,
-  `usu_nivel_academico` VARCHAR(30) NULL ,
-  `usu_biografia` TEXT NULL ,
-  `usu_profesion` VARCHAR(40) NULL ,
-  PRIMARY KEY (`idUsuario`) ,
-  UNIQUE INDEX `usu_email` (`usu_email` ASC) )
-ENGINE = MyISAM
-AUTO_INCREMENT = 3
-DEFAULT CHARACTER SET = utf8;
+-- --------------------------------------------------------
 
+-- 
+-- Estructura de tabla para la tabla `encuesta`
+-- 
 
--- -----------------------------------------------------
--- Table `mydb`.`publicacion`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`publicacion` (
-  `idPublicacion` INT(11) NOT NULL AUTO_INCREMENT ,
-  `pub_titulo` VARCHAR(90) NOT NULL ,
-  `pub_resumen` TEXT NOT NULL ,
-  `pub_estado` VARCHAR(15) NOT NULL ,
-  `pub_otros_autores` VARCHAR(150) NULL DEFAULT NULL ,
-  `pub_archivo` VARCHAR(90) NULL ,
-  `usuario_idUsuario` INT(11) NOT NULL ,
-  `evento_idEvento` INT(11) NOT NULL ,
-  PRIMARY KEY (`idPublicacion`, `usuario_idUsuario`, `evento_idEvento`) ,
-  INDEX `fk_publicacion_usuario1` (`usuario_idUsuario` ASC) ,
-  INDEX `fk_publicacion_evento1` (`evento_idEvento` ASC) ,
-  CONSTRAINT `fk_publicacion_usuario1`
-    FOREIGN KEY (`usuario_idUsuario` )
-    REFERENCES `mydb`.`usuario` (`idUsuario` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_publicacion_evento1`
-    FOREIGN KEY (`evento_idEvento` )
-    REFERENCES `mydb`.`evento` (`idEvento` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8;
+CREATE TABLE `encuesta` (
+  `idEncuesta` int(11) NOT NULL auto_increment,
+  `enc_nombre` varchar(90) NOT NULL,
+  `enc_descripcion` varchar(200) NOT NULL,
+  PRIMARY KEY  (`idEncuesta`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
+-- 
+-- Volcar la base de datos para la tabla `encuesta`
+-- 
 
--- -----------------------------------------------------
--- Table `mydb`.`lugar`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`lugar` (
-  `idLugar` INT(11) NOT NULL AUTO_INCREMENT ,
-  `lug_nombre` VARCHAR(150) NOT NULL ,
-  `lug_descripcion` VARCHAR(200) NOT NULL ,
-  `lug_imagen` VARCHAR(150) NULL ,
-  `lug_direccion` VARCHAR(100) NOT NULL ,
-  `lug_latitud` DECIMAL NOT NULL ,
-  `lug_longitud` DECIMAL NOT NULL ,
-  PRIMARY KEY (`idLugar`) )
-ENGINE = InnoDB;
+INSERT INTO `encuesta` VALUES (1, 'Encuesta 1', 'DEscripcion de encuesta 1');
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `mydb`.`patrocinador_has_evento`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`patrocinador_has_evento` (
-  `patrocinador_idPatrocinador` INT(11) NOT NULL ,
-  `evento_idEvento` INT(11) NOT NULL ,
-  PRIMARY KEY (`patrocinador_idPatrocinador`, `evento_idEvento`) ,
-  INDEX `fk_patrocinador_has_evento_patrocinador1` (`patrocinador_idPatrocinador` ASC) ,
-  INDEX `fk_patrocinador_has_evento_evento1` (`evento_idEvento` ASC) ,
-  CONSTRAINT `fk_patrocinador_has_evento_patrocinador1`
-    FOREIGN KEY (`patrocinador_idPatrocinador` )
-    REFERENCES `mydb`.`patrocinador` (`idPatrocinador` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_patrocinador_has_evento_evento1`
-    FOREIGN KEY (`evento_idEvento` )
-    REFERENCES `mydb`.`evento` (`idEvento` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8;
+-- 
+-- Estructura de tabla para la tabla `espacio`
+-- 
 
+CREATE TABLE `espacio` (
+  `idEspacio` int(11) NOT NULL auto_increment,
+  `esp_nombre` varchar(90) NOT NULL,
+  `esp_descripcion` varchar(150) NOT NULL,
+  `esp_imagen` varchar(45) default NULL,
+  `esp_capacidad` int(11) NOT NULL,
+  `esp_latitud` decimal(10,0) NOT NULL,
+  `esp_longitud` decimal(10,0) NOT NULL,
+  `lugar_idLugar` int(11) NOT NULL,
+  PRIMARY KEY  (`idEspacio`,`lugar_idLugar`),
+  KEY `fk_Espacio_lugar1` (`lugar_idLugar`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
--- -----------------------------------------------------
--- Table `mydb`.`Espacio`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`Espacio` (
-  `idEspacio` INT(11) NOT NULL AUTO_INCREMENT ,
-  `esp_nombre` VARCHAR(90) NOT NULL ,
-  `esp_descripcion` VARCHAR(150) NOT NULL ,
-  `esp_imagen` VARCHAR(45) NULL ,
-  `esp_capacidad` INT NOT NULL ,
-  `esp_latitud` DECIMAL NOT NULL ,
-  `esp_longitud` DECIMAL NOT NULL ,
-  `lugar_idLugar` INT(11) NOT NULL ,
-  PRIMARY KEY (`idEspacio`, `lugar_idLugar`) ,
-  INDEX `fk_Espacio_lugar1` (`lugar_idLugar` ASC) ,
-  CONSTRAINT `fk_Espacio_lugar1`
-    FOREIGN KEY (`lugar_idLugar` )
-    REFERENCES `mydb`.`lugar` (`idLugar` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+-- 
+-- Volcar la base de datos para la tabla `espacio`
+-- 
 
+INSERT INTO `espacio` VALUES (1, 'Salon 1-301', 'Salon en bloque 1', '/espacios/1/espacio_img.jpg', 20, 0, 0, 1);
+INSERT INTO `espacio` VALUES (2, 'Salon 3-205', 'Salon en bloque 3', '/espacios/2/espacio_img.jpg', 10, 0, 0, 1);
+INSERT INTO `espacio` VALUES (3, 'ESpacio tecno', '', '', 0, 0, 0, 2);
 
--- -----------------------------------------------------
--- Table `mydb`.`Espacio_has_agenda`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`Espacio_has_agenda` (
-  `Espacio_idEspacio` INT(11) NOT NULL ,
-  `agenda_idAgenda` INT(11) NOT NULL ,
-  `agenda_evento_idEvento` INT(11) NOT NULL ,
-  PRIMARY KEY (`Espacio_idEspacio`, `agenda_idAgenda`, `agenda_evento_idEvento`) ,
-  INDEX `fk_Espacio_has_agenda_Espacio1` (`Espacio_idEspacio` ASC) ,
-  INDEX `fk_Espacio_has_agenda_agenda1` (`agenda_idAgenda` ASC, `agenda_evento_idEvento` ASC) ,
-  CONSTRAINT `fk_Espacio_has_agenda_Espacio1`
-    FOREIGN KEY (`Espacio_idEspacio` )
-    REFERENCES `mydb`.`Espacio` (`idEspacio` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Espacio_has_agenda_agenda1`
-    FOREIGN KEY (`agenda_idAgenda` , `agenda_evento_idEvento` )
-    REFERENCES `mydb`.`agenda` (`idAgenda` , `evento_idEvento` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+-- --------------------------------------------------------
 
+-- 
+-- Estructura de tabla para la tabla `espacio_has_agenda`
+-- 
 
--- -----------------------------------------------------
--- Table `mydb`.`respuesta`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`respuesta` (
-  `idRespuesta` INT NOT NULL AUTO_INCREMENT ,
-  `res_abierta` VARCHAR(150) NULL ,
-  `res_multiple` INT NULL ,
-  `pregunta_idPregunta` INT(11) NOT NULL ,
-  `pregunta_encuesta_idEncuesta` INT(11) NOT NULL ,
-  `pregunta_encuesta_evento_idEvento` INT(11) NOT NULL ,
-  `usuario_idUsuario` INT(11) NOT NULL ,
-  PRIMARY KEY (`idRespuesta`, `pregunta_idPregunta`, `pregunta_encuesta_idEncuesta`, `pregunta_encuesta_evento_idEvento`, `usuario_idUsuario`) ,
-  INDEX `fk_respuesta_pregunta1` (`pregunta_idPregunta` ASC, `pregunta_encuesta_idEncuesta` ASC, `pregunta_encuesta_evento_idEvento` ASC) ,
-  INDEX `fk_respuesta_usuario1` (`usuario_idUsuario` ASC) ,
-  CONSTRAINT `fk_respuesta_pregunta1`
-    FOREIGN KEY (`pregunta_idPregunta` , `pregunta_encuesta_idEncuesta` , `pregunta_encuesta_evento_idEvento` )
-    REFERENCES `mydb`.`pregunta` (`idPregunta` , `encuesta_idEncuesta` , `encuesta_evento_idEvento` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_respuesta_usuario1`
-    FOREIGN KEY (`usuario_idUsuario` )
-    REFERENCES `mydb`.`usuario` (`idUsuario` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+CREATE TABLE `espacio_has_agenda` (
+  `espacio_idEspacio` int(11) NOT NULL,
+  `agenda_idAgenda` int(11) NOT NULL,
+  `agenda_evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`espacio_idEspacio`,`agenda_idAgenda`,`agenda_evento_idEvento`),
+  KEY `fk_Espacio_has_agenda_Espacio1` (`espacio_idEspacio`),
+  KEY `fk_Espacio_has_agenda_agenda1` (`agenda_idAgenda`,`agenda_evento_idEvento`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+-- 
+-- Volcar la base de datos para la tabla `espacio_has_agenda`
+-- 
 
--- -----------------------------------------------------
--- Table `mydb`.`usuario_has_comite`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`usuario_has_comite` (
-  `usuario_idUsuario` INT(11) NOT NULL ,
-  `comite_idComite` INT(11) NOT NULL ,
-  PRIMARY KEY (`usuario_idUsuario`, `comite_idComite`) ,
-  INDEX `fk_usuario_has_comite_usuario1` (`usuario_idUsuario` ASC) ,
-  INDEX `fk_usuario_has_comite_comite1` (`comite_idComite` ASC) ,
-  CONSTRAINT `fk_usuario_has_comite_usuario1`
-    FOREIGN KEY (`usuario_idUsuario` )
-    REFERENCES `mydb`.`usuario` (`idUsuario` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_usuario_has_comite_comite1`
-    FOREIGN KEY (`comite_idComite` )
-    REFERENCES `mydb`.`comite` (`idComite` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8;
+INSERT INTO `espacio_has_agenda` VALUES (1, 3, 1);
 
+-- --------------------------------------------------------
 
--- -----------------------------------------------------
--- Table `mydb`.`comite_has_evento`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`comite_has_evento` (
-  `comite_idComite` INT(11) NOT NULL ,
-  `evento_idEvento` INT(11) NOT NULL ,
-  PRIMARY KEY (`comite_idComite`, `evento_idEvento`) ,
-  INDEX `fk_comite_has_evento_comite1` (`comite_idComite` ASC) ,
-  INDEX `fk_comite_has_evento_evento1` (`evento_idEvento` ASC) ,
-  CONSTRAINT `fk_comite_has_evento_comite1`
-    FOREIGN KEY (`comite_idComite` )
-    REFERENCES `mydb`.`comite` (`idComite` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_comite_has_evento_evento1`
-    FOREIGN KEY (`evento_idEvento` )
-    REFERENCES `mydb`.`evento` (`idEvento` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8;
+-- 
+-- Estructura de tabla para la tabla `evento`
+-- 
+
+CREATE TABLE `evento` (
+  `idEvento` int(11) NOT NULL auto_increment,
+  `eve_nombre` varchar(150) NOT NULL,
+  `eve_descripcion` text NOT NULL,
+  `eve_fecha_inicio` date NOT NULL,
+  `eve_fecha_fin` date NOT NULL,
+  `eve_estado` int(11) NOT NULL,
+  `eve_titulo_imagen` varchar(100) default NULL,
+  `eve_imagen` varchar(100) default NULL,
+  `eve_temas` text,
+  `eve_costos` text,
+  `eve_recepcion de articulos` date NOT NULL,
+  `eve_pagina_web` varchar(45) NOT NULL,
+  `eve_facebook` varchar(45) default NULL,
+  `eve_twitter` varchar(45) default NULL,
+  PRIMARY KEY  (`idEvento`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+-- 
+-- Volcar la base de datos para la tabla `evento`
+-- 
+
+INSERT INTO `evento` VALUES (1, 'Sexta semana tecnologica en la Universidad Distrital Francisco Jose de Caldas que se llevara  a cabo en la sede Tecnologica en el mes asignado', 'aun sin descripcion 2', '2015-11-29', '0000-00-00', 0, '', '', NULL, NULL, '0000-00-00', '', NULL, NULL);
+INSERT INTO `evento` VALUES (2, 'Sexta semana tecnologica en la Universidad Distrital Francisco Jose de Caldas', 'aun sin descripcion', '2015-04-02', '0000-00-00', 0, 'Cartagena', 'eventos/2/portada_evento.jpg', NULL, NULL, '0000-00-00', '', NULL, NULL);
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `evento_has_encuesta`
+-- 
+
+CREATE TABLE `evento_has_encuesta` (
+  `evento_idEvento` int(11) NOT NULL,
+  `encuesta_idEncuesta` int(11) NOT NULL,
+  PRIMARY KEY  (`evento_idEvento`,`encuesta_idEncuesta`),
+  KEY `fk_evento_has_encuesta_evento1` (`evento_idEvento`),
+  KEY `fk_evento_has_encuesta_encuesta1` (`encuesta_idEncuesta`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 
+-- Volcar la base de datos para la tabla `evento_has_encuesta`
+-- 
+
+INSERT INTO `evento_has_encuesta` VALUES (1, 1);
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `galeria`
+-- 
+
+CREATE TABLE `galeria` (
+  `idGaleria` int(11) NOT NULL auto_increment,
+  `gal_nombre` varchar(45) NOT NULL,
+  `gal_descripcion` varchar(200) NOT NULL,
+  `evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`idGaleria`,`evento_idEvento`),
+  KEY `fk_galeria_evento1` (`evento_idEvento`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+-- 
+-- Volcar la base de datos para la tabla `galeria`
+-- 
+
+INSERT INTO `galeria` VALUES (1, 'Titulo Galeria', 'Descripcion de la galeria', 1);
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `imagen`
+-- 
+
+CREATE TABLE `imagen` (
+  `idImagen` int(11) NOT NULL auto_increment,
+  `img_nombre` varchar(60) NOT NULL,
+  `img_descripcion` varchar(150) default NULL,
+  `img_imagen` varchar(60) NOT NULL,
+  `galeria_idGaleria` int(11) NOT NULL,
+  `galeria_evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`idImagen`,`galeria_idGaleria`,`galeria_evento_idEvento`),
+  KEY `fk_imagen_galeria1` (`galeria_idGaleria`,`galeria_evento_idEvento`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+-- 
+-- Volcar la base de datos para la tabla `imagen`
+-- 
+
+INSERT INTO `imagen` VALUES (1, 'Imagen 1', 'Descripcion de imagen 1', '/imagenes/1/imagen_img.jpg', 1, 0);
+INSERT INTO `imagen` VALUES (2, 'Imagen 2', 'Descripcion de imagen 1', '/imagenes/2/imagen_img.jpg', 1, 0);
+INSERT INTO `imagen` VALUES (4, 'Imagen 4', 'Descripcion 4', '/imagenes/5/imagen_img.jpg', 1, 0);
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `lugar`
+-- 
+
+CREATE TABLE `lugar` (
+  `idLugar` int(11) NOT NULL auto_increment,
+  `lug_nombre` varchar(150) NOT NULL,
+  `lug_descripcion` varchar(200) NOT NULL,
+  `lug_imagen` varchar(150) default NULL,
+  `lug_direccion` varchar(100) NOT NULL,
+  `lug_latitud` varchar(20) NOT NULL,
+  `lug_longitud` varchar(20) NOT NULL,
+  PRIMARY KEY  (`idLugar`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+-- 
+-- Volcar la base de datos para la tabla `lugar`
+-- 
+
+INSERT INTO `lugar` VALUES (1, 'UDistrital', 'Universidad Distrital sede Tecnologica', '/lugares/1/lugar_img.jpg', 'Transversal 50 # 68S-1 a 68S-99, BogotÃ¡, Cundinamarca, Colombia', '4.579114', '-74.157961');
+INSERT INTO `lugar` VALUES (2, 'UD Tecnologica', 'la sede sur', '', '', '', '');
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `lugar_has_evento`
+-- 
+
+CREATE TABLE `lugar_has_evento` (
+  `lugar_idLugar` int(11) NOT NULL,
+  `evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`lugar_idLugar`,`evento_idEvento`),
+  KEY `fk_lugar_has_evento_lugar1` (`lugar_idLugar`),
+  KEY `fk_lugar_has_evento_evento1` (`evento_idEvento`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- 
+-- Volcar la base de datos para la tabla `lugar_has_evento`
+-- 
+
+INSERT INTO `lugar_has_evento` VALUES (1, 1);
+INSERT INTO `lugar_has_evento` VALUES (2, 1);
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `patrocinador`
+-- 
+
+CREATE TABLE `patrocinador` (
+  `idPatrocinador` int(11) NOT NULL auto_increment,
+  `pat_nombre` varchar(45) NOT NULL,
+  `pat_descripcion` text NOT NULL,
+  `pat_imagen` varchar(45) NOT NULL,
+  PRIMARY KEY  (`idPatrocinador`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+-- 
+-- Volcar la base de datos para la tabla `patrocinador`
+-- 
+
+INSERT INTO `patrocinador` VALUES (1, 'Patrocinador 1', '', '/patrocinadores/1/patrocinador_img.jpg');
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `patrocinador_has_evento`
+-- 
+
+CREATE TABLE `patrocinador_has_evento` (
+  `patrocinador_idPatrocinador` int(11) NOT NULL,
+  `evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`patrocinador_idPatrocinador`,`evento_idEvento`),
+  KEY `fk_patrocinador_has_evento_patrocinador1` (`patrocinador_idPatrocinador`),
+  KEY `fk_patrocinador_has_evento_evento1` (`evento_idEvento`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 
+-- Volcar la base de datos para la tabla `patrocinador_has_evento`
+-- 
+
+INSERT INTO `patrocinador_has_evento` VALUES (1, 1);
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `pregunta`
+-- 
+
+CREATE TABLE `pregunta` (
+  `idPregunta` int(11) NOT NULL auto_increment,
+  `pre_pregunta` varchar(45) NOT NULL,
+  `pre_tipo` varchar(45) NOT NULL,
+  `encuesta_idEncuesta` int(11) NOT NULL,
+  PRIMARY KEY  (`idPregunta`,`encuesta_idEncuesta`),
+  KEY `fk_pregunta_encuesta1` (`encuesta_idEncuesta`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `pregunta`
+-- 
 
 
--- -----------------------------------------------------
--- Table `mydb`.`lugar_has_evento`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`lugar_has_evento` (
-  `lugar_idLugar` INT(11) NOT NULL ,
-  `evento_idEvento` INT(11) NOT NULL ,
-  PRIMARY KEY (`lugar_idLugar`, `evento_idEvento`) ,
-  INDEX `fk_lugar_has_evento_lugar1` (`lugar_idLugar` ASC) ,
-  INDEX `fk_lugar_has_evento_evento1` (`evento_idEvento` ASC) ,
-  CONSTRAINT `fk_lugar_has_evento_lugar1`
-    FOREIGN KEY (`lugar_idLugar` )
-    REFERENCES `mydb`.`lugar` (`idLugar` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_lugar_has_evento_evento1`
-    FOREIGN KEY (`evento_idEvento` )
-    REFERENCES `mydb`.`evento` (`idEvento` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `publicacion`
+-- 
+
+CREATE TABLE `publicacion` (
+  `idPublicacion` int(11) NOT NULL auto_increment,
+  `pub_titulo` varchar(90) NOT NULL,
+  `pub_resumen` text NOT NULL,
+  `pub_estado` varchar(15) NOT NULL,
+  `pub_otros_autores` varchar(150) default NULL,
+  `pub_archivo` varchar(90) default NULL,
+  `usuario_idUsuario` int(11) NOT NULL,
+  `evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`idPublicacion`,`usuario_idUsuario`,`evento_idEvento`),
+  KEY `fk_publicacion_usuario1` (`usuario_idUsuario`),
+  KEY `fk_publicacion_evento1` (`evento_idEvento`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+-- 
+-- Volcar la base de datos para la tabla `publicacion`
+-- 
+
+INSERT INTO `publicacion` VALUES (1, 'Memorias Presentacion', 'Un resumen de la presentacion', 'PENDIENTE', 'N/A', '/publicaciones/1/publicacion_file.docx', 0, 1);
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `respuesta`
+-- 
+
+CREATE TABLE `respuesta` (
+  `idRespuesta` int(11) NOT NULL auto_increment,
+  `res_abierta` varchar(150) default NULL,
+  `res_multiple` int(11) default NULL,
+  `pregunta_idPregunta` int(11) NOT NULL,
+  `pregunta_encuesta_idEncuesta` int(11) NOT NULL,
+  `pregunta_encuesta_evento_idEvento` int(11) NOT NULL,
+  `usuario_idUsuario` int(11) NOT NULL,
+  PRIMARY KEY  (`idRespuesta`,`pregunta_idPregunta`,`pregunta_encuesta_idEncuesta`,`pregunta_encuesta_evento_idEvento`,`usuario_idUsuario`),
+  KEY `fk_respuesta_pregunta1` (`pregunta_idPregunta`,`pregunta_encuesta_idEncuesta`,`pregunta_encuesta_evento_idEvento`),
+  KEY `fk_respuesta_usuario1` (`usuario_idUsuario`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- 
+-- Volcar la base de datos para la tabla `respuesta`
+-- 
 
 
--- -----------------------------------------------------
--- Table `mydb`.`usuario_has_evento`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`usuario_has_evento` (
-  `usuario_idUsuario` INT(11) NOT NULL ,
-  `evento_idEvento` INT(11) NOT NULL ,
-  PRIMARY KEY (`usuario_idUsuario`, `evento_idEvento`) ,
-  INDEX `fk_usuario_has_evento_usuario1` (`usuario_idUsuario` ASC) ,
-  INDEX `fk_usuario_has_evento_evento1` (`evento_idEvento` ASC) ,
-  CONSTRAINT `fk_usuario_has_evento_usuario1`
-    FOREIGN KEY (`usuario_idUsuario` )
-    REFERENCES `mydb`.`usuario` (`idUsuario` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_usuario_has_evento_evento1`
-    FOREIGN KEY (`evento_idEvento` )
-    REFERENCES `mydb`.`evento` (`idEvento` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8;
+-- --------------------------------------------------------
 
+-- 
+-- Estructura de tabla para la tabla `usuario`
+-- 
 
--- -----------------------------------------------------
--- Table `mydb`.`evento_has_encuesta`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `mydb`.`evento_has_encuesta` (
-  `evento_idEvento` INT(11) NOT NULL ,
-  `encuesta_idEncuesta` INT(11) NOT NULL ,
-  PRIMARY KEY (`evento_idEvento`, `encuesta_idEncuesta`) ,
-  INDEX `fk_evento_has_encuesta_evento1` (`evento_idEvento` ASC) ,
-  INDEX `fk_evento_has_encuesta_encuesta1` (`encuesta_idEncuesta` ASC) ,
-  CONSTRAINT `fk_evento_has_encuesta_evento1`
-    FOREIGN KEY (`evento_idEvento` )
-    REFERENCES `mydb`.`evento` (`idEvento` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_evento_has_encuesta_encuesta1`
-    FOREIGN KEY (`encuesta_idEncuesta` )
-    REFERENCES `mydb`.`encuesta` (`idEncuesta` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = MyISAM
-DEFAULT CHARACTER SET = utf8;
+CREATE TABLE `usuario` (
+  `idUsuario` int(11) NOT NULL auto_increment,
+  `usu_identificacion` varchar(30) NOT NULL,
+  `usu_nombre` varchar(50) NOT NULL,
+  `usu_apellido` varchar(50) NOT NULL,
+  `usu_nacionalidad` varchar(30) NOT NULL,
+  `usu_email` varchar(40) NOT NULL,
+  `usu_telefono` int(11) NOT NULL,
+  `usu_contrasena` varchar(20) NOT NULL,
+  `usu_imagen` varchar(45) NOT NULL,
+  `usu_perfil` int(11) NOT NULL,
+  `usu_estado` varchar(5) NOT NULL,
+  `usu_institucion` varchar(90) NOT NULL,
+  `usu_nivel_academico` varchar(30) default NULL,
+  `usu_biografia` text,
+  `usu_profesion` varchar(40) default NULL,
+  PRIMARY KEY  (`idUsuario`),
+  UNIQUE KEY `usu_email` (`usu_email`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
+-- 
+-- Volcar la base de datos para la tabla `usuario`
+-- 
 
+INSERT INTO `usuario` VALUES (3, '', 'John', 'Quiroga', '', 'john@gmail.com', 0, '12', '/usuarios/3/usuario_img.jpg', 1, '1', '', '', '', '');
+INSERT INTO `usuario` VALUES (4, '', 'Asistente1', '', '', 'Asistente1@gmail.com', 0, '12', '/usuarios/4/usuario_img.jpg', 3, '', '', '', '', '');
+INSERT INTO `usuario` VALUES (5, '', 'Asistente2', '', '', 'Asistente2@j.com', 0, '12', '', 3, '', '', '', '', '');
+INSERT INTO `usuario` VALUES (6, '', 'Organizador1', '', '', 'organizador1@gmail.com', 0, '12', '', 2, '', '', '', '', '');
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `usuario_has_comite`
+-- 
+
+CREATE TABLE `usuario_has_comite` (
+  `usuario_idUsuario` int(11) NOT NULL,
+  `comite_idComite` int(11) NOT NULL,
+  `evento_idEvento` int(11) NOT NULL,
+  PRIMARY KEY  (`usuario_idUsuario`,`comite_idComite`),
+  KEY `fk_usuario_has_comite_usuario1` (`usuario_idUsuario`),
+  KEY `fk_usuario_has_comite_comite1` (`comite_idComite`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 
+-- Volcar la base de datos para la tabla `usuario_has_comite`
+-- 
+
+INSERT INTO `usuario_has_comite` VALUES (4, 7, 1);
+
+-- --------------------------------------------------------
+
+-- 
+-- Estructura de tabla para la tabla `usuario_has_evento`
+-- 
+
+CREATE TABLE `usuario_has_evento` (
+  `usuario_idUsuario` int(11) NOT NULL,
+  `evento_idEvento` int(11) NOT NULL,
+  `estado` varchar(10) NOT NULL,
+  PRIMARY KEY  (`usuario_idUsuario`,`evento_idEvento`),
+  KEY `fk_usuario_has_evento_usuario1` (`usuario_idUsuario`),
+  KEY `fk_usuario_has_evento_evento1` (`evento_idEvento`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- 
+-- Volcar la base de datos para la tabla `usuario_has_evento`
+-- 
+
+INSERT INTO `usuario_has_evento` VALUES (4, 1, 'activo');
+INSERT INTO `usuario_has_evento` VALUES (5, 1, 'activo');
+INSERT INTO `usuario_has_evento` VALUES (5, 2, 'pendiente');
+INSERT INTO `usuario_has_evento` VALUES (4, 2, 'pendiente');
