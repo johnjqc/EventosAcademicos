@@ -19,6 +19,10 @@ $(function() {
 $(document).on('pageinit','#page_usuarios',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
 	window.localStorage.setItem('activeUsuario', -1);
+	if (localStorage.getItem('idUsuario') != -1) {
+		window.localStorage.setItem('activeUsuario', localStorage.getItem('idUsuario'));
+	}
+	
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_usuario.php?jsoncallback=?";
 	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
@@ -44,7 +48,7 @@ $(document).on('pageinit','#page_usuarios',function(e){
                 div_output.load();
             }
             $.each(data, function(i,item) {
-            	output = '<li id="usuario' + item.idUsuario + '"><a href="g_usuario_q.html">';
+            	output = '<li id="usuario' + item.idUsuario + '"><a href="g_usuario_q.html" data-ajax="false" >';
             	if (!$.isEmptyObject(item.usu_imagen)) {
             		output += '<img src="' + httpImagen + item.usu_imagen + '">';
             	}
@@ -95,17 +99,89 @@ $(document).on('pageinit','#page_usuario_query',function(e){
         	div_output.empty();
         	
             $.each(data, function(i,item){
-            	output = '<div class="ui-body ui-body-a ui-corner-all ">';
+//            	output = '<div class="ui-body ui-body-a ui-corner-all ">';
+            	output = '<ul data-role="listview" data-inset="true">';
             	if (!$.isEmptyObject(item.usu_imagen)) {
+            		output += '<li class="ui-field-contain">';
                     output += '<div class="card-image">';
                     output += '<img alt="home" src="' + httpImagen + item.usu_imagen + '" />';
                     output += '</div>';
-                    output += '<div class="card-separator"></div>';
+                    output += '</li>';
                 }
-                output += '<p><h1>' + item.usu_identificacion + '</h1></p>';
-                output += '<p>' + item.usu_nombre + ' ' + item.usu_apellido + '</p>';
-                output += '<p>' + item.usu_email + '</p>';
-                output += '</div>';
+            	if (!$.isEmptyObject(item.usu_identificacion)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="identificacion">Identificacion:</label>';
+            		output += '<spam id="identificacion"><h1>' + item.usu_identificacion + '</h1></spam>';
+                    output += '</li>';
+            	}
+            	if (!$.isEmptyObject(item.usu_nombre)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="name">Nombre:</label>';
+            		output += '<spam id="name">' + item.usu_nombre + ' ' + item.usu_apellido + '</spam>';
+                    output += '</li>';
+            	}
+            	if (!$.isEmptyObject(item.usu_email)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="email">Email:</label>';
+            		output += '<spam id="email">' + item.usu_email + '</spam>';
+                    output += '</li>';
+            	}
+            	if (!$.isEmptyObject(item.usu_nacionalidad)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="nat">Nacionalidad:</label>';
+            		output += '<spam id="nat">' + item.usu_nacionalidad + '</spam>';
+                    output += '</li>';
+            	}
+            	if (!$.isEmptyObject(item.usu_telefono)) {
+            		if (item.usu_telefono != 0) {
+            			output += '<li class="ui-field-contain">';
+                		output += '<label for="phone">Telefono:</label>';
+                		output += '<spam id="phone">' + item.usu_telefono + '</spam>';
+                        output += '</li>';
+            		}
+            	}
+            	if (!$.isEmptyObject(item.usu_perfil)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="profile">Perfil:</label>';
+            		if (item.usu_perfil == 1) {
+                    	output += '<spam id="profile">Coordinador</spam>';
+                    }
+                    if (item.usu_perfil == 2) {
+                    	output += '<spam id="profile">Organizador</spam>';
+                    }
+                    if (item.usu_perfil == 3) {
+                    	output += '<spam id="profile">Asistente</spam>';
+                    }
+                    if (item.usu_perfil == 4) {
+                    	output += '<spam id="profile">Ponente</spam>';
+                    }
+                    output += '</li>';
+            	}
+            	if (!$.isEmptyObject(item.usu_institucion)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="institucion">Institucion:</label>';
+            		output += '<spam id="institucion">' + item.usu_institucion + '</spam>';
+                    output += '</li>';
+            	}
+            	if (!$.isEmptyObject(item.usu_nivel_academico)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="nivel_academico">Nivel academico:</label>';
+            		output += '<spam id="nivel_academico">' + item.usu_nivel_academico + '</spam>';
+                    output += '</li>';
+            	}
+            	if (!$.isEmptyObject(item.usu_profesion)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="profesion">Profesion:</label>';
+            		output += '<spam id="profesion">' + item.usu_profesion + '</spam>';
+                    output += '</li>';
+            	}
+            	if (!$.isEmptyObject(item.usu_biografia)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="biografia">Biografia:</label>';
+            		output += '<spam id="biografia">' + item.usu_biografia + '</spam>';
+                    output += '</li>';
+            	}
+                output += '</ul>';
                 div_output.append(output);
                 div_output.load();
             });

@@ -29,13 +29,14 @@
     <div data-role="panel" id="mypanel" data-display="overlay" data-theme="f">
         <ul data-role="listview" id="list_menu" data-theme="f">
             <li data-icon="delete" data-theme="c"><a href="#" data-rel="close" >Close</a></li>
-            <li><a href="#">Mi Perfil</a></li>
-            <li><a href="g_comite.html" data-ajax="false">Comites</a></li>
-            <li><a href="g_encuesta.html" data-ajax="false">Encuestas</a></li>
-            <li><a href="g_lugar.html" data-ajax="false">Lugares</a></li>
-            <li><a href="g_patrocinador.html" data-ajax="false">Patrocinadores</a></li>
-            <li><a href="g_publicacion.html" data-ajax="false">Publicaciones</a></li>
-            <li><a href="g_usuario.html" data-ajax="false">Usuarios</a></li>
+            <li><a id="mnuPerfil" href="g_usuario_q.html" data-ajax="false">Mi Perfil</a></li>
+            <li><a id="mnuComites" href="g_comite.html" data-ajax="false">Comites</a></li>
+            <li><a id="mnuEncuestas" href="g_encuesta.html" data-ajax="false">Encuestas</a></li>
+            <li><a id="mnuInscripciones" href="g_inscripcion.html" data-ajax="false">Inscripciones</a></li>
+            <li><a id="mnuLugares" href="g_lugar.html" data-ajax="false">Lugares</a></li>
+            <li><a id="mnuPatrocinadores" href="g_patrocinador.html" data-ajax="false">Patrocinadores</a></li>
+            <li><a id="mnuPublicaciones" href="g_publicacion.html" data-ajax="false">Publicaciones</a></li>
+            <li><a id="mnuUsuarios" href="g_usuario.html" data-ajax="false">Usuarios</a></li>
             <li data-icon="power"><a id="logout" href="#" data-ajax="false">Logout</a></li>
         </ul>
     </div>
@@ -43,7 +44,8 @@
     <div data-role="header" data-position="fixed">
         <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-ajax="false" href="../index.html" >Only Icon</a>
         <div id="custom-border-radius" class="ui-btn-right">
-        	<a id="btn_subscribe" href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop" 
+        	<a id="btn_inscripcion" href="g_inscripcion.html" data-ajax="false"  class="ui-btn ui-corner-all ui-icon-action ui-btn-icon-notext">Only Icon</a>
+        	<a id="btn_subscribe" href="#popupSubscribe" data-rel="popup" data-position-to="window" data-transition="pop" 
         		class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext">Only Icon</a>
         	<a id="btn_deleteEvento" href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop" 
         		class="ui-btn ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-notext">Only Icon</a>
@@ -136,57 +138,57 @@
 		</div>
 		
 		<div id="menu_asistente_ponente" class="ui-grid-b">
-		    <div class="ui-block-a" id="btnSponsor">
+		    <div class="ui-block-a" id="btnSponsor34">
 		    	<div class="ui-body ui-body-a ui-corner-all">
 		    		<img alt="sponsor" src="../images/sponsor.png" style="width: auto; max-width: 100%;">
 		    		<div >Patrocinadores</div>
 		    	</div>
 		    </div>
-			<div class="ui-block-b" id="btnCalendar">
+			<div class="ui-block-b" id="btnCalendar34">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="calendar" src="../images/calendar.png" style="width: auto; max-width: 100%;">
 					<div >Agenda</div>
 				</div>
 			</div>
-			<div class="ui-block-c" id="btnCommittee">
+			<div class="ui-block-c" id="btnCommittee34">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="committee" src="../images/committee.png" style="width: auto; max-width: 100%;">
 					<div >Comite</div>
 				</div>
 			</div>
 			
-			<div class="ui-block-a" id="btnFiles">
+			<div class="ui-block-a" id="btnFiles34">
 		    	<div class="ui-body ui-body-a ui-corner-all">
 		    		<img alt="report" src="../images/files.png" style="width: auto; max-width: 100%;">
 		    		<div >Memorias</div>
 		    	</div>
 		    </div>
-			<div class="ui-block-b" id="btnPlaces">
+			<div class="ui-block-b" id="btnPlaces34">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="places" src="../images/places.png" style="width: auto; max-width: 100%;">
 					<div >Lugares</div>
 				</div>
 			</div>
-			<div class="ui-block-c" id="btnGallery">
+			<div class="ui-block-c" id="btnGallery34">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="gallery" src="../images/gallery.png" style="width: auto; max-width: 100%;">
 					<div >Galeria</div>
 				</div>
 			</div>
 			
-			<div class="ui-block-a" id="btnContac">
+			<div class="ui-block-a" id="btnContac34">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="gallery" src="../images/contac.png" style="width: auto; max-width: 100%;">
 					<div >Contacto</div>
 				</div>
 			</div>
-			<div class="ui-block-b" id="btnPoll">
+			<div class="ui-block-b" id="btnPoll34">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="poll" src="../images/poll.png" style="width: auto; max-width: 100%;">
 					<div >Encuesta</div>
 				</div>
 			</div>
-			<div class="ui-block-c" id="btnInfo">
+			<div class="ui-block-c" id="btnInfo34">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="poll" src="../images/info.png" style="width: auto; max-width: 100%;">
 					<div >Informacion</div>
@@ -195,45 +197,45 @@
 		</div>
 		
 		<div id="menu_invitado" class="ui-grid-b">
-		    <div class="ui-block-a" id="btnSponsor">
+		    <div class="ui-block-a" id="btnSponsor0">
 		    	<div class="ui-body ui-body-a ui-corner-all">
 		    		<img alt="sponsor" src="../images/sponsor.png" style="width: auto; max-width: 100%;">
 		    		<div >Patrocinadores</div>
 		    	</div>
 		    </div>
-			<div class="ui-block-b" id="btnCalendar">
+			<div class="ui-block-b" id="btnCalendar0">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="calendar" src="../images/calendar.png" style="width: auto; max-width: 100%;">
 					<div >Agenda</div>
 				</div>
 			</div>
-			<div class="ui-block-c" id="btnCommittee">
+			<div class="ui-block-c" id="btnCommittee0">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="committee" src="../images/committee.png" style="width: auto; max-width: 100%;">
 					<div >Comite</div>
 				</div>
 			</div>
 			
-			<div class="ui-block-a" id="btnInfo">
+			<div class="ui-block-a" id="btnInfo0">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="poll" src="../images/info.png" style="width: auto; max-width: 100%;">
 					<div >Informacion</div>
 				</div>
 			</div>
-			<div class="ui-block-b" id="btnPlaces">
+			<div class="ui-block-b" id="btnPlaces0">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="places" src="../images/places.png" style="width: auto; max-width: 100%;">
 					<div >Lugares</div>
 				</div>
 			</div>
-			<div class="ui-block-c" id="btnGallery">
+			<div class="ui-block-c" id="btnGallery0">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="gallery" src="../images/gallery.png" style="width: auto; max-width: 100%;">
 					<div >Galeria</div>
 				</div>
 			</div>
 			
-			<div class="ui-block-a" id="btnContac">
+			<div class="ui-block-a" id="btnContac0">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<img alt="gallery" src="../images/contac.png" style="width: auto; max-width: 100%;">
 					<div >Contacto</div>
@@ -251,6 +253,13 @@
 			<h3 class="ui-title">Esta seguro de eliminar el evento?</h3>
 			<p>Esta accion no se puede deshacer.</p>
 			<a href="#" id="btn_delete_evento" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-ajax="false" data-transition="flow">Eliminar</a>
+			<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancelar</a>
+		</div>
+	</div>
+	<div data-role="popup" id="popupSubscribe" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+		<div role="main" class="ui-content">
+			<h3 class="ui-title">Se realizara la subscripción al evento.</h3>
+			<a href="#" id="btn_subscribe_evento" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-ajax="false" data-transition="flow">Aceptar</a>
 			<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancelar</a>
 		</div>
 	</div>

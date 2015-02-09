@@ -22,6 +22,12 @@ $(function() {
 
 $(document).on('pageinit','#app_home',function(e){
 	window.localStorage.setItem('activeEvent', -1);
+	
+	if ($.isEmptyObject(localStorage.getItem('usu_perfil'))) {
+		window.localStorage.setItem('usu_perfil', -1);
+		window.localStorage.setItem('idUsuario', -1);
+	}
+	
     $('#saveServer').on('tap', function() {
         window.localStorage.setItem('text_ip', $('#text_ip').val());
         window.localStorage.setItem('text_puerto', $('#text_puerto').val());
@@ -49,6 +55,7 @@ $(document).on('pageshow','#app_home', function(e) {
 
 $(document).on('pageinit','#pageEvento',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
+	idUsuario = window.localStorage.getItem('idUsuario');
 	getEvento();
 	
 	$("#btnSpeaker").bind( "tap", function(e) {
@@ -57,15 +64,43 @@ $(document).on('pageinit','#pageEvento',function(e){
 	$("#btnCalendar").bind( "tap", function(e) {
 		window.location = "g_agenda.html";
     });
+	$("#btnCalendar0").bind( "tap", function(e) {
+		window.location = "g_agenda.html";
+    });
+	$("#btnCalendar34").bind( "tap", function(e) {
+		window.location = "g_agenda.html";
+    });
+	
 	$("#btnCommittee").bind( "tap", function(e) {
 		window.location = "r_comite.html";
 	});
+	$("#btnCommittee0").bind( "tap", function(e) {
+		window.location = "r_comite.html";
+	});
+	$("#btnCommittee34").bind( "tap", function(e) {
+		window.location = "r_comite.html";
+	});
+	
 	$("#btnSponsor").bind( "tap", function(e) {
 		window.location = "r_patrocinador.html";
 	});
+	$("#btnSponsor0").bind( "tap", function(e) {
+		window.location = "r_patrocinador.html";
+	});
+	$("#btnSponsor34").bind( "tap", function(e) {
+		window.location = "r_patrocinador.html";
+	});
+	
 	$("#btnPlaces").bind( "tap", function(e) {
 		window.location = "r_lugar.html";
 	});
+	$("#btnPlaces0").bind( "tap", function(e) {
+		window.location = "r_lugar.html";
+	});
+	$("#btnPlaces34").bind( "tap", function(e) {
+		window.location = "r_lugar.html";
+	});
+	
 	$("#btnAttendees").bind( "tap", function(e) {
 		window.location = "asistentes.html";
 	});
@@ -75,18 +110,75 @@ $(document).on('pageinit','#pageEvento',function(e){
 	$("#btnPoll").bind( "tap", function(e) {
 		window.location = "r_encuesta.html";
 	});
+	$("#btnPoll34").bind( "tap", function(e) {
+		window.location = "r_encuesta.html";
+	});
+	
 	$("#btnGallery").bind( "tap", function(e) {
 		window.location = "g_galeria.html";
 	});
+	$("#btnGallery0").bind( "tap", function(e) {
+		window.location = "g_galeria.html";
+	});
+	$("#btnGallery34").bind( "tap", function(e) {
+		window.location = "g_galeria.html";
+	});
+	
 	$("#btnFiles").bind( "tap", function(e) {
 		window.location = "r_publicacion.html";
 	});
+	$("#btnFiles34").bind( "tap", function(e) {
+		window.location = "r_publicacion.html";
+	});
+	
 	$("#btnInfo").bind( "tap", function(e) {
 		//window.location = "informacion.html";
 	});
+	$("#btnInfo0").bind( "tap", function(e) {
+		//window.location = "informacion.html";
+	});
+	$("#btnInfo34").bind( "tap", function(e) {
+		//window.location = "informacion.html";
+	});
+	
 	$("#btnContac").bind( "tap", function(e) {
 		window.location = "contacto.html";
 	});
+	$("#btnContac0").bind( "tap", function(e) {
+		window.location = "contacto.html";
+	});
+	$("#btnContac34").bind( "tap", function(e) {
+		window.location = "contacto.html";
+	});
+	
+	var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_evento.php?jsoncallback=?";
+	
+	$('#btn_subscribe_evento').bind('tap', function(e) {
+		$.ajax({
+			url: urlServer,
+			type: 'POST',
+			data: {'accion': 'subscribir_evento', idEvento: activeEvent, idUsuario: idUsuario},
+			cache: false,
+			dataType: 'jsonp',
+			jsonp: 'jsoncallback',
+			success: function(data, textStatus, jqXHR) {
+				if(typeof data.error === 'undefined') {
+					$('#btn_subscribe').hide();
+					alert("Usuario agregado exitosamente");
+					window.history.back();
+				} else {
+					console.log('ERRORS: ' + data.error);
+				}
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log('ERRORS: ' + textStatus);
+				$.mobile.loading( "hide" );
+			},
+			complete: function() {
+				$.mobile.loading( "hide" );
+			}
+		});
+    });
 });
 
 $(document).on('pageshow','#crud_evento',function(e){
@@ -225,6 +317,7 @@ $(document).on('pageinit','#signin',function(e){
 	            	idUsuario = data.idUsuario;
 	            	window.localStorage.setItem('usu_perfil', data.usu_perfil);
 	            	window.localStorage.setItem('idUsuario', data.idUsuario);
+	            	window.localStorage.setItem('activeUsuario', data.idUsuario);
 	            	window.location = "../index.html";
 	            } else {
 	            	$( "#dlg-invalid-credentials" ).popup( "open" );
@@ -338,8 +431,9 @@ function submitForm(event, data) {
 
 function getEvento() {
 	getIpPortserver();
+	idUsuario = window.localStorage.getItem('idUsuario');
     
-    var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_evento.php?jsoncallback=?";
+    var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_evento.php?jsoncallback=?";
     var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
     var output = "";
     var div_output= $('#event_content');
@@ -351,7 +445,7 @@ function getEvento() {
         complete: function(){
             $.mobile.loading("hide");
         },
-        url: archivoValidacion,
+        url: urlServer,
         data: {
             'accion': 'queryEvento', 'evento': activeEvent
         },
@@ -397,6 +491,33 @@ function getEvento() {
             alert('Error conectando al servidor.');
         }
     });
+    
+    $.ajax({
+		url: urlServer,
+		type: 'POST',
+		data: {'accion': 'query_subscribir_evento', idEvento: activeEvent, idUsuario: idUsuario},
+		cache: false,
+		dataType: 'jsonp',
+		jsonp: 'jsoncallback',
+		success: function(data, textStatus, jqXHR) {
+			if(typeof data.error === 'undefined') {
+				$.each(data, function(i,item){ 
+					if (!$.isEmptyObject(item.estado)) {
+						$('#btn_subscribe').hide();
+					}
+				});
+			} else {
+				console.log('ERRORS: ' + data.error);
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log('ERRORS: ' + textStatus);
+			$.mobile.loading( "hide" );
+		},
+		complete: function() {
+			$.mobile.loading( "hide" );
+		}
+	});
 }
 
 function getEvents() {
@@ -500,8 +621,16 @@ function security() {
 		if (usu_perfil == -1) {
 			$("#menu_asistente_ponente").hide();
 			$("#menu_coordinador").hide();
+			
+			$("#btn_menu_home").hide();
+			$("#btnNewEvento").hide();
+			$("#btn_edit_evento").hide();
+			$("#btn_deleteEvento").hide();
+			$("#btn_subscribe").hide();
+			$("#btn_inscripcion").hide();
 		}
 		if (usu_perfil == 1) {
+			$("#btn_subscribe").hide();
 			$("#menu_invitado").hide();
 			$("#menu_asistente_ponente").hide();
 		}
@@ -510,19 +639,22 @@ function security() {
 			$("#menu_asistente_ponente").hide();
 		}
 		if (usu_perfil == 3 || usu_perfil == 4) {
-			$("#menu_invitado").hide();
-			$("#menu_organizador").hide();
-			$("#menu_coordinador").hide();
-		}
-		if (usu_perfil != -1) {
-
-		}
-		if (usu_perfil == -1) {
-			$("#btn_menu_home").hide();
 			$("#btnNewEvento").hide();
 			$("#btn_edit_evento").hide();
 			$("#btn_deleteEvento").hide();
-			$("#btn_subscribe").hide();
+			$("#btn_inscripcion").hide();
+			
+			$("#menu_invitado").hide();
+			$("#menu_organizador").hide();
+			$("#menu_coordinador").hide();
+			
+			$("#mnuComites").hide();
+			$("#mnuEncuestas").hide();
+			$("#mnuLugares").hide();
+			$("#mnuPatrocinadores").hide();
+			$("#mnuPublicaciones").hide();
+			$("#mnuUsuarios").hide();
+			
 		}
 		if (usu_perfil != -1 && usu_perfil != 0) {
 			$("#btnLogin").hide();

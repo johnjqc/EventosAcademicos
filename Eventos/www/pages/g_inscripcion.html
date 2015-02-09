@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/EventosAcademicosTheme.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="../css/eventos.css" />
+
+    <!--<script type="text/javascript" src="js/cordova.js"></script>-->
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="../js/i18next-1.7.7.min.js"></script>
+    <script type="text/javascript" src="../js/inscripcion.js"></script>
+    <script type="text/javascript" src="../js/lenguaje.js"></script>
+	
+    <script type="text/javascript">
+        if (!navigator.userAgent.toLowerCase().match('chrome') or !navigator.userAgent.toLowerCase().match('firefox')) {
+                document.write("<script type='text/javascript' src='cordova.js'><\/script>");
+        }
+    </script>
+    <title>Eventos Academicos</title>
+</head>
+<body>
+
+<div data-role="page" id="pageInscripcion" data-theme="c">
+    <div data-role="panel" id="mypanel" data-display="overlay" data-theme="f">
+        <ul data-role="listview" id="list_menu" data-theme="f">
+            <li data-icon="delete" data-theme="c"><a href="#" data-rel="close" >Close</a></li>
+            <li><a id="mnuPerfil" href="g_usuario_q.html" data-ajax="false">Mi Perfil</a></li>
+            <li><a id="mnuComites" href="g_comite.html" data-ajax="false">Comites</a></li>
+            <li><a id="mnuEncuestas" href="g_encuesta.html" data-ajax="false">Encuestas</a></li>
+            <li><a id="mnuInscripciones" href="g_inscripcion.html" data-ajax="false">Inscripciones</a></li>
+            <li><a id="mnuLugares" href="g_lugar.html" data-ajax="false">Lugares</a></li>
+            <li><a id="mnuPatrocinadores" href="g_patrocinador.html" data-ajax="false">Patrocinadores</a></li>
+            <li><a id="mnuPublicaciones" href="g_publicacion.html" data-ajax="false">Publicaciones</a></li>
+            <li><a id="mnuUsuarios" href="g_usuario.html" data-ajax="false">Usuarios</a></li>
+            <li data-icon="power"><a id="logout" href="#" data-ajax="false">Logout</a></li>
+        </ul>
+    </div>
+
+    <div data-role="header" data-position="fixed">
+        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-ajax="false" data-rel="back" href="evento.html" >Only Icon</a>
+        <div id="custom-border-radius" class="ui-btn-right">
+        	<a href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
+                data-display="overlay">Only Icon</a>
+        </div>
+        <span class="ui-title" ></span>
+    </div>
+    <div data-role="content">
+    	<div data-role="collapsibleset" data-theme="a" data-content-theme="b">
+    		<div data-role="collapsible">
+    			<h2>Solicitudes</h2>
+				<ul id="listInscripciones" data-role="listview" data-theme="a" data-inset="true" data-split-icon="check" data-split-theme="b"
+					data-filter="true" data-filter-theme="a" data-divider-theme="b">
+					
+				</ul>
+			</div>
+		</div>
+		<div data-role="collapsibleset" data-theme="a" data-content-theme="b">
+    		<div data-role="collapsible">
+    			<h2>Inscritos</h2>
+				<ul id="listInscritos" data-role="listview" data-theme="a" data-inset="true" data-split-icon="delete" data-split-theme="d"
+					data-filter="true" data-filter-theme="a" data-divider-theme="b">
+					
+				</ul>
+			</div>
+		</div>
+		
+    </div>
+</div>
+</body>
+</html>

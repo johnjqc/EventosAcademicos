@@ -37,6 +37,21 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
+		if ($accion == "query_subscribir_evento") {
+			$rows = array();
+			
+			$idEvento = $_REQUEST['idEvento'];
+			$idComite = $_REQUEST['idUsuario'];
+			
+			$sth = mysql_query("SELECT * FROM usuario_has_evento WHERE usuario_idUsuario= '$idUsuario' and evento_idEvento='$idEvento'") or $rows["error"] =mysql_error();
+			while($r = mysql_fetch_assoc($sth)) {
+				$rows[] = $r;
+			}
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
 		if(isset($_GET['files'])) {  
 			$error = false;
 			$files = array();
@@ -98,6 +113,19 @@
 			$rows["id"] = "$nextId";
 			$rows["name"] = $t_img_path;
 			
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "subscribir_evento") {
+			$rows = array();
+			
+			$idEvento = $_REQUEST['idEvento'];
+			$idComite = $_REQUEST['idUsuario'];
+			
+			$res = mysql_query("INSERT INTO usuario_has_evento ( usuario_idUsuario, evento_idEvento, estado)
+				VALUES ('$idUsuario', '$idEvento', 'pendiente') ") or $rows["error"] =mysql_error();
 			
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
