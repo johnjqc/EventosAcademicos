@@ -19,9 +19,9 @@ $(function() {
 $(document).on('pageinit','#page_usuarios',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
 	window.localStorage.setItem('activeUsuario', -1);
-	if (localStorage.getItem('idUsuario') != -1) {
-		window.localStorage.setItem('activeUsuario', localStorage.getItem('idUsuario'));
-	}
+//	if (localStorage.getItem('idUsuario') != -1) {
+//		window.localStorage.setItem('activeUsuario', localStorage.getItem('idUsuario'));
+//	}
 	
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_usuario.php?jsoncallback=?";

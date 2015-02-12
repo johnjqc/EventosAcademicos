@@ -75,7 +75,7 @@
 			$idComite = $_REQUEST['idComite'];
 			
 			$sth = mysql_query("select * FROM usuario a JOIN usuario_has_evento b ON a.idUsuario = b.usuario_idUsuario
-				AND b.evento_idEvento ='$idEvento' AND b.estado = 'activo' WHERE a.usu_perfil = '3' and a.idUsuario not in (
+				AND b.evento_idEvento ='$idEvento' AND b.estado = 'activo' WHERE a.usu_perfil = '2' and a.idUsuario not in (
 					select usuario_idUsuario from usuario_has_comite where comite_idComite = '$idComite'
 				)") or $rows["error"] =mysql_error();
 			while($r = mysql_fetch_assoc($sth)) {

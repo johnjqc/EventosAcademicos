@@ -132,13 +132,13 @@ $(document).on('pageinit','#pageEvento',function(e){
 	});
 	
 	$("#btnInfo").bind( "tap", function(e) {
-		//window.location = "informacion.html";
+		window.location = "informacion.html";
 	});
 	$("#btnInfo0").bind( "tap", function(e) {
-		//window.location = "informacion.html";
+		window.location = "informacion.html";
 	});
 	$("#btnInfo34").bind( "tap", function(e) {
-		//window.location = "informacion.html";
+		window.location = "informacion.html";
 	});
 	
 	$("#btnContac").bind( "tap", function(e) {
@@ -225,6 +225,103 @@ $(document).on('pageshow','#crud_evento',function(e){
 	
 });
 
+
+$(document).on('pageinit','#page_info',function(e){
+	activeEvent = window.localStorage.getItem('activeEvent');
+	
+	getIpPortserver();
+    
+    var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_evento.php?jsoncallback=?";
+    var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
+    var div_output = $('#contenido');
+    
+    $.ajax({
+        beforeSend: function(){
+            showLoading();
+        },
+        complete: function(){
+            $.mobile.loading("hide");
+        },
+        url: archivoValidacion,
+        data: {
+            'accion': 'queryEvento', 'evento': activeEvent
+        },
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        timeout: 6000,
+        success: function(data, status){
+        	div_output.empty();
+        	
+        	$.each(data, function(i,item){ 
+        		if (!$.isEmptyObject(item.eve_facebook) || !$.isEmptyObject(item.eve_facebook) || !$.isEmptyObject(item.eve_pagina_web)) {
+	        		output = '<div class="ui-body ui-body-a ui-corner-all ">';
+	        		output += '<div data-role="controlgroup" data-type="horizontal">';
+	        		if (!$.isEmptyObject(item.eve_facebook)) {
+	        			output += '<a id="btnFb" href="' + item.eve_facebook + '" class="ui-corner-all"><img alt="home" src="../images/facebook.png" /></a>';
+	        			
+	        			
+	        		}
+	        		if (!$.isEmptyObject(item.eve_twitter)) {
+	        			output += '<a href="' + item.eve_twitter + '" class="ui-corner-all"><img alt="home" src="../images/twitter.png" /></a>';
+	        		}
+	        		if (!$.isEmptyObject(item.eve_pagina_web)) {
+	        			output += '<a id="btnWeb" href="#" class="ui-corner-all"><img alt="home" src="../images/web.png" /></a>';
+	        			
+	        			
+	        		}
+	        		output += '</div>';
+	        		output += '</div><br>';
+        		} else {
+        			output = '';
+        		}
+        		$('#btnWeb').bind( 'tap', function(e) {
+        			alert(1);
+//				ChromeLauncher.open(item.eve_pagina_web);
+		    });
+        		output += '<div class="ui-body ui-body-a ui-corner-all ">';
+				if (!$.isEmptyObject(item.eve_fecha_inicio)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="identificacion">Fecha recepcion de articulos:</label>';
+            		output += '<spam id="identificacion">' + item.eve_fecha_inicio + '</spam>';
+                    output += '</li>';
+            	}
+				if (!$.isEmptyObject(item.eve_fecha_fin)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="identificacion">Fecha Inicio:</label>';
+            		output += '<spam id="identificacion">' + item.eve_fecha_fin + '</spam>';
+                    output += '</li>';
+            	}
+				if (!$.isEmptyObject(item.eve_recepcion_articulos)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="identificacion">Fecha Fin:</label>';
+            		output += '<spam id="identificacion">' + item.eve_recepcion_articulos + '</spam>';
+                    output += '</li>';
+            	}
+				if (!$.isEmptyObject(item.eve_temas)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="identificacion">Fecha recepcion de articulos:</label>';
+            		output += '<spam id="identificacion">' + item.eve_temas + '</spam>';
+                    output += '</li>';
+            	}
+				if (!$.isEmptyObject(item.eve_costos)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="identificacion">Fecha recepcion de articulos:</label>';
+            		output += '<spam id="identificacion">' + item.eve_costos + '</spam>';
+                    output += '</li>';
+            	}
+				output += '</div><br>';
+				
+				div_output.append(output);
+				div_output.load();
+        	});
+        },
+        error: function(){
+            $.mobile.loading("hide");
+            alert('Error conectando al servidor.');
+        }
+    });
+	
+});
 
 $(document).on('pageinit','#signup',function(e){
 	getIpPortserver();
