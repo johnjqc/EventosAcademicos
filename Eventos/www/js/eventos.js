@@ -59,7 +59,7 @@ $(document).on('pageinit','#pageEvento',function(e){
 	getEvento();
 	
 	$("#btnSpeaker").bind( "tap", function(e) {
-    	
+		window.location = "r_ponentes.html";
     });
 	$("#btnCalendar").bind( "tap", function(e) {
 		window.location = "g_agenda.html";
@@ -102,7 +102,7 @@ $(document).on('pageinit','#pageEvento',function(e){
 	});
 	
 	$("#btnAttendees").bind( "tap", function(e) {
-		window.location = "asistentes.html";
+		window.location = "r_asistentes.html";
 	});
 	$("#btnReport").bind( "tap", function(e) {
 		
@@ -265,19 +265,13 @@ $(document).on('pageinit','#page_info',function(e){
 	        			output += '<a href="' + item.eve_twitter + '" class="ui-corner-all"><img alt="home" src="../images/twitter.png" /></a>';
 	        		}
 	        		if (!$.isEmptyObject(item.eve_pagina_web)) {
-	        			output += '<a id="btnWeb" href="#" class="ui-corner-all"><img alt="home" src="../images/web.png" /></a>';
-	        			
-	        			
+	        			output += '<a id="btnWeb" rel="external"  href="' + item.eve_pagina_web + '" class="ui-corner-all"><img alt="home" src="../images/web.png" /></a>';
 	        		}
 	        		output += '</div>';
 	        		output += '</div><br>';
         		} else {
         			output = '';
         		}
-        		$('#btnWeb').bind( 'tap', function(e) {
-        			alert(1);
-//				ChromeLauncher.open(item.eve_pagina_web);
-		    });
         		output += '<div class="ui-body ui-body-a ui-corner-all ">';
 				if (!$.isEmptyObject(item.eve_fecha_inicio)) {
             		output += '<li class="ui-field-contain">';

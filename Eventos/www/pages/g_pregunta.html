@@ -13,7 +13,7 @@
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/jquery.mobile-1.4.5.min.js"></script>
     <script type="text/javascript" src="../js/i18next-1.7.7.min.js"></script>
-    <script type="text/javascript" src="../js/encuesta.js"></script>
+    <script type="text/javascript" src="../js/pregunta.js"></script>
     <script type="text/javascript" src="../js/lenguaje.js"></script>
 	
     <script type="text/javascript">
@@ -25,7 +25,7 @@
 </head>
 <body>
 
-<div data-role="page" id="page_encuesta_query" data-theme="c">
+<div data-role="page" id="pagepregunta" data-theme="c">
     <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
         <ul data-role="listview">
             <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
@@ -36,37 +36,18 @@
     </div>
 
     <div data-role="header" data-position="fixed">
-        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-rel="back" href="../index.html" >Only Icon</a>
+        <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-ajax="false" data-rel="back" href="evento.html" >Only Icon</a>
         <div id="custom-border-radius" class="ui-btn-right">
-        	<a href="g_pregunta.html" data-ajax="false" id="btn_edit_pregunta"
-        		class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext">Only Icon</a>
-        	<a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop"
-        		class="ui-btn ui-btn-d ui-corner-all ui-icon-delete ui-btn-icon-notext">Only Icon</a>
-        	<a href="g_encuesta_cu.html" data-ajax="false" id="btn_edit_encuesta"
-        		class="ui-btn ui-corner-all ui-icon-edit ui-btn-icon-notext">Only Icon</a>
-            <a id="btn_popup_server" href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
+        	<a  href="g_pregunta_cu.html" data-ajax="false" class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext ">+</a>
+            <a href="#mypanel" class="ui-btn ui-corner-all ui-icon-bullets ui-btn-icon-notext"
                 data-display="overlay">Only Icon</a>
         </div>
         <span class="ui-title" ></span>
     </div>
-    <div data-role="content" >
-		<div class="ui-body ui-body-a ui-corner-all ">
-			<h1 id="nombre"></h1>
-			<p id="descripcion"></p>
-		</div>
-		
-		<div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
-			<div data-role="header" data-theme="a">
-				<h1>Eliminar encuesta</h1>
-			</div>
-			<div role="main" class="ui-content">
-				<h3 class="ui-title">Esta seguro de eliminar el encuesta?</h3>
-				<p>Esta accion no se puede deshacer.</p>
-				<a href="#" id="btn_delete_encuesta" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-ajax="false" data-transition="flow">Eliminar</a>
-				<a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancelar</a>
-			</div>
-		</div>
-		
+    <div data-role="content">
+		<ul id="listpreguntas" data-role="listview" data-inset="true" data-theme="a">
+			
+		</ul>
     </div>
 </div>
 </body>
