@@ -145,7 +145,7 @@ $(document).on('pageinit','#pageEvento',function(e){
 		window.location = "contacto.html";
 	});
 	$("#btnContac0").bind( "tap", function(e) {
-		window.location = "contacto.html";
+		window.location = "login.html";
 	});
 	$("#btnContac34").bind( "tap", function(e) {
 		window.location = "contacto.html";

@@ -214,6 +214,7 @@ $(document).on('pageinit','#page_agenda',function(e) {
 $(document).on('pageinit','#page_agenda_query',function(e){
 	activeAgenda = localStorage.getItem('activeAgenda');
 	activeEvent = localStorage.getItem('activeEvent');
+	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_agenda.php?jsoncallback=?";
@@ -271,7 +272,12 @@ $(document).on('pageinit','#page_agenda_query',function(e){
 		            		output += '<img src="' + httpImagen + item.esp_imagen + '">';
 		            	}
 		        		output += '<h2>' + item.esp_nombre + '</h2></a>';
-		    			output += '<a id="delete_r_espacio' + item.idEspacio + '" href="#" >Elimina Relacion</a>';
+		        		if (!$.isEmptyObject(usu_perfil)) {
+		        			if (usu_perfil != -1) {
+		        				output += '<a id="delete_r_espacio' + item.idEspacio + '" href="#" >Elimina Relacion</a>';
+		        			}
+		        		}
+		    			
 						output += '</li>';
 						list_output.append(output);
 						list_output.listview("refresh");
@@ -321,9 +327,7 @@ $(document).on('pageinit','#page_agenda_query',function(e){
 		        }
 		    });
 			
-//			$("#list_espacios").append(output);
 			div_output.load();
-//			$("#list_espacios").listview("refresh");
         },
         beforeSend: function(){
             showLoading();
@@ -470,8 +474,12 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
-		if (usu_perfil != -1) {
-			
+		if (usu_perfil == -1) {
+			$("#btn_menu_home").hide();
+			$("#btn_new_agenda").hide();
+			$("#btn_r_espacio").hide();
+			$("#btnm_delete_agenda").hide();
+			$("#btn_edit_agenda").hide();
 		}
 	}
 }

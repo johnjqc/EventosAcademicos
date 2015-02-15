@@ -16,6 +16,8 @@ $(function() {
 $(document).on('pageinit','#page_r_comite',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
 	window.localStorage.setItem('activeComite', -1);
+	usu_perfil = window.localStorage.getItem('usu_perfil');
+	
 	getIpPortserver();
 	var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_comite.php?jsoncallback=?";
 	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
@@ -44,7 +46,11 @@ $(document).on('pageinit','#page_r_comite',function(e){
             	output = '<li id="r_comite' + item.idComite + '"><a data-ajax="false" href="r_comite_usuarios.html">';
 //            	output += '<img src="' + httpImagen + item.usu_imagen + '">';
         		output += '<h2>' + item.com_nombre + '</h2></a>';
-    			output += '<a id="delete_r_comite' + item.idComite + '" href="#" >Elimina Relacion</a>';
+        		if (!$.isEmptyObject(usu_perfil)) {
+        			if (usu_perfil != -1) {
+        				output += '<a id="delete_r_comite' + item.idComite + '" href="#" >Elimina Relacion</a>';
+        			}
+        		}
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
@@ -165,6 +171,8 @@ $(document).on('pageinit','#page_r_comite_evento',function(e){
 $(document).on('pageinit','#page_comite_usuarios_query',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
 	activeComite = localStorage.getItem('activeComite');
+	usu_perfil = window.localStorage.getItem('usu_perfil');
+	
 	getIpPortserver();
 	var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_comite.php?jsoncallback=?";
 	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
@@ -234,7 +242,11 @@ $(document).on('pageinit','#page_comite_usuarios_query',function(e){
             		output += '<img src="' + httpImagen + item.usu_imagen + '">';
             	}
         		output += '<h2>' + item.usu_nombre+ ' ' + item.usu_apellido + '</h2></a>';
-    			output += '<a id="delete_r_usuario' + item.idUsuario + '" href="#" >Elimina Relacion</a>';
+        		if (!$.isEmptyObject(usu_perfil)) {
+        			if (usu_perfil != -1) {
+        				output += '<a id="delete_r_usuario' + item.idUsuario + '" href="#" >Elimina Relacion</a>';
+        			}
+        		}
 				output += '</li>';
 				list_output.append(output);
 				list_output.listview("refresh");
@@ -378,7 +390,13 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
-		if (usu_perfil != -1) {
+		if (usu_perfil == -1) {
+			$("#btn_menu_home").hide();
+			$("#btn_r_espacio").hide();
+			$("#btn_r_usuario").hide();
+			$("#btn_confirm_delete_comite").hide();
+			$("#btn_edit_comite").hide();
+			
 			
 		}
 	}

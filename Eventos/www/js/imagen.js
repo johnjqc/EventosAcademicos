@@ -244,8 +244,10 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
-		if (usu_perfil != -1) {
-			
+		if (usu_perfil == -1) {
+			$("#btn_menu_home").hide();
+			$("#btn_confirm_delete_imagen").hide();
+			$("#btn_edit_imagen").hide();
 		}
 	}
 }

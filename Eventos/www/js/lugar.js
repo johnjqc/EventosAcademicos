@@ -329,8 +329,11 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
-		if (usu_perfil != -1) {
-			
+		if (usu_perfil == -1) {
+			$("#btn_menu_home").hide();
+			$("#btn_new_lugar").hide();
+			$("#btn_confirm_delete_lugar").hide();
+			$("#btn_edit_lugar").hide();
 		}
 	}
 }

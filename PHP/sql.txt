@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Servidor: localhost
--- Tiempo de generación: 08-02-2015 a las 20:56:15
+-- Tiempo de generación: 15-02-2015 a las 14:06:52
 -- Versión del servidor: 5.0.51
 -- Versión de PHP: 5.2.6
 
@@ -29,7 +29,7 @@ CREATE TABLE `agenda` (
   `evento_idEvento` int(11) NOT NULL,
   PRIMARY KEY  (`idAgenda`,`evento_idEvento`),
   KEY `fk_agenda_evento1` (`evento_idEvento`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- Volcar la base de datos para la tabla `agenda`
@@ -50,7 +50,7 @@ CREATE TABLE `comite` (
   `com_nombre` varchar(45) NOT NULL,
   `com_descripcion` varchar(200) NOT NULL,
   PRIMARY KEY  (`idComite`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- Volcar la base de datos para la tabla `comite`
@@ -93,7 +93,7 @@ CREATE TABLE `encuesta` (
   `enc_nombre` varchar(90) NOT NULL,
   `enc_descripcion` varchar(200) NOT NULL,
   PRIMARY KEY  (`idEncuesta`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- Volcar la base de datos para la tabla `encuesta`
@@ -118,7 +118,7 @@ CREATE TABLE `espacio` (
   `lugar_idLugar` int(11) NOT NULL,
   PRIMARY KEY  (`idEspacio`,`lugar_idLugar`),
   KEY `fk_Espacio_lugar1` (`lugar_idLugar`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- 
 -- Volcar la base de datos para la tabla `espacio`
@@ -166,18 +166,18 @@ CREATE TABLE `evento` (
   `eve_imagen` varchar(100) default NULL,
   `eve_temas` text,
   `eve_costos` text,
-  `eve_recepcion de articulos` date NOT NULL,
+  `eve_recepcion_articulos` date NOT NULL,
   `eve_pagina_web` varchar(45) NOT NULL,
   `eve_facebook` varchar(45) default NULL,
   `eve_twitter` varchar(45) default NULL,
   PRIMARY KEY  (`idEvento`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- Volcar la base de datos para la tabla `evento`
 -- 
 
-INSERT INTO `evento` VALUES (1, 'Sexta semana tecnologica en la Universidad Distrital Francisco Jose de Caldas que se llevara  a cabo en la sede Tecnologica en el mes asignado', 'aun sin descripcion 2', '2015-11-29', '0000-00-00', 0, '', '', NULL, NULL, '0000-00-00', '', NULL, NULL);
+INSERT INTO `evento` VALUES (1, 'Sexta semana tecnologica en la Universidad Distrital Francisco Jose de Caldas que se llevara  a cabo en la sede Tecnologica en el mes asignado', 'aun sin descripcion 2', '2015-11-29', '0000-00-00', 0, '', '', NULL, NULL, '0000-00-00', 'http://evetosud.net63.net', NULL, NULL);
 INSERT INTO `evento` VALUES (2, 'Sexta semana tecnologica en la Universidad Distrital Francisco Jose de Caldas', 'aun sin descripcion', '2015-04-02', '0000-00-00', 0, 'Cartagena', 'eventos/2/portada_evento.jpg', NULL, NULL, '0000-00-00', '', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -199,6 +199,7 @@ CREATE TABLE `evento_has_encuesta` (
 -- 
 
 INSERT INTO `evento_has_encuesta` VALUES (1, 1);
+INSERT INTO `evento_has_encuesta` VALUES (2, 1);
 
 -- --------------------------------------------------------
 
@@ -213,7 +214,7 @@ CREATE TABLE `galeria` (
   `evento_idEvento` int(11) NOT NULL,
   PRIMARY KEY  (`idGaleria`,`evento_idEvento`),
   KEY `fk_galeria_evento1` (`evento_idEvento`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- Volcar la base de datos para la tabla `galeria`
@@ -236,7 +237,7 @@ CREATE TABLE `imagen` (
   `galeria_evento_idEvento` int(11) NOT NULL,
   PRIMARY KEY  (`idImagen`,`galeria_idGaleria`,`galeria_evento_idEvento`),
   KEY `fk_imagen_galeria1` (`galeria_idGaleria`,`galeria_evento_idEvento`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- Volcar la base de datos para la tabla `imagen`
@@ -261,7 +262,7 @@ CREATE TABLE `lugar` (
   `lug_latitud` varchar(20) NOT NULL,
   `lug_longitud` varchar(20) NOT NULL,
   PRIMARY KEY  (`idLugar`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- 
 -- Volcar la base de datos para la tabla `lugar`
@@ -303,7 +304,7 @@ CREATE TABLE `patrocinador` (
   `pat_descripcion` text NOT NULL,
   `pat_imagen` varchar(45) NOT NULL,
   PRIMARY KEY  (`idPatrocinador`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- Volcar la base de datos para la tabla `patrocinador`
@@ -339,17 +340,20 @@ INSERT INTO `patrocinador_has_evento` VALUES (1, 1);
 
 CREATE TABLE `pregunta` (
   `idPregunta` int(11) NOT NULL auto_increment,
-  `pre_pregunta` varchar(45) NOT NULL,
+  `pre_pregunta` varchar(200) NOT NULL,
   `pre_tipo` varchar(45) NOT NULL,
   `encuesta_idEncuesta` int(11) NOT NULL,
   PRIMARY KEY  (`idPregunta`,`encuesta_idEncuesta`),
   KEY `fk_pregunta_encuesta1` (`encuesta_idEncuesta`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- Volcar la base de datos para la tabla `pregunta`
 -- 
 
+INSERT INTO `pregunta` VALUES (1, 'Esta usted de acuerdo con los horarios planteados para la ponencia del dia viernes en la noche?', '2', 1);
+INSERT INTO `pregunta` VALUES (2, 'Pregunta 2', '2', 1);
+INSERT INTO `pregunta` VALUES (3, 'Que opina del evento?', '1', 1);
 
 -- --------------------------------------------------------
 
@@ -369,7 +373,7 @@ CREATE TABLE `publicacion` (
   PRIMARY KEY  (`idPublicacion`,`usuario_idUsuario`,`evento_idEvento`),
   KEY `fk_publicacion_usuario1` (`usuario_idUsuario`),
   KEY `fk_publicacion_evento1` (`evento_idEvento`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- Volcar la base de datos para la tabla `publicacion`
@@ -394,12 +398,15 @@ CREATE TABLE `respuesta` (
   PRIMARY KEY  (`idRespuesta`,`pregunta_idPregunta`,`pregunta_encuesta_idEncuesta`,`pregunta_encuesta_evento_idEvento`,`usuario_idUsuario`),
   KEY `fk_respuesta_pregunta1` (`pregunta_idPregunta`,`pregunta_encuesta_idEncuesta`,`pregunta_encuesta_evento_idEvento`),
   KEY `fk_respuesta_usuario1` (`usuario_idUsuario`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- 
 -- Volcar la base de datos para la tabla `respuesta`
 -- 
 
+INSERT INTO `respuesta` VALUES (1, NULL, 1, 1, 1, 1, 7);
+INSERT INTO `respuesta` VALUES (2, NULL, 0, 2, 1, 1, 7);
+INSERT INTO `respuesta` VALUES (3, 'Esta muy bueno!!', NULL, 3, 1, 1, 7);
 
 -- --------------------------------------------------------
 
@@ -425,7 +432,7 @@ CREATE TABLE `usuario` (
   `usu_profesion` varchar(40) default NULL,
   PRIMARY KEY  (`idUsuario`),
   UNIQUE KEY `usu_email` (`usu_email`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- Volcar la base de datos para la tabla `usuario`
@@ -435,6 +442,7 @@ INSERT INTO `usuario` VALUES (3, '', 'John', 'Quiroga', '', 'john@gmail.com', 0,
 INSERT INTO `usuario` VALUES (4, '', 'Asistente1', '', '', 'Asistente1@gmail.com', 0, '12', '/usuarios/4/usuario_img.jpg', 3, '', '', '', '', '');
 INSERT INTO `usuario` VALUES (5, '', 'Asistente2', '', '', 'Asistente2@j.com', 0, '12', '', 3, '', '', '', '', '');
 INSERT INTO `usuario` VALUES (6, '', 'Organizador1', '', '', 'organizador1@gmail.com', 0, '12', '', 2, '', '', '', '', '');
+INSERT INTO `usuario` VALUES (7, '', 'ponente1', '1', '', 'ponente1@gmail.com', 0, '12', '', 4, '1', '', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -455,7 +463,7 @@ CREATE TABLE `usuario_has_comite` (
 -- Volcar la base de datos para la tabla `usuario_has_comite`
 -- 
 
-INSERT INTO `usuario_has_comite` VALUES (4, 7, 1);
+INSERT INTO `usuario_has_comite` VALUES (6, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -480,3 +488,5 @@ INSERT INTO `usuario_has_evento` VALUES (4, 1, 'activo');
 INSERT INTO `usuario_has_evento` VALUES (5, 1, 'activo');
 INSERT INTO `usuario_has_evento` VALUES (5, 2, 'pendiente');
 INSERT INTO `usuario_has_evento` VALUES (4, 2, 'pendiente');
+INSERT INTO `usuario_has_evento` VALUES (6, 1, 'activo');
+INSERT INTO `usuario_has_evento` VALUES (7, 1, 'activo');

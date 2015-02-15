@@ -16,6 +16,8 @@ $(function() {
 $(document).on('pageinit','#page_r_patrocinador',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
 	window.localStorage.setItem('activePatrocinador', -1);
+	usu_perfil = window.localStorage.getItem('usu_perfil');
+	
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_patrocinador.php?jsoncallback=?";
 	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
@@ -47,7 +49,12 @@ $(document).on('pageinit','#page_r_patrocinador',function(e){
             		output += '<img src="' + httpImagen + item.pat_imagen + '">';
             	}
         		output += '<h2>' + item.pat_nombre + '</h2></a>';
-    			output += '<a id="delete_r_patrocinador' + item.idPatrocinador + '" href="#" >Elimina Relacion</a>';
+        		if (!$.isEmptyObject(usu_perfil)) {
+        			if (usu_perfil != -1) {
+        				output += '<a id="delete_r_patrocinador' + item.idPatrocinador + '" href="#" >Elimina Relacion</a>';
+        			}
+        		}
+    			
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
@@ -190,8 +197,9 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
-		if (usu_perfil != -1) {
-			
+		if (usu_perfil == -1) {
+			$("#btn_menu_home").hide();
+			$("#btn_r_patrocinador").hide();
 		}
 	}
 }

@@ -38,7 +38,7 @@ $(document).on('pageinit','#pagepregunta',function(e) {
                 div_output.load();
             }
             $.each(data, function(i,item){
-            	output = '<li><a data-ajax="false" id="pregunta' + item.idPregunta + '" href="g_pregunta_q.html">' + item.enc_nombre + '</a></li>';
+            	output = '<li><a data-ajax="false" id="pregunta' + item.idPregunta + '" href="g_pregunta_q.html">' + item.pre_pregunta + '</a></li>';
                 div_output.append(output);
                 div_output.listview("refresh");
                 $('#pregunta' + item.idPregunta).bind('tap', function(e) {
@@ -77,9 +77,14 @@ $(document).on('pageinit','#page_pregunta_query',function(e){
         	$('#nombre').empty();
         	$('#descripcion').empty();
             $.each(data, function(i,item){
-            	$('#nombre').append(item.enc_nombre);
+            	$('#nombre').append(item.pre_pregunta);
             	$('#nombre').load();
-            	$('#descripcion').append(item.enc_descripcion);
+            	if (item.pre_tipo == 1) {
+            		$('#descripcion').append("Tipo de pregunta: Abierta");
+            	}
+            	if (item.pre_tipo == 2) {
+            		$('#descripcion').append("Tipo de pregunta: Verdadero - Falso");
+            	}
             	$('#descripcion').load();
             });
         },
@@ -101,15 +106,14 @@ $(document).on('pageinit','#page_pregunta_query',function(e){
     	$.ajax({
             url: archivoValidacion,
             data: {
-                'accion': 'delete_pregunta', id: activePregunta
+                'accion': 'delete_pregunta', idPregunta: activePregunta
             },
             dataType: 'jsonp',
             jsonp: 'jsoncallback',
             timeout: 6000,
             success: function(data, status){
             	if(typeof data.error === 'undefined') {
-            		alert("pregunta eliminado exitosamente");
-//            		$.mobile.navigate("g_pregunta.html");
+            		alert("Pregunta eliminada exitosamente");
             		window.history.go(-2);
             	} else {
                     console.log('ERRORS: ' + data.error);
@@ -147,9 +151,9 @@ $(document).on('pageinit','#crud_pregunta',function(e){
 	        timeout: 6000,
 	        success: function(data, status){
 		        if(typeof data.error === 'undefined') {
-		        	$.each(data, function(i,item){ 
-		        		$("#t_nombre").val(item.enc_nombre);
-		        		$("#t_descripcion").val(item.enc_descripcion);
+		        	$.each(data, function(i,item) {
+		        		$("#t_pregunta").val(item.pre_pregunta);
+		        		$("#t_tipo").val(item.pre_tipo).selectmenu('refresh');;
 		        	});
 	        	} else {
 	                console.log('ERRORS: ' + data.error);
@@ -171,8 +175,8 @@ $(document).on('pageinit','#crud_pregunta',function(e){
 
 function submitForm_newpregunta(event) {
     activePregunta = window.localStorage.getItem('activePregunta');
-    activeEvent = window.localStorage.getItem('activeEvent');
-    var accion = '&accion=new_pregunta&evento=' + activeEvent;
+    activeEncuesta = window.localStorage.getItem('activeEncuesta');
+    var accion = '&accion=new_pregunta&idEncuesta=' + activeEncuesta;
     if (activePregunta != -1) { // valor -1 indica nuevo, valor diferente indica edicion
     	accion = '&accion=update_pregunta&idPregunta='+ activePregunta;
     }

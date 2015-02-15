@@ -16,6 +16,8 @@ $(function() {
 $(document).on('pageinit','#page_r_lugar',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
 	window.localStorage.setItem('activeLugar', -1);
+	usu_perfil = window.localStorage.getItem('usu_perfil');
+	
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_lugar.php?jsoncallback=?";
 	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
@@ -46,7 +48,11 @@ $(document).on('pageinit','#page_r_lugar',function(e){
             		output += '<img src="' + httpImagen + item.lug_imagen + '">';
             	}
             	output += '<h2>' + item.lug_nombre + '</h2></a>';
-    			output += '<a id="delete_r_lugar' + item.idLugar + '" href="#" >Elimina Relacion</a>';
+            	if (!$.isEmptyObject(usu_perfil)) {
+            		if (usu_perfil != -1) {
+            			output += '<a id="delete_r_lugar' + item.idLugar + '" href="#" >Elimina Relacion</a>';
+            		}
+            	}
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
@@ -189,8 +195,9 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
-		if (usu_perfil != -1) {
-			
+		if (usu_perfil == -1) {
+			$("#btn_menu_home").hide();
+			$("#btn_r_espacio").hide();
 		}
 	}
 }
