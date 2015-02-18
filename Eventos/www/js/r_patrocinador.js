@@ -50,7 +50,7 @@ $(document).on('pageinit','#page_r_patrocinador',function(e){
             	}
         		output += '<h2>' + item.pat_nombre + '</h2></a>';
         		if (!$.isEmptyObject(usu_perfil)) {
-        			if (usu_perfil != -1) {
+        			if (usu_perfil != -1 && usu_perfil != 3 && usu_perfil != 4) {
         				output += '<a id="delete_r_patrocinador' + item.idPatrocinador + '" href="#" >Elimina Relacion</a>';
         			}
         		}
@@ -199,6 +199,12 @@ function security() {
 	if (!$.isEmptyObject(usu_perfil)) {
 		if (usu_perfil == -1) {
 			$("#btn_menu_home").hide();
+			$("#btn_r_patrocinador").hide();
+		}
+		if (usu_perfil == 3) {
+			$("#btn_r_patrocinador").hide();
+		}
+		if (usu_perfil == 4) {
 			$("#btn_r_patrocinador").hide();
 		}
 	}

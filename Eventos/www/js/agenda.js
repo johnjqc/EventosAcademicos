@@ -273,7 +273,7 @@ $(document).on('pageinit','#page_agenda_query',function(e){
 		            	}
 		        		output += '<h2>' + item.esp_nombre + '</h2></a>';
 		        		if (!$.isEmptyObject(usu_perfil)) {
-		        			if (usu_perfil != -1) {
+		        			if (usu_perfil != -1 && usu_perfil != 3 && usu_perfil != 4) {
 		        				output += '<a id="delete_r_espacio' + item.idEspacio + '" href="#" >Elimina Relacion</a>';
 		        			}
 		        		}
@@ -476,6 +476,18 @@ function security() {
 	if (!$.isEmptyObject(usu_perfil)) {
 		if (usu_perfil == -1) {
 			$("#btn_menu_home").hide();
+			$("#btn_new_agenda").hide();
+			$("#btn_r_espacio").hide();
+			$("#btnm_delete_agenda").hide();
+			$("#btn_edit_agenda").hide();
+		}
+		if (usu_perfil == 3) {
+			$("#btn_new_agenda").hide();
+			$("#btn_r_espacio").hide();
+			$("#btnm_delete_agenda").hide();
+			$("#btn_edit_agenda").hide();
+		}
+		if (usu_perfil == 4) {
 			$("#btn_new_agenda").hide();
 			$("#btn_r_espacio").hide();
 			$("#btnm_delete_agenda").hide();

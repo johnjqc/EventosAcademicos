@@ -49,7 +49,7 @@ $(document).on('pageinit','#page_r_lugar',function(e){
             	}
             	output += '<h2>' + item.lug_nombre + '</h2></a>';
             	if (!$.isEmptyObject(usu_perfil)) {
-            		if (usu_perfil != -1) {
+            		if (usu_perfil != -1 && usu_perfil != 3 && usu_perfil != 4) {
             			output += '<a id="delete_r_lugar' + item.idLugar + '" href="#" >Elimina Relacion</a>';
             		}
             	}
@@ -197,6 +197,12 @@ function security() {
 	if (!$.isEmptyObject(usu_perfil)) {
 		if (usu_perfil == -1) {
 			$("#btn_menu_home").hide();
+			$("#btn_r_espacio").hide();
+		}
+		if (usu_perfil == 3) {
+			$("#btn_r_espacio").hide();
+		}
+		if (usu_perfil == 4) {
 			$("#btn_r_espacio").hide();
 		}
 	}

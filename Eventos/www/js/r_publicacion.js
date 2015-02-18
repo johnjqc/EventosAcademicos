@@ -44,7 +44,9 @@ $(document).on('pageinit','#page_r_publicacion',function(e){
             	output = '<li id="r_publicacion' + item.idPublicacion + '"><a data-ajax="false" href="g_publicacion_q.html">';
             	
             	output += '<h2>' + item.pub_titulo + '</h2></a>';
-    			output += '<a id="delete_r_publicacion' + item.idPublicacion + '" href="#" >Elimina Relacion</a>';
+            	if (usu_perfil != 3) {
+            		output += '<a id="delete_r_publicacion' + item.idPublicacion + '" href="#" >Elimina Relacion</a>';
+            	}
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
@@ -185,8 +187,8 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
-		if (usu_perfil != -1) {
-			
+		if (usu_perfil == 3) {
+			$("#btn_r_publicacion").hide();
 		}
 	}
 }

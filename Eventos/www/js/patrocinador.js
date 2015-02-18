@@ -315,7 +315,14 @@ function security() {
 			$("#btn_menu_home").hide();
 			$("#btn_edit_comite").hide();
 			$("#btn_delete_comite").hide();
-			
+		}
+		if (usu_perfil == 3) {
+			$("#btn_edit_comite").hide();
+			$("#btn_delete_comite").hide();
+		}
+		if (usu_perfil == 4) {
+			$("#btn_edit_comite").hide();
+			$("#btn_delete_comite").hide();
 		}
 	}
 }

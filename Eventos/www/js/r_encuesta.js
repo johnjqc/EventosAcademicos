@@ -44,7 +44,9 @@ $(document).on('pageinit','#page_r_encuesta',function(e){
             	output = '<li id="r_encuesta' + item.idEncuesta + '"><a data-ajax="false" href="g_encuesta_q.html">';
 //            	output += '<img src="' + httpImagen + item.usu_imagen + '">';
         		output += '<h2>' + item.enc_nombre + '</h2></a>';
-    			output += '<a id="delete_r_encuesta' + item.idEncuesta + '" href="#" >Elimina Relacion</a>';
+        		if (usu_perfil != 3 && usu_perfil != 4) {
+        			output += '<a id="delete_r_encuesta' + item.idEncuesta + '" href="#" >Elimina Relacion</a>';
+        		}
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
@@ -183,8 +185,11 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
-		if (usu_perfil != -1) {
-			
+		if (usu_perfil == 3) {
+			$("#btn_r_encuesta").hide();
+		}
+		if (usu_perfil == 4) {
+			$("#btn_r_encuesta").hide();
 		}
 	}
 }

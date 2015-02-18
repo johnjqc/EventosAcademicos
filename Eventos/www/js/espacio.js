@@ -323,5 +323,13 @@ function security() {
 			$("#btn_confirm_delete_espacio").hide();
 			$("#btn_edit_comite").hide();
 		}
+		if (usu_perfil == 3) {
+			$("#btn_confirm_delete_espacio").hide();
+			$("#btn_edit_comite").hide();
+		}
+		if (usu_perfil == 4) {
+			$("#btn_confirm_delete_espacio").hide();
+			$("#btn_edit_comite").hide();
+		}
 	}
 }

@@ -249,6 +249,14 @@ function security() {
 			$("#btn_confirm_delete_imagen").hide();
 			$("#btn_edit_imagen").hide();
 		}
+		if (usu_perfil == 3) {
+			$("#btn_confirm_delete_imagen").hide();
+			$("#btn_edit_imagen").hide();
+		}
+		if (usu_perfil == 4) {
+			$("#btn_confirm_delete_imagen").hide();
+			$("#btn_edit_imagen").hide();
+		}
 	}
 }
 

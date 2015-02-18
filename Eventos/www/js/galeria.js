@@ -292,7 +292,18 @@ function security() {
 			$("#btn_new_imagen").hide();
 			$("#btn_confirm_delete_galeria").hide();
 			$("#btn_edit_galeria").hide();
-			
+		}
+		if (usu_perfil == 3) {
+			$("#btn_new_galeria").hide();
+			$("#btn_new_imagen").hide();
+			$("#btn_confirm_delete_galeria").hide();
+			$("#btn_edit_galeria").hide();
+		}
+		if (usu_perfil == 4) {
+			$("#btn_new_galeria").hide();
+			$("#btn_new_imagen").hide();
+			$("#btn_confirm_delete_galeria").hide();
+			$("#btn_edit_galeria").hide();
 		}
 	}
 }

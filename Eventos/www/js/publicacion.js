@@ -44,7 +44,7 @@ $(document).on('pageinit','#page_publicaciones',function(e){
                 div_output.load();
             }
             $.each(data, function(i,item){
-            	output = '<li id="publicacion' + item.idPublicacion + '"><a href="g_publicacion_q.html">';
+            	output = '<li id="publicacion' + item.idPublicacion + '"><a data-ajax="false" href="g_publicacion_q.html">';
         		output += '' + item.pub_titulo + '';
     			output += '</a>';
 				output += '</li>';
@@ -304,8 +304,13 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
-		if (usu_perfil != -1) {
-			
+		if (usu_perfil == 3) {
+			$("#btn_edit_publicacion").hide();
+			$("#btn_confirm_delete_publicacion").hide();
+		}
+		
+		if (usu_perfil != -1 && usu_perfil != 0) {
+			$("#btnLogin").hide();
 		}
 	}
 }

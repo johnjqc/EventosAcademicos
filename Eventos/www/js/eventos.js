@@ -276,30 +276,30 @@ $(document).on('pageinit','#page_info',function(e){
 				if (!$.isEmptyObject(item.eve_fecha_inicio)) {
             		output += '<li class="ui-field-contain">';
             		output += '<label for="identificacion">Fecha recepcion de articulos:</label>';
-            		output += '<spam id="identificacion">' + item.eve_fecha_inicio + '</spam>';
+            		output += '<spam id="identificacion">' + item.eve_recepcion_articulos + '</spam>';
                     output += '</li>';
             	}
 				if (!$.isEmptyObject(item.eve_fecha_fin)) {
             		output += '<li class="ui-field-contain">';
             		output += '<label for="identificacion">Fecha Inicio:</label>';
-            		output += '<spam id="identificacion">' + item.eve_fecha_fin + '</spam>';
+            		output += '<spam id="identificacion">' + item.eve_fecha_inicio + '</spam>';
                     output += '</li>';
             	}
 				if (!$.isEmptyObject(item.eve_recepcion_articulos)) {
             		output += '<li class="ui-field-contain">';
             		output += '<label for="identificacion">Fecha Fin:</label>';
-            		output += '<spam id="identificacion">' + item.eve_recepcion_articulos + '</spam>';
+            		output += '<spam id="identificacion">' + item.eve_fecha_fin + '</spam>';
                     output += '</li>';
             	}
 				if (!$.isEmptyObject(item.eve_temas)) {
             		output += '<li class="ui-field-contain">';
-            		output += '<label for="identificacion">Fecha recepcion de articulos:</label>';
+            		output += '<label for="identificacion">Temas:</label>';
             		output += '<spam id="identificacion">' + item.eve_temas + '</spam>';
                     output += '</li>';
             	}
 				if (!$.isEmptyObject(item.eve_costos)) {
             		output += '<li class="ui-field-contain">';
-            		output += '<label for="identificacion">Fecha recepcion de articulos:</label>';
+            		output += '<label for="identificacion">Costos:</label>';
             		output += '<spam id="identificacion">' + item.eve_costos + '</spam>';
                     output += '</li>';
             	}
@@ -729,7 +729,7 @@ function security() {
 			$("#menu_invitado").hide();
 			$("#menu_asistente_ponente").hide();
 		}
-		if (usu_perfil == 3 || usu_perfil == 4) {
+		if (usu_perfil == 3) {
 			$("#btnNewEvento").hide();
 			$("#btn_edit_evento").hide();
 			$("#btn_deleteEvento").hide();
@@ -745,8 +745,26 @@ function security() {
 			$("#mnuPatrocinadores").hide();
 			$("#mnuPublicaciones").hide();
 			$("#mnuUsuarios").hide();
-			
+			$("#mnuInscripciones").hide();
 		}
+		if (usu_perfil == 4) {
+			$("#btnNewEvento").hide();
+			$("#btn_edit_evento").hide();
+			$("#btn_deleteEvento").hide();
+			$("#btn_inscripcion").hide();
+			
+			$("#menu_invitado").hide();
+			$("#menu_organizador").hide();
+			$("#menu_coordinador").hide();
+			
+			$("#mnuComites").hide();
+			$("#mnuEncuestas").hide();
+			$("#mnuLugares").hide();
+			$("#mnuPatrocinadores").hide();
+			$("#mnuUsuarios").hide();
+			$("#mnuInscripciones").hide();
+		}
+		
 		if (usu_perfil != -1 && usu_perfil != 0) {
 			$("#btnLogin").hide();
 		}

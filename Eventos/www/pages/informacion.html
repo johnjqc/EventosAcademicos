@@ -26,12 +26,18 @@
 <body>
 
 <div data-role="page" id="page_info" data-theme="c">
-    <div data-role="panel" id="mypanel" data-theme="f" data-display="overlay">
-        <ul data-role="listview">
-            <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
-            <li><a href="#">Gestion Usuarios</a></li>
-            <li><a href="#">Gestion ...</a></li>
-            <li><a href="#">Acerca de...</a></li>
+    <div data-role="panel" id="mypanel" data-display="overlay" data-theme="f">
+        <ul data-role="listview" id="list_menu" data-theme="f">
+            <li data-icon="delete" data-theme="c"><a href="#" data-rel="close" >Close</a></li>
+            <li><a id="mnuPerfil" href="g_usuario_q.html" data-ajax="false">Mi Perfil</a></li>
+            <li><a id="mnuComites" href="g_comite.html" data-ajax="false">Comites</a></li>
+            <li><a id="mnuEncuestas" href="g_encuesta.html" data-ajax="false">Encuestas</a></li>
+            <li><a id="mnuInscripciones" href="g_inscripcion.html" data-ajax="false">Inscripciones</a></li>
+            <li><a id="mnuLugares" href="g_lugar.html" data-ajax="false">Lugares</a></li>
+            <li><a id="mnuPatrocinadores" href="g_patrocinador.html" data-ajax="false">Patrocinadores</a></li>
+            <li><a id="mnuPublicaciones" href="g_publicacion.html" data-ajax="false">Publicaciones</a></li>
+            <li><a id="mnuUsuarios" href="g_usuario.html" data-ajax="false">Usuarios</a></li>
+            <li data-icon="power"><a id="logout" href="#" data-ajax="false">Logout</a></li>
         </ul>
     </div>
 

@@ -266,7 +266,7 @@ $(document).on('pageinit','#page_usuario_new',function(e){
 	        		$("#t_telefono").val(item.usu_telefono);
 	        		$("#t_contrasena").val(item.usu_contrasena);
 	        		$("#t_imagen").val(item.usu_imagen);
-	        		$("#t_perfil").val(item.usu_perfil).selectmenu('refresh');;
+	        		$("#t_perfil").val(item.usu_perfil).selectmenu('refresh');
 	        		$("#t_estado").val(item.usu_estado);
 	        		$("#t_institucion").val(item.usu_institucion);
 	        		$("#t_nivel_academico").val(item.usu_nivel_academico);
@@ -401,6 +401,26 @@ function security() {
 			$("#btn_menu_home").hide();
 			$("#btn_confirm_delete_usuario").hide();
 			$("#btn_edit_comite").hide();
+		}
+		if (usu_perfil == 3) {
+			$("#btn_confirm_delete_usuario").hide();
+			if (localStorage.getItem('idUsuario') != localStorage.getItem('activeUsuario')) {
+				$("#btn_edit_usuario").hide();
+			}
+			$("#label_perfil").hide();
+			$("#t_perfil").hide().selectmenu('refresh');;
+			$("#label_estado").hide();
+			$("#t_estado").hide();
+		}
+		if (usu_perfil == 4) {
+			$("#btn_confirm_delete_usuario").hide();
+			if (localStorage.getItem('idUsuario') != localStorage.getItem('activeUsuario')) {
+				$("#btn_edit_usuario").hide();
+			}
+			$("#label_perfil").hide();
+			$("#t_perfil").hide().selectmenu('refresh');;
+			$("#label_estado").hide();
+			$("#t_estado").hide();
 		}
 	}
 }

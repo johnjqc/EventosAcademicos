@@ -397,8 +397,15 @@ function security() {
 	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	if (!$.isEmptyObject(usu_perfil)) {
-		if (usu_perfil != -1) {
-			
+		if (usu_perfil == 3) {
+			$("#btn_edit_pregunta").hide();
+			$("#btn_edit_encuesta").hide();
+			$("#btn_confirm_delete_encuesta").hide();
+		}
+		if (usu_perfil == 4) {
+			$("#btn_edit_pregunta").hide();
+			$("#btn_edit_encuesta").hide();
+			$("#btn_confirm_delete_encuesta").hide();
 		}
 	}
 }

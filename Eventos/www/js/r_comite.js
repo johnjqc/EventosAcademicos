@@ -47,7 +47,7 @@ $(document).on('pageinit','#page_r_comite',function(e){
 //            	output += '<img src="' + httpImagen + item.usu_imagen + '">';
         		output += '<h2>' + item.com_nombre + '</h2></a>';
         		if (!$.isEmptyObject(usu_perfil)) {
-        			if (usu_perfil != -1) {
+        			if (usu_perfil != -1 && usu_perfil != 3 && usu_perfil != 4) {
         				output += '<a id="delete_r_comite' + item.idComite + '" href="#" >Elimina Relacion</a>';
         			}
         		}
@@ -243,7 +243,7 @@ $(document).on('pageinit','#page_comite_usuarios_query',function(e){
             	}
         		output += '<h2>' + item.usu_nombre+ ' ' + item.usu_apellido + '</h2></a>';
         		if (!$.isEmptyObject(usu_perfil)) {
-        			if (usu_perfil != -1) {
+        			if (usu_perfil != -1 && usu_perfil != 3 && usu_perfil != 4) {
         				output += '<a id="delete_r_usuario' + item.idUsuario + '" href="#" >Elimina Relacion</a>';
         			}
         		}
@@ -396,8 +396,18 @@ function security() {
 			$("#btn_r_usuario").hide();
 			$("#btn_confirm_delete_comite").hide();
 			$("#btn_edit_comite").hide();
-			
-			
+		}
+		if (usu_perfil == 3) {
+			$("#btn_r_espacio").hide();
+			$("#btn_r_usuario").hide();
+			$("#btn_confirm_delete_comite").hide();
+			$("#btn_edit_comite").hide();
+		}
+		if (usu_perfil == 4) {
+			$("#btn_r_espacio").hide();
+			$("#btn_r_usuario").hide();
+			$("#btn_confirm_delete_comite").hide();
+			$("#btn_edit_comite").hide();
 		}
 	}
 }

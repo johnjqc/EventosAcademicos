@@ -335,5 +335,15 @@ function security() {
 			$("#btn_confirm_delete_lugar").hide();
 			$("#btn_edit_lugar").hide();
 		}
+		if (usu_perfil == 3) {
+			$("#btn_new_lugar").hide();
+			$("#btn_confirm_delete_lugar").hide();
+			$("#btn_edit_lugar").hide();
+		}
+		if (usu_perfil == 4) {
+			$("#btn_new_lugar").hide();
+			$("#btn_confirm_delete_lugar").hide();
+			$("#btn_edit_lugar").hide();
+		}
 	}
 }
