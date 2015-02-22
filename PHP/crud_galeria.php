@@ -16,8 +16,8 @@
 		$rows = array();
 		
 		if ($accion == "query_galerias") {
-			$evento = $_GET['evento'];
-			$sth = mysql_query("SELECT * from galeria");
+			$idEvento = $_GET['evento'];
+			$sth = mysql_query("SELECT * from galeria where evento_idEvento=$idEvento");
 			$rows = array();
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
