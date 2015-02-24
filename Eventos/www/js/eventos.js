@@ -614,8 +614,8 @@ function getEvento() {
 function getEvents() {
 	getIpPortserver();
 
-    var archivoValidacion = "http://" + text_ip + "/web/eventos/crud_evento.php?jsoncallback=?";
-    var httpImagen = "http://" + text_ip + "/web/eventos/";
+    var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_evento.php?jsoncallback=?";
+    var httpImagen = "http://" + text_ip + ":" + text_puerto  + "/web/eventos/";
     var output = "";
     var div_output= $('#event_home');
 
