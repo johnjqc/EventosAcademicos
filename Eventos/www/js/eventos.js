@@ -212,8 +212,13 @@ $(document).on('pageshow','#crud_evento',function(e){
 	        		$("#t_descripcion").val(item.eve_descripcion);
 	        		$("#t_titulo_img").val(item.eve_titulo_imagen);
 	        		
-	        		//Falta garantiza carga de estado activo e imagen
-//	        		$( "input[type='checkbox']" ).prop( "checked", true ).checkboxradio( "refresh" );
+	        		$("#t_temas").val(item.eve_temas);
+	        		$("#t_costos").val(item.eve_costos);
+	        		$("#t_fecha_articulos").val(item.eve_recepcion_articulos);
+	        		$("#t_pagina").val(item.eve_pagina_web);
+	        		$("#t_facebook").val(item.eve_facebook);
+	        		$("#t_twitter").val(item.eve_twitter);
+	        		
 	        	});
 	        },
 	        error: function(){
@@ -719,6 +724,7 @@ function security() {
 			$("#btn_deleteEvento").hide();
 			$("#btn_subscribe").hide();
 			$("#btn_inscripcion").hide();
+			$("#btn_filtro").hide();
 		}
 		if (usu_perfil == 1) {
 			$("#btn_subscribe").hide();
