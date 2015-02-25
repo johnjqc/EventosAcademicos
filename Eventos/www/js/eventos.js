@@ -43,6 +43,11 @@ $(document).on('pageinit','#app_home',function(e){
     		$('#text_puerto').val(text_puerto);
     	}
     });
+    
+    $("#btn_filtro").bind( "tap", function(e) {
+    	getIpPortserver();
+    	getMisEvents();
+    });
 
     getEvents();
 });
@@ -179,6 +184,36 @@ $(document).on('pageinit','#pageEvento',function(e){
 			}
 		});
     });
+	
+	$('#btn_delete_evento').bind('tap', function(e) {
+    	$.ajax({
+            url: urlServer,
+            data: {
+                'accion': 'delete_evento', idEvento: activeEvent
+            },
+            dataType: 'jsonp',
+            jsonp: 'jsoncallback',
+            timeout: 6000,
+            success: function(data, status){
+            	if(typeof data.error === 'undefined') {
+            		alert("Evento eliminado exitosamente");
+            		window.history.go(-2);
+            	} else {
+                    console.log('ERRORS: ' + data.error);
+                }
+           },
+            beforeSend: function(){
+                showLoading();
+            },
+            complete: function(){
+                $.mobile.loading( "hide" );
+            },
+            error: function(){
+                $.mobile.loading( "hide" );
+                alert('Error conectando al servidor.');
+            }
+       });
+    });
 });
 
 $(document).on('pageshow','#crud_evento',function(e){
@@ -214,6 +249,7 @@ $(document).on('pageshow','#crud_evento',function(e){
 	        		
 	        		$("#t_temas").val(item.eve_temas);
 	        		$("#t_costos").val(item.eve_costos);
+	        		$("#t_tipo").val(item.eve_tipo);
 	        		$("#t_fecha_articulos").val(item.eve_recepcion_articulos);
 	        		$("#t_pagina").val(item.eve_pagina_web);
 	        		$("#t_facebook").val(item.eve_facebook);
@@ -306,6 +342,12 @@ $(document).on('pageinit','#page_info',function(e){
             		output += '<li class="ui-field-contain">';
             		output += '<label for="identificacion">Costos:</label>';
             		output += '<spam id="identificacion">' + item.eve_costos + '</spam>';
+                    output += '</li>';
+            	}
+				if (!$.isEmptyObject(item.eve_tipo)) {
+            		output += '<li class="ui-field-contain">';
+            		output += '<label for="identificacion">Tipo Evento:</label>';
+            		output += '<spam id="identificacion">' + item.eve_tipo + '</spam>';
                     output += '</li>';
             	}
 				output += '</div><br>';
@@ -681,6 +723,91 @@ function getEvents() {
 //                    $.mobile.changePage( "./pages/evento.html");
                 	window.location = "./pages/evento.html";
                 });
+            });
+            $("span").i18n();
+            mainloaded = true;
+        },
+        error: function(){
+            $('#event_home').empty();
+            $.mobile.loading( "hide" );
+            alert('Error conectando al servidor.');
+        }
+    });
+}
+
+function getMisEvents() {
+	getIpPortserver();
+	idUsuario = window.localStorage.getItem('idUsuario');
+	
+    var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_evento.php?jsoncallback=?";
+    var httpImagen = "http://" + text_ip + ":" + text_puerto  + "/web/eventos/";
+    var output = "";
+    var div_output= $('#event_home');
+
+    $.ajax({
+        beforeSend: function(){
+            showLoading();
+        },
+        complete: function(){
+            $.mobile.loading( "hide" );
+        },
+        url: archivoValidacion,
+        data: {
+            'accion': 'query_mis_eventos', idUsuario: idUsuario
+        },
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        timeout: 6000,
+        success: function(data, status){
+            $('#event_home').empty();
+            if ($.isEmptyObject(data)) {
+            	output = '<br />';
+            	output += '<div class="ui-body ui-body-a ui-corner-all ">';
+            	output += '<p>No se encontraron Eventos para mostrar en la Base de Datos</p>';
+                output += '</div>';
+                div_output.append(output);
+                div_output.load();
+            }
+            $.each(data, function(i,item){
+                if (i != 0) {
+                    output = '<br />';
+                }
+                output += '<div id="evento'+ item.idEvento +'" class="ui-body ui-body-a ui-corner-all ">';
+                if ($.isEmptyObject(item.eve_imagen)) {
+                    output += '<div class="banner2">';
+                } else {
+                    output += '<div class="banner">';
+                }
+                output += '<div class="date_event">';
+                var fecha = new Date(item.eve_fecha_inicio);
+                output += '<p>' + fecha.getUTCDate() + ' <span data-i18n>dates.short' + (fecha.getMonth() +1) + '</span></p>';
+                output += '</div>';
+                output += '</div>';
+                if (!$.isEmptyObject(item.eve_imagen)) {
+                    output += '<div class="card-image">';
+                    output += '<img alt="home" src="' + httpImagen + item.eve_imagen + '" />';
+                    if (!$.isEmptyObject(item.eve_titulo_imagen)) {
+                        output += '<h2>' + item.eve_titulo_imagen + '</h2>';
+                    }
+                    output += '</div>';
+                    output += '<div class="card-separator"></div>';
+                }
+                output += '<p>' + item.eve_nombre + '</p>';
+                output += '</div>';
+                div_output.append(output);
+                $("#event_home").load();
+                $('#evento' + item.idEvento).bind('tap', function(e) {
+                	window.localStorage.setItem('activeEvent', item.idEvento);
+                	window.location = "./pages/evento.html";
+                });
+            });
+            output = '<a href="#" id="ver_todos" class="ui-btn ui-btn-b ui-corner-all mc-top-margin-1-5">Ver Todos</a>';
+            
+            div_output.append(output);
+            $("#event_home").load();
+            $("#ver_todos").bind( "tap", function(e) {
+            	getIpPortserver();
+            	getEvents();
             });
             $("span").i18n();
             mainloaded = true;

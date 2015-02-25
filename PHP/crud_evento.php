@@ -52,6 +52,19 @@
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 		}
 		
+		if ($accion == "query_mis_eventos") {
+			$idUsuario = $_GET['idUsuario'];
+			$sth = mysql_query("SELECT * FROM evento a JOIN usuario_has_evento b ON b.usuario_idUsuario = $idUsuario 
+								AND evento_idEvento = a.idEvento AND estado = 'activo'");
+			$rows = array();
+			while($r = mysql_fetch_assoc($sth)) {
+				$rows[] = $r;
+			}
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
 		if(isset($_GET['files'])) {  
 			$error = false;
 			$files = array();
@@ -100,14 +113,22 @@
 				$t_img_path = "";
 			}
 			
-			$is_active = $_REQUEST['is_active']; 
-
+			$t_temas = $_REQUEST['t_temas']; 
+			$t_costos = $_REQUEST['t_costos']; 
+			$t_tipo = $_REQUEST['t_tipo']; 
+			$t_fecha_articulos = $_REQUEST['t_fecha_articulos']; 
+			$t_pagina = $_REQUEST['t_pagina']; 
+			$t_facebook = $_REQUEST['t_facebook']; 
+			$t_twitter= $_REQUEST['t_twitter']; 
+			
+			
 			$result = mysql_query("SHOW TABLE STATUS LIKE 'evento'");
 			$row = mysql_fetch_array($result);
 			$nextId = $row['Auto_increment'];
 			
-			$res = mysql_query("INSERT INTO evento (eve_nombre, eve_fecha_inicio, eve_fecha_fin, eve_estado, eve_descripcion, eve_titulo_imagen, eve_imagen)
-				VALUES ('$t_nombre', '$t_fecha_inicio', '$t_fecha_fin', '$is_active', '$t_descripcion', '$t_titulo_img', '$t_img_path') ") or $rows["respuesta"] =mysql_error();
+			$res = mysql_query("INSERT INTO evento (eve_nombre, eve_fecha_inicio, eve_fecha_fin, eve_descripcion, eve_titulo_imagen, eve_imagen, eve_temas, eve_costos, eve_tipo, eve_recepcion_articulos, eve_pagina_web, eve_facebook, eve_twitter)
+				VALUES ('$t_nombre', '$t_fecha_inicio', '$t_fecha_fin', '$t_descripcion', '$t_titulo_img', '$t_img_path', '$t_temas'
+						, '$t_costos', $t_tipo, '$t_fecha_articulos', '$t_pagina', '$t_facebook', '$t_twitter') ") or $rows["respuesta"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
 			$rows["id"] = "$nextId";
@@ -147,15 +168,35 @@
 				$t_img_path = "";
 			}
 			
-			$is_active = $_REQUEST['is_active']; 
+			$t_temas = $_REQUEST['t_temas']; 
+			$t_costos = $_REQUEST['t_costos']; 
+			$t_tipo = $_REQUEST['t_tipo']; 
+			$t_fecha_articulos = $_REQUEST['t_fecha_articulos']; 
+			$t_pagina = $_REQUEST['t_pagina']; 
+			$t_facebook = $_REQUEST['t_facebook']; 
+			$t_twitter= $_REQUEST['t_twitter']; 
 
 			$nextId = $_REQUEST['id']; 
 			
-			$res = mysql_query("UPDATE evento SET eve_nombre='$t_nombre', eve_fecha_inicio='$t_fecha_inicio', eve_fecha_fin='$t_fecha_fin', eve_estado='$is_active', eve_descripcion='$t_descripcion', eve_titulo_imagen='$t_titulo_img', eve_imagen='$t_img_path' WHERE idEvento=$nextId") or $rows["respuesta"] =mysql_error();
+			$res = mysql_query("UPDATE evento SET eve_nombre='$t_nombre', eve_fecha_inicio='$t_fecha_inicio', eve_fecha_fin='$t_fecha_fin', eve_descripcion='$t_descripcion', eve_titulo_imagen='$t_titulo_img', eve_imagen='$t_img_path', 
+			eve_temas='$t_temas', eve_costos='$t_costos', eve_tipo= '$t_tipo', eve_recepcion_articulos='$t_fecha_articulos', eve_pagina_web='$t_pagina', 
+			eve_facebook='$t_facebook', eve_twitter='$t_twitter' WHERE idEvento=$nextId") or $rows["respuesta"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
 			$rows["id"] = "$nextId";
 			$rows["name"] = $t_img_path;
+			
+			$resultadosJson= json_encode($rows);
+			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
+		}
+		
+		if ($accion == "delete_evento") {
+			$rows = array();
+			$idEvento = $_REQUEST['idEvento'];
+			
+			$res = mysql_query("DELETE FROM evento WHERE idEvento='$idEvento'") or $rows["error"] =mysql_error();
+
+			$rows["respuesta"] = "ok";
 			
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';

@@ -46,7 +46,7 @@ $(document).on('pageinit','#page_patrocinadores',function(e){
                 div_output.load();
             }
             $.each(data, function(i,item){
-            	output = '<li id="patrocinador' + item.idPatrocinador + '"><a href="g_patrocinador_q.html">';
+            	output = '<li id="patrocinador' + item.idPatrocinador + '"><a data-ajax="false" href="g_patrocinador_q.html">';
             	if (!$.isEmptyObject(item.pat_imagen)) {
             		output += '<img src="' + httpImagen + item.pat_imagen + '">';
             	}
