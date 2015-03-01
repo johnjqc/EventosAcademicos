@@ -69,8 +69,8 @@
 			
 			foreach($_FILES as $file) {
 				$ext = explode (".",basename($file['name']));
-				if(move_uploaded_file($file['tmp_name'], $uploaddir."espacio_img.".$ext[1])) {
-					$files[] = '/espacios/'.$nextId.'/'."espacio_img.".$ext[1];
+				if(move_uploaded_file($file['tmp_name'], $uploaddir."espacio".$nextId."_img.".$ext[1])) {
+					$files[] = '/espacios/'.$nextId.'/'."espacio".$nextId."_img.".$ext[1];
 				} else {
 					$error = true;
 				}

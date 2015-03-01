@@ -8,6 +8,14 @@ var idUsuario;
 var files;
 
 $(function() {
+//	document.addEventListener("deviceready", onDeviceReady, false);
+
+    // device APIs are available
+    //
+//    function onDeviceReady() {
+//        navigator.splashscreen.show();
+//    }
+
 	security();
 	$('input[type=file]').on('change', prepareUpload);
 	$('#frm_new_evento').on('submit', uploadFiles);
@@ -17,6 +25,11 @@ $(function() {
 		window.localStorage.setItem('usu_perfil', -1);
 		window.localStorage.setItem('idUsuario', -1);
 		window.location = "../index.html";
+    });
+	$('#logoutHome').bind('tap', function(e) {
+		window.localStorage.setItem('usu_perfil', -1);
+		window.localStorage.setItem('idUsuario', -1);
+		window.location = "index.html";
     });
 });
 
@@ -292,24 +305,40 @@ $(document).on('pageinit','#page_info',function(e){
         timeout: 6000,
         success: function(data, status){
         	div_output.empty();
-        	
+
         	$.each(data, function(i,item){ 
         		if (!$.isEmptyObject(item.eve_facebook) || !$.isEmptyObject(item.eve_facebook) || !$.isEmptyObject(item.eve_pagina_web)) {
 	        		output = '<div class="ui-body ui-body-a ui-corner-all ">';
 	        		output += '<div data-role="controlgroup" data-type="horizontal">';
 	        		if (!$.isEmptyObject(item.eve_facebook)) {
-	        			output += '<a id="btnFb" href="' + item.eve_facebook + '" class="ui-corner-all"><img alt="home" src="../images/facebook.png" /></a>';
+	        			output += '<a id="btnFb" href="' + item.eve_facebook + '" class="ui-corner-all"> \
+	        				<img alt="home" src="../images/facebook.png" /></a>';
 	        			
 	        			
 	        		}
 	        		if (!$.isEmptyObject(item.eve_twitter)) {
-	        			output += '<a href="' + item.eve_twitter + '" class="ui-corner-all"><img alt="home" src="../images/twitter.png" /></a>';
+	        			output += '<a href="' + item.eve_twitter + '" class="ui-corner-all"> \
+	        				<img alt="home" src="../images/twitter.png" /></a>';
 	        		}
 	        		if (!$.isEmptyObject(item.eve_pagina_web)) {
-	        			output += '<a id="btnWeb" rel="external"  href="' + item.eve_pagina_web + '" class="ui-corner-all"><img alt="home" src="../images/web.png" /></a>';
+	        			output += '<a id="btnWeb" rel="external"  href="' + item.eve_pagina_web + '" class="ui-corner-all"> \
+	        				<img alt="home" src="../images/web.png" /></a>';
+	        			output += '<div id="btnWeb1" class="ui-corner-all"> \
+        				<img alt="home" src="../images/web.png" /></div>';
+	        			$('#btnWeb1').bind('tap', function(e) {
+	        				navigator.ChromeLauncher.open(item.eve_pagina_web)
+	        		    });
 	        		}
 	        		output += '</div>';
 	        		output += '</div><br>';
+//	        		$(document).on('click','a', function(e) {
+//	                    e.preventDefault();
+//	                    var elem = $(this);
+//	                    var url = elem.attr('href');
+//	                    if (url.indexOf('http://') !== -1) {
+//	                        window.open(url, '_system');
+//	                    }
+//	                });
         		} else {
         			output = '';
         		}

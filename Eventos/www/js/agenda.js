@@ -4,6 +4,7 @@ var activeAgenda; //id del agenda seleccionado para ver detalles o edicion
 var activeEvent; //id del evento seleccionado para ver detalles 
 var activeEspacio;
 var usu_perfil;
+var idUsuario;
 
 $(function() {
 	security();
@@ -64,7 +65,8 @@ $(document).on('pageinit','#page_r_espacio_agenda',function(e){
 						success: function(data, textStatus, jqXHR) {
 							if(typeof data.error === 'undefined') {
 								alert("Espacio agregado exitosamente");
-								location.reload();
+//								location.reload();
+								window.history.go(-1);
 							} else {
 								console.log('ERRORS: ' + data.error);
 							}
@@ -154,7 +156,7 @@ $(document).on('pageinit','#page_agenda',function(e) {
 					fechas.push(fecha); 
 				}
 			});
-			fechas.sort(); 
+//			fechas.sort(); 
 			for(var j=0; j < fechas.length; j++) {
 				var tempData = data;
 				var count = 0;
@@ -215,12 +217,41 @@ $(document).on('pageinit','#page_agenda_query',function(e){
 	activeAgenda = localStorage.getItem('activeAgenda');
 	activeEvent = localStorage.getItem('activeEvent');
 	usu_perfil = window.localStorage.getItem('usu_perfil');
+	idUsuario = window.localStorage.getItem('idUsuario');
 	
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_agenda.php?jsoncallback=?";
 	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
 	var div_output = $('#agenda_content');
 	var output;
+	var capacidad = 0;
+	var cupo = 0;
+	
+	$.ajax({
+		url: archivoValidacion,
+		type: 'POST',
+		data: {'accion': 'query_usuario_agenda', idAgenda: activeAgenda, idUsuario: idUsuario},
+		cache: false,
+		dataType: 'jsonp',
+		jsonp: 'jsoncallback',
+		success: function(data, textStatus, jqXHR) {
+			if(typeof data.error === 'undefined') {
+				$.each(data, function(i,item){
+					$('#btn_r_usuario').hide();
+				});
+			} else {
+				console.log('ERRORS: ' + data.error);
+			}
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log('ERRORS: ' + textStatus);
+			$.mobile.loading( "hide" );
+		},
+		complete: function() {
+			$.mobile.loading( "hide" );
+		}
+	});
+	
     $.ajax({
         url: archivoValidacion,
         data: {
@@ -247,86 +278,6 @@ $(document).on('pageinit','#page_agenda_query',function(e){
 				output += '<div class="card-separator"></div>';
             });
 			div_output.append(output);
-			
-			var list_output= $('#list_espacios');
-
-		    $.ajax({
-		        url: archivoValidacion,
-		        data: {
-		            'accion': 'query_r_espacios', 'idEvento': activeEvent, idAgenda: activeAgenda
-		        },
-		        dataType: 'jsonp',
-		        jsonp: 'jsoncallback',
-		        timeout: 6000,
-		        success: function(data, status){
-		        	list_output.empty();
-		        	
-		            if ($.isEmptyObject(data)) {
-		            	output = '<p> No se encontraron espacios relacionados</p>';
-		                list_output.append(output);
-		                list_output.load();
-		            }
-		            $.each(data, function(i,item){
-		            	output = '<li id="r_espacio' + item.idEspacio + '"><a data-ajax="false" href="g_espacio_q.html">';
-		            	if (!$.isEmptyObject(item.esp_imagen)) {
-		            		output += '<img src="' + httpImagen + item.esp_imagen + '">';
-		            	}
-		        		output += '<h2>' + item.esp_nombre + '</h2></a>';
-		        		if (!$.isEmptyObject(usu_perfil)) {
-		        			if (usu_perfil != -1 && usu_perfil != 3 && usu_perfil != 4) {
-		        				output += '<a id="delete_r_espacio' + item.idEspacio + '" href="#" >Elimina Relacion</a>';
-		        			}
-		        		}
-		    			
-						output += '</li>';
-						list_output.append(output);
-						list_output.listview("refresh");
-						$('#r_espacio' + (item.idEspacio)).bind('tap', function(e) {
-		                	window.localStorage.setItem('activeEspacio', item.idEspacio);
-		                });
-						$('#delete_r_espacio' + (item.idEspacio)).bind('tap', function(e) {
-							$.ajax({
-						        url: archivoValidacion,
-						        data: {
-						            accion: 'delete_r_espacio', idEvento: activeEvent, idEspacio: item.idEspacio, idAgenda: activeAgenda
-						        },
-						        dataType: 'jsonp',
-						        jsonp: 'jsoncallback',
-						        timeout: 6000,
-						        success: function(data, status){
-						        	alert("Se elimino relacion de espacio con agenda exitosamente");
-						        	location.reload();
-						        },
-						        beforeSend: function(){
-						            showLoading();
-						        },
-						        complete: function(){
-						            $.mobile.loading( "hide" );
-						        },
-						        error: function(jqXHR, textStatus, errorThrown){
-						        	console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
-						        	div_output.empty();
-						            $.mobile.loading( "hide" );
-						            alert('Error conectando al servidor.');
-						        }
-						    });
-		                });
-		            });
-		        },
-		        beforeSend: function(){
-		            showLoading();
-		        },
-		        complete: function(){
-		            $.mobile.loading( "hide" );
-		        },
-		        error: function(jqXHR, textStatus, errorThrown){
-		        	console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
-		        	list_output.empty();
-		            $.mobile.loading( "hide" );
-		            alert('Error conectando al servidor.');
-		        }
-		    });
-			
 			div_output.load();
         },
         beforeSend: function(){
@@ -337,6 +288,170 @@ $(document).on('pageinit','#page_agenda_query',function(e){
         },
         error: function(){
         	div_output.empty();
+            $.mobile.loading( "hide" );
+            alert('Error conectando al servidor.');
+        }
+    });
+    
+    var list_output= $('#list_espacios');
+
+    $.ajax({
+        url: archivoValidacion,
+        data: {
+            'accion': 'query_r_espacios', 'idEvento': activeEvent, idAgenda: activeAgenda
+        },
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        timeout: 6000,
+        success: function(data, status){
+        	list_output.empty();
+        	
+            if ($.isEmptyObject(data)) {
+            	output = '<p>&nbsp; No se encontraron espacios relacionados</p>';
+                list_output.append(output);
+                list_output.load();
+            }
+            $.each(data, function(i,item){
+            	$("#btn_r_espacio").hide();
+            	output = '<li id="r_espacio' + item.idEspacio + '"><a data-ajax="false" href="g_espacio_q.html">';
+            	if (!$.isEmptyObject(item.esp_imagen)) {
+            		output += '<img src="' + httpImagen + item.esp_imagen + '">';
+            	}
+        		output += '<h2>' + item.esp_nombre + '</h2></a>';
+        		if (!$.isEmptyObject(usu_perfil)) {
+        			if (usu_perfil != -1 && usu_perfil != 3 && usu_perfil != 4) {
+        				output += '<a id="delete_r_espacio' + item.idEspacio + '" href="#" >Elimina Relacion</a>';
+        			}
+        		}
+        		capacidad = item.esp_capacidad;
+				output += '</li>';
+				list_output.append(output);
+				list_output.listview("refresh");
+				$('#r_espacio' + (item.idEspacio)).bind('tap', function(e) {
+                	window.localStorage.setItem('activeEspacio', item.idEspacio);
+                });
+				$('#delete_r_espacio' + (item.idEspacio)).bind('tap', function(e) {
+					$.ajax({
+				        url: archivoValidacion,
+				        data: {
+				            accion: 'delete_r_espacio', idEvento: activeEvent, idEspacio: item.idEspacio, idAgenda: activeAgenda
+				        },
+				        dataType: 'jsonp',
+				        jsonp: 'jsoncallback',
+				        timeout: 6000,
+				        success: function(data, status){
+				        	alert("Se elimino relacion de espacio con agenda exitosamente");
+				        	location.reload();
+				        },
+				        beforeSend: function(){
+				            showLoading();
+				        },
+				        complete: function(){
+				            $.mobile.loading( "hide" );
+				        },
+				        error: function(jqXHR, textStatus, errorThrown){
+				        	console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
+				        	div_output.empty();
+				            $.mobile.loading( "hide" );
+				            alert('Error conectando al servidor.');
+				        }
+				    });
+                });
+            });
+        },
+        beforeSend: function(){
+            showLoading();
+        },
+        complete: function(){
+            $.mobile.loading( "hide" );
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+        	console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
+        	list_output.empty();
+            $.mobile.loading( "hide" );
+            alert('Error conectando al servidor.');
+        }
+    });
+    
+    //Relacion Usuarios
+    var list_usuarios= $('#list_usuarios');
+
+    $.ajax({
+        url: archivoValidacion,
+        data: {
+            'accion': 'query_usuarios_agenda', idAgenda: activeAgenda
+        },
+        dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+        timeout: 6000,
+        success: function(data, status){
+        	list_usuarios.empty();
+        	cupo = data.length;
+        	$("#MyHeaderID ").text("Asistentes confirmados " + cupo + "/" + capacidad);
+        	if (cupo == capacidad) {
+        		$("#btn_r_usuario ").hide();
+        	}
+//        	$("#nro_asistentes").load();
+            if ($.isEmptyObject(data)) {
+            	output = '<p>&nbsp; No se encontraron usarios relacionados</p>';
+                list_usuarios.append(output);
+                list_usuarios.load();
+            }
+            $.each(data, function(i,item){
+            	output = '<li id="r_usuario' + item.idUsuario + '"><a data-ajax="false" href="g_usuario_q.html">';
+            	if (!$.isEmptyObject(item.usu_imagen)) {
+            		output += '<img src="' + httpImagen + item.usu_imagen + '">';
+            	}
+        		output += '<h2>' + item.usu_nombre + ' ' + item.usu_apellido + '</h2></a>';
+        		if (!$.isEmptyObject(usu_perfil)) {
+        			if ((usu_perfil != -1 && usu_perfil != 3 &&  usu_perfil != 4) || idUsuario == item.idUsuario) {
+        				output += '<a id="delete_r_usuario' + item.idUsuario + '" href="#" >Elimina Relacion</a>';
+        			}
+        		}
+				output += '</li>';
+				list_usuarios.append(output);
+				list_usuarios.listview("refresh");
+				$('#r_usuario' + (item.idUsuario)).bind('tap', function(e) {
+                	window.localStorage.setItem('activeUsuario', item.idUsuario);
+                });
+				$('#delete_r_usuario' + (item.idUsuario)).bind('tap', function(e) {
+					$.ajax({
+				        url: archivoValidacion,
+				        data: {
+				            accion: 'delete_r_usuario', idUsuario: item.idUsuario, idAgenda: activeAgenda
+				        },
+				        dataType: 'jsonp',
+				        jsonp: 'jsoncallback',
+				        timeout: 6000,
+				        success: function(data, status){
+				        	alert("Se elimino relacion de usuario con agenda exitosamente");
+				        	location.reload();
+				        },
+				        beforeSend: function(){
+				            showLoading();
+				        },
+				        complete: function(){
+				            $.mobile.loading( "hide" );
+				        },
+				        error: function(jqXHR, textStatus, errorThrown){
+				        	console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
+				        	div_output.empty();
+				            $.mobile.loading( "hide" );
+				            alert('Error conectando al servidor.');
+				        }
+				    });
+                });
+            });
+        },
+        beforeSend: function(){
+            showLoading();
+        },
+        complete: function(){
+            $.mobile.loading( "hide" );
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+        	console.log('ERRORS: ' + textStatus + " " + jqXHR.responseText);
+        	list_usuarios.empty();
             $.mobile.loading( "hide" );
             alert('Error conectando al servidor.');
         }
@@ -355,6 +470,37 @@ $(document).on('pageinit','#page_agenda_query',function(e){
             	if(typeof data.error === 'undefined') {
             		alert("agenda eliminado exitosamente");
             		window.history.go(-2);
+            	} else {
+                    console.log('ERRORS: ' + data.error);
+                }
+            },
+            beforeSend: function(){
+                showLoading();
+            },
+            complete: function(){
+                $.mobile.loading( "hide" );
+            },
+            error: function(){
+                $.mobile.loading( "hide" );
+                alert('Error conectando al servidor.');
+            }
+        });
+    });
+    
+    $('#btn_r_usuario').bind('tap', function(e) {
+    	$.ajax({
+            url: archivoValidacion,
+            data: {
+                'accion': 'r_usuario_agenda', idAgenda: activeAgenda, idUsuario: idUsuario
+            },
+            dataType: 'jsonp',
+            jsonp: 'jsoncallback',
+            timeout: 6000,
+            success: function(data, status){
+            	if(typeof data.error === 'undefined') {
+            		alert("Usuario agregado exitosamente");
+            		$("#btn_r_usuario").hide();
+            		location.reload();
             	} else {
                     console.log('ERRORS: ' + data.error);
                 }

@@ -49,7 +49,7 @@ $(document).on('pageinit','#page_espacios',function(e){
                 div_output.load();
             }
             $.each(data, function(i,item){
-            	output = '<li id="espacio' + item.idEspacio + '"><a href="g_espacio_q.html">';
+            	output = '<li id="espacio' + item.idEspacio + '"><a data-ajax="false" href="g_espacio_q.html">';
             	if (!$.isEmptyObject(item.esp_imagen)) {
             		output += '<img src="' + httpImagen + item.esp_imagen + '">';
             	}

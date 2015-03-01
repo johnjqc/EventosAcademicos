@@ -44,6 +44,8 @@
     <div data-role="header" data-position="fixed">
         <a class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext headerButton" data-rel="back" href="../index.html" >Only Icon</a>
         <div id="custom-border-radius" class="ui-btn-right">
+        	<a href="#" data-ajax="false" id="btn_r_usuario"
+        		class="ui-btn ui-corner-all ui-icon-check ui-btn-icon-notext">Only Icon</a>
 			<a href="r_espacio_agenda.html" data-ajax="false" id="btn_r_espacio"
         		class="ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext">Only Icon</a>
         	<a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop" id="btnm_delete_agenda"
@@ -56,14 +58,15 @@
         <span class="ui-title" ></span>
     </div>
     <div data-role="content" >
-		<div id="agenda_content">
-			
-		</div>
+		<div id="agenda_content"></div>
 		
-		<div data-role="collapsible" data-theme="a" data-content-theme="a">
-		<h4>Lugares</h4>
-		<ul id="list_espacios" data-role="listview" data-split-icon="delete" data-split-theme="d">
-		</ul>
+		<div class="ui-body ui-body-a ui-corner-all ">
+			<ul id="list_espacios" data-role="listview" data-split-icon="delete" data-split-theme="d"></ul>
+		</div>
+		<br>
+		<div id="list_asistentes" data-role="collapsible" data-theme="a" data-content-theme="a">
+			<h4 id="nro_asistentes"><span id="MyHeaderID">Asistentes confirmados</span></h4>
+			<ul id="list_usuarios" data-role="listview" data-filter="true" data-split-icon="delete" data-split-theme="d"></ul>
 		</div>
 		
 		<div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
