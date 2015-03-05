@@ -7,6 +7,11 @@ var usu_perfil;
 $(function() {
 	security();
 	$('#frm_new_comite').on('submit', submitForm_newComite);
+	$('#logout').bind('tap', function(e) {
+		window.localStorage.setItem('usu_perfil', -1);
+		window.localStorage.setItem('idUsuario', -1);
+		window.location = "../index.html";
+    });
 });
 
 $(document).on('pageinit','#pageComite',function(e) {

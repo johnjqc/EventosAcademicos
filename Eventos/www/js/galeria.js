@@ -7,6 +7,11 @@ var usu_perfil;
 $(function() {
 	security();
 	$('#frm_new_galeria').on('submit', submitForm_newgaleria);
+	$('#logout').bind('tap', function(e) {
+		window.localStorage.setItem('usu_perfil', -1);
+		window.localStorage.setItem('idUsuario', -1);
+		window.location = "../index.html";
+    });
 });
 
 $(document).on('pageinit','#pagegaleria',function(e) {
@@ -298,12 +303,33 @@ function security() {
 			$("#btn_new_imagen").hide();
 			$("#btn_confirm_delete_galeria").hide();
 			$("#btn_edit_galeria").hide();
+			
+			$("#menu_invitado").hide();
+			$("#menu_organizador").hide();
+			$("#menu_coordinador").hide();
+			$("#mnuComites").hide();
+			$("#mnuEncuestas").hide();
+			$("#mnuLugares").hide();
+			$("#mnuPatrocinadores").hide();
+			$("#mnuPublicaciones").hide();
+			$("#mnuUsuarios").hide();
+			$("#mnuInscripciones").hide();
 		}
 		if (usu_perfil == 4) {
 			$("#btn_new_galeria").hide();
 			$("#btn_new_imagen").hide();
 			$("#btn_confirm_delete_galeria").hide();
 			$("#btn_edit_galeria").hide();
+			
+			$("#menu_invitado").hide();
+			$("#menu_organizador").hide();
+			$("#menu_coordinador").hide();
+			$("#mnuComites").hide();
+			$("#mnuEncuestas").hide();
+			$("#mnuLugares").hide();
+			$("#mnuPatrocinadores").hide();
+			$("#mnuUsuarios").hide();
+			$("#mnuInscripciones").hide();
 		}
 	}
 }

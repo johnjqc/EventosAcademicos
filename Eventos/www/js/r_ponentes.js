@@ -12,6 +12,11 @@ $(function() {
 	$(document).on("pagehide", "div[data-role=page]", function(event){
 		$(event.target).remove();
 	});
+	$('#logout').bind('tap', function(e) {
+		window.localStorage.setItem('usu_perfil', -1);
+		window.localStorage.setItem('idUsuario', -1);
+		window.location = "../index.html";
+    });
 });
 
 

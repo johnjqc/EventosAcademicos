@@ -6,6 +6,11 @@ var usu_perfil;
 
 $(function() {
 	security();
+	$('#logout').bind('tap', function(e) {
+		window.localStorage.setItem('usu_perfil', -1);
+		window.localStorage.setItem('idUsuario', -1);
+		window.location = "../index.html";
+    });
 });
 
 $(document).on('pageinit','#pageInscripcion',function(e) {

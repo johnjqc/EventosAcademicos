@@ -8,14 +8,6 @@ var idUsuario;
 var files;
 
 $(function() {
-//	document.addEventListener("deviceready", onDeviceReady, false);
-
-    // device APIs are available
-    //
-//    function onDeviceReady() {
-//        navigator.splashscreen.show();
-//    }
-
 	security();
 	$('input[type=file]').on('change', prepareUpload);
 	$('#frm_new_evento').on('submit', uploadFiles);
@@ -323,11 +315,11 @@ $(document).on('pageinit','#page_info',function(e){
 	        		if (!$.isEmptyObject(item.eve_pagina_web)) {
 	        			output += '<a id="btnWeb" rel="external"  href="' + item.eve_pagina_web + '" class="ui-corner-all"> \
 	        				<img alt="home" src="../images/web.png" /></a>';
-	        			output += '<div id="btnWeb1" class="ui-corner-all"> \
-        				<img alt="home" src="../images/web.png" /></div>';
-	        			$('#btnWeb1').bind('tap', function(e) {
-	        				navigator.ChromeLauncher.open(item.eve_pagina_web)
-	        		    });
+//	        			output += '<div id="btnWeb1" class="ui-corner-all"> \
+//        				<img alt="home" src="../images/web.png" /></div>';
+//	        			$('#btnWeb1').bind('tap', function(e) {
+//	        				navigator.ChromeLauncher.open(item.eve_pagina_web)
+//	        		    });
 	        		}
 	        		output += '</div>';
 	        		output += '</div><br>';
@@ -900,7 +892,6 @@ function security() {
 			$("#menu_invitado").hide();
 			$("#menu_organizador").hide();
 			$("#menu_coordinador").hide();
-			
 			$("#mnuComites").hide();
 			$("#mnuEncuestas").hide();
 			$("#mnuLugares").hide();
@@ -918,7 +909,6 @@ function security() {
 			$("#menu_invitado").hide();
 			$("#menu_organizador").hide();
 			$("#menu_coordinador").hide();
-			
 			$("#mnuComites").hide();
 			$("#mnuEncuestas").hide();
 			$("#mnuLugares").hide();

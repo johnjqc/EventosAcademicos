@@ -8,6 +8,11 @@ var usu_perfil;
 $(function() {
 	security();
 	$('#frm_new_pregunta').on('submit', submitForm_newpregunta);
+	$('#logout').bind('tap', function(e) {
+		window.localStorage.setItem('usu_perfil', -1);
+		window.localStorage.setItem('idUsuario', -1);
+		window.location = "../index.html";
+    });
 });
 
 $(document).on('pageinit','#pagepregunta',function(e) {

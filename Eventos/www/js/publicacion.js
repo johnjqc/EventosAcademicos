@@ -14,6 +14,11 @@ $(function() {
 	});
 	$('input[type=file]').on('change', prepareUpload);
 	$('#frm_new_publicacion').on('submit', uploadFiles);
+	$('#logout').bind('tap', function(e) {
+		window.localStorage.setItem('usu_perfil', -1);
+		window.localStorage.setItem('idUsuario', -1);
+		window.location = "../index.html";
+    });
 });
 
 $(document).on('pageinit','#page_publicaciones',function(e){
@@ -307,6 +312,29 @@ function security() {
 		if (usu_perfil == 3) {
 			$("#btn_edit_publicacion").hide();
 			$("#btn_confirm_delete_publicacion").hide();
+			
+			$("#menu_invitado").hide();
+			$("#menu_organizador").hide();
+			$("#menu_coordinador").hide();
+			$("#mnuComites").hide();
+			$("#mnuEncuestas").hide();
+			$("#mnuLugares").hide();
+			$("#mnuPatrocinadores").hide();
+			$("#mnuPublicaciones").hide();
+			$("#mnuUsuarios").hide();
+			$("#mnuInscripciones").hide();
+		}
+		
+		if (usu_perfil == 4) {
+			$("#menu_invitado").hide();
+			$("#menu_organizador").hide();
+			$("#menu_coordinador").hide();
+			$("#mnuComites").hide();
+			$("#mnuEncuestas").hide();
+			$("#mnuLugares").hide();
+			$("#mnuPatrocinadores").hide();
+			$("#mnuUsuarios").hide();
+			$("#mnuInscripciones").hide();
 		}
 		
 		if (usu_perfil != -1 && usu_perfil != 0) {
