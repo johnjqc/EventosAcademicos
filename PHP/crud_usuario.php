@@ -80,7 +80,6 @@
 			$t_telefono = $_REQUEST['t_telefono'];
 			$t_contrasena = $_REQUEST['t_contrasena'];
 			$t_perfil = $_REQUEST['t_perfil'];
-			$t_estado = $_REQUEST['t_estado'];
 			$t_institucion = $_REQUEST['t_institucion'];
 			$t_nivel_academico = $_REQUEST['t_nivel_academico'];
 			$t_biografia = $_REQUEST['t_biografia'];
@@ -98,7 +97,7 @@
 			$row = mysql_fetch_array($result);
 			$nextId = $row['Auto_increment'];
 			
-			$res = mysql_query("INSERT INTO usuario (usu_identificacion ,usu_nombre ,usu_apellido ,usu_nacionalidad ,usu_email ,usu_telefono ,usu_contrasena ,usu_imagen ,usu_perfil ,usu_estado ,usu_institucion ,usu_nivel_academico ,usu_biografia ,usu_profesion) VALUES ('$t_identificacion', '$t_nombre', '$t_apellido', '$t_nacionalidad', '$t_email', '$t_telefono', '$t_contrasena', '$t_archivo_path' ,'$t_perfil', '$t_estado', '$t_institucion', '$t_nivel_academico', '$t_biografia', '$t_profesion') ") or $rows["error"] =mysql_error();
+			$res = mysql_query("INSERT INTO usuario (usu_identificacion ,usu_nombre ,usu_apellido ,usu_nacionalidad ,usu_email ,usu_telefono ,usu_contrasena ,usu_imagen ,usu_perfil ,usu_institucion ,usu_nivel_academico ,usu_biografia ,usu_profesion) VALUES ('$t_identificacion', '$t_nombre', '$t_apellido', '$t_nacionalidad', '$t_email', '$t_telefono', md5('$t_contrasena'), '$t_archivo_path' ,'$t_perfil', '$t_institucion', '$t_nivel_academico', '$t_biografia', '$t_profesion') ") or $rows["error"] =mysql_error();
 			
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
@@ -115,7 +114,6 @@
 			$t_telefono = $_REQUEST['t_telefono'];
 			$t_contrasena = $_REQUEST['t_contrasena'];
 			$t_perfil = $_REQUEST['t_perfil'];
-			$t_estado = $_REQUEST['t_estado'];
 			$t_institucion = $_REQUEST['t_institucion'];
 			$t_nivel_academico = $_REQUEST['t_nivel_academico'];
 			$t_biografia = $_REQUEST['t_biografia'];
@@ -131,7 +129,7 @@
 						
 			$nextId = $_REQUEST['idUsuario']; 
 			
-			$res = mysql_query("UPDATE usuario SET usu_identificacion='$t_identificacion' ,usu_nombre='$t_nombre' ,usu_apellido='$t_apellido' ,usu_nacionalidad='$t_nacionalidad' ,usu_email='$t_email' ,usu_telefono='$t_telefono' ,usu_contrasena='$t_contrasena' ,usu_imagen='$t_archivo_path' ,usu_perfil='$t_perfil' ,usu_estado='$t_estado' ,usu_institucion='$t_institucion' ,usu_nivel_academico='$t_nivel_academico' ,usu_biografia='$t_biografia' ,usu_profesion='$t_profesion' WHERE idUsuario=$nextId") or $rows["error"] =mysql_error();
+			$res = mysql_query("UPDATE usuario SET usu_identificacion='$t_identificacion' ,usu_nombre='$t_nombre' ,usu_apellido='$t_apellido' ,usu_nacionalidad='$t_nacionalidad' ,usu_email='$t_email' ,usu_telefono='$t_telefono' ,usu_contrasena=md5('$t_contrasena') ,usu_imagen='$t_archivo_path' ,usu_perfil='$t_perfil' ,usu_institucion='$t_institucion' ,usu_nivel_academico='$t_nivel_academico' ,usu_biografia='$t_biografia' ,usu_profesion='$t_profesion' WHERE idUsuario=$nextId") or $rows["error"] =mysql_error();
 
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';

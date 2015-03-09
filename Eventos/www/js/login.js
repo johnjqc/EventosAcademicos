@@ -42,6 +42,9 @@ $(function() {
 	            console.log('ERRORS: ' + textStatus + jqXHR.responseText);
 	            $.mobile.loading( "hide" );
 	        },
+	        beforeSend: function(){
+	            showLoading();
+	        },
 	        complete: function() {
 	        	$.mobile.loading( "hide" );
 	        }

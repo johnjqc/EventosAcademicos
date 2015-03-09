@@ -118,6 +118,12 @@ $(document).on('pageinit','#page_lugar_query',function(e){
                 output += '<p><h1>' + item.lug_nombre + '</h1></p>';
                 output += '<p>' + item.lug_descripcion + '</p>';
                 output += '</div>';
+                if (!$.isEmptyObject(item.lug_direccion)) {
+                    output += '<div class="ui-body ui-body-a ui-corner-all ">';
+                    output += '<b>Direccion: </b>' + item.lug_direccion + '';
+                    output += '</div>';
+                }
+
                 div_output.append(output);
                 div_output.load();
                 

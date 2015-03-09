@@ -559,9 +559,7 @@ function submitForm(event, data) {
     });
     
     getIpPortserver();
-
     var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_evento.php?jsoncallback=?";
-
     $.ajax({
         url: urlServer,
         type: 'POST',

@@ -128,10 +128,9 @@
 			
 			$res = mysql_query("INSERT INTO evento (eve_nombre, eve_fecha_inicio, eve_fecha_fin, eve_descripcion, eve_titulo_imagen, eve_imagen, eve_temas, eve_costos, eve_tipo, eve_recepcion_articulos, eve_pagina_web, eve_facebook, eve_twitter)
 				VALUES ('$t_nombre', '$t_fecha_inicio', '$t_fecha_fin', '$t_descripcion', '$t_titulo_img', '$t_img_path', '$t_temas'
-						, '$t_costos', $t_tipo, '$t_fecha_articulos', '$t_pagina', '$t_facebook', '$t_twitter') ") or $rows["respuesta"] =mysql_error();
+						, '$t_costos', '$t_tipo', '$t_fecha_articulos', '$t_pagina', '$t_facebook', '$t_twitter') ") or $rows["error"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
-			$rows["id"] = "$nextId";
 			$rows["name"] = $t_img_path;
 			
 			

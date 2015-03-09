@@ -18,7 +18,7 @@
 			$txtPassword = $_REQUEST['txt-password'];
 			$perfil = $_REQUEST['perfil'];
 			
-			$res = mysql_query(" INSERT INTO usuario (usu_nombre, usu_apellido, usu_email , usu_contrasena, usu_perfil , usu_estado )  values ( '".$txtFirstName."', '".$txtLastName."', '".$txtEmail."', '".$txtPassword."','$perfil','1')") or $rows["error"] =mysql_error(); 
+			$res = mysql_query(" INSERT INTO usuario (usu_nombre, usu_apellido, usu_email , usu_contrasena, usu_perfil , usu_estado )  values ( '".$txtFirstName."', '".$txtLastName."', '".$txtEmail."', md5('".$txtPassword."'),'$perfil','1')") or $rows["error"] =mysql_error(); 
 			
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
@@ -28,7 +28,7 @@
 			$rows = array();
 			$txtEmail = $_REQUEST['txt-email'];
 			$txtPassword = $_REQUEST['txt-password'];
-			$res = mysql_query("SELECT * from usuario WHERE usu_email= '$txtEmail' and usu_contrasena='$txtPassword'");
+			$res = mysql_query("SELECT * from usuario WHERE usu_email= '$txtEmail' and usu_contrasena=md5('$txtPassword')");
 			
 			while($r = mysql_fetch_assoc($res)) {
 				$rows = $r;
@@ -70,7 +70,7 @@
 				$rows["error"] = $mail->ErrorInfo;
 			} else {
 				$rows["OK"] = "Message sent!";
-				mysql_query("UPDATE usuario SET usu_contrasena='$newpwd' WHERE usu_email='$email'") or $rows["error"] =mysql_error();
+				mysql_query("UPDATE usuario SET usu_contrasena=md5('$newpwd') WHERE usu_email='$email'") or $rows["error"] =mysql_error();
 			}
 					
 			$resultadosJson= json_encode($rows);

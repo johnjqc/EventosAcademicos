@@ -4,6 +4,7 @@ var text_puerto = '';
 var activeUsuario;
 var activeEvent;
 var usu_perfil;
+var idUsuario;
 
 var files;
 
@@ -58,7 +59,21 @@ $(document).on('pageinit','#page_usuarios',function(e){
             		output += '<img src="' + httpImagen + item.usu_imagen + '">';
             	}
         		output += '<h2>' + item.usu_nombre + ' ' + item.usu_apellido + '</h2>';
-    			output += '<p>' + item.usu_email + '</p></a>';
+    			output += '<p>' + item.usu_email + '</p>';
+    			output += '<p>';
+    			if (item.usu_perfil == 1) {
+                	output += '<spam id="profile">Coordinador</spam>';
+                }
+                if (item.usu_perfil == 2) {
+                	output += '<spam id="profile">Organizador</spam>';
+                }
+                if (item.usu_perfil == 3) {
+                	output += '<spam id="profile">Asistente</spam>';
+                }
+                if (item.usu_perfil == 4) {
+                	output += '<spam id="profile">Ponente</spam>';
+                }
+                output +='</p></a>';
 				output += '</li>';
                 
                 div_output.append(output);
@@ -85,7 +100,12 @@ $(document).on('pageinit','#page_usuarios',function(e){
 $(document).on('pageinit','#page_usuario_query',function(e){
 	activeUsuario = localStorage.getItem('activeUsuario');
 	activeEvent = window.localStorage.getItem('activeEvent');
+	idUsuario = window.localStorage.getItem('idUsuario');
 	
+	if (activeUsuario == -1) {
+		activeUsuario = idUsuario;
+		window.localStorage.setItem('activeUsuario', activeUsuario);
+	}
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_usuario.php?jsoncallback=?";
 	var httpImagen = "http://" + text_ip + ":" + text_puerto + "/web/eventos/";
@@ -407,13 +427,30 @@ function security() {
 			$("#btn_confirm_delete_usuario").hide();
 			$("#btn_edit_comite").hide();
 		}
+		if (usu_perfil == 1) {
+			if (localStorage.getItem('idUsuario') == localStorage.getItem('activeUsuario')) {
+				$("#btn_confirm_delete_usuario").hide();
+				$("#t_perfil").hide().selectmenu('refresh');
+			}
+		}
+		if (usu_perfil == 2) {
+			$("#itemPerfil1").attr("disabled","disabled");
+			if (localStorage.getItem('activeUsuario') == -1) {
+				$("#itemPerfil2").attr("disabled","disabled");
+			}
+			
+			if (localStorage.getItem('idUsuario') == localStorage.getItem('activeUsuario')) {
+				$("#btn_confirm_delete_usuario").hide();
+				$("#t_perfil").hide().selectmenu('refresh');
+			}
+		}
 		if (usu_perfil == 3) {
 			$("#btn_confirm_delete_usuario").hide();
 			if (localStorage.getItem('idUsuario') != localStorage.getItem('activeUsuario')) {
 				$("#btn_edit_usuario").hide();
 			}
 			$("#label_perfil").hide();
-			$("#t_perfil").hide().selectmenu('refresh');;
+			$("#t_perfil").hide().selectmenu('refresh');
 			$("#label_estado").hide();
 			$("#t_estado").hide();
 			
@@ -434,7 +471,7 @@ function security() {
 				$("#btn_edit_usuario").hide();
 			}
 			$("#label_perfil").hide();
-			$("#t_perfil").hide().selectmenu('refresh');;
+			$("#t_perfil").hide().selectmenu('refresh');
 			$("#label_estado").hide();
 			$("#t_estado").hide();
 			

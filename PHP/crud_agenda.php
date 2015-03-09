@@ -117,6 +117,8 @@
 			$t_hora_inicio = $_REQUEST['t_hora_inicio'];
 			$t_hora_fin = $_REQUEST['t_hora_fin'];
 			$t_actividad = $_REQUEST['t_actividad'];
+			$t_tipo = $_REQUEST['t_tipo'];
+			
 			$t_descripcion = $_REQUEST['t_descripcion'];
 			$idEvento = $_REQUEST['idEvento'];
 
@@ -124,7 +126,7 @@
 			$row = mysql_fetch_array($result);
 			$nextId = $row['Auto_increment'];
 			
-			$res = mysql_query("INSERT INTO agenda (age_fecha, age_hora_fin, age_hora_inicio, age_actividad, age_descripcion, evento_idEvento) VALUES ('$t_fecha', '$t_hora_fin', '$t_hora_inicio', '$t_actividad', '$t_descripcion', '$idEvento') ") or $rows["error"] =mysql_error();
+			$res = mysql_query("INSERT INTO agenda (age_fecha, age_hora_fin, age_hora_inicio, age_actividad, age_tipo, age_descripcion, evento_idEvento) VALUES ('$t_fecha', '$t_hora_fin', '$t_hora_inicio', '$t_actividad', '$t_tipo', '$t_descripcion', '$idEvento') ") or $rows["error"] =mysql_error();
 
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
@@ -162,10 +164,11 @@
 			$t_hora_inicio = $_REQUEST['t_hora_inicio'];
 			$t_hora_fin = $_REQUEST['t_hora_fin'];
 			$t_actividad = $_REQUEST['t_actividad'];
+			$t_tipo = $_REQUEST['t_tipo'];
 			$t_descripcion = $_REQUEST['t_descripcion'];
 			$idAgenda = $_REQUEST['idAgenda']; 
 			
-			$res = mysql_query("UPDATE agenda SET age_fecha='$t_fecha', age_hora_inicio='$t_hora_inicio', age_hora_fin='$t_hora_fin', age_actividad='$t_actividad', age_descripcion='$t_descripcion' WHERE idAgenda=$idAgenda") or $rows["error"] =mysql_error();
+			$res = mysql_query("UPDATE agenda SET age_fecha='$t_fecha', age_hora_inicio='$t_hora_inicio', age_hora_fin='$t_hora_fin', age_actividad='$t_actividad', age_tipo='$t_tipo', age_descripcion='$t_descripcion' WHERE idAgenda=$idAgenda") or $rows["error"] =mysql_error();
 			
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';

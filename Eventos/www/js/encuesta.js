@@ -187,6 +187,7 @@ $(document).on('pageinit','#page_encuesta_query',function(e){
                     div_output.append(output);
                     div_output.load();
                 }
+        		var emtyPreguntas = false;
         		if ($.isEmptyObject(respuestas)) {
         			$.each(data, function(i,item){
         				if (item.pre_tipo == 1) {
@@ -194,6 +195,7 @@ $(document).on('pageinit','#page_encuesta_query',function(e){
                     		output += '<label for="identificacion">' + item.pre_pregunta + '</label>';
                     		output += '<spam id="identificacion"><textarea name="t_respuesta_' + item.idPregunta + '" id="t_respuesta_' + item.idPregunta + '" data-enhanced="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all"></textarea>';
                             output += '</spam></li>';
+                            emtyPreguntas = true;
                     	}
         				if (item.pre_tipo == 2) {
                     		output = '<li class="ui-field-contain">';
@@ -210,9 +212,11 @@ $(document).on('pageinit','#page_encuesta_query',function(e){
                         div_output.load();
                         $("input[type='radio']").checkboxradio().checkboxradio("refresh");
                     });
-        			var button = $('<input id="btn_encuesta" type="submit" data-theme="b" name="submit" id="submit_new_contacto" value="Submit">');
-                    div_output.append(button);
-                    button.button();
+        			if (emtyPreguntas) {
+        				var button = $('<input id="btn_encuesta" type="submit" data-theme="b" name="submit" id="submit_new_contacto" value="Enviar">');
+                        div_output.append(button);
+                        button.button();
+        			}
         		} else {
         			$.each(respuestas, function(i,item){
         				if (item.pre_tipo == 1) {

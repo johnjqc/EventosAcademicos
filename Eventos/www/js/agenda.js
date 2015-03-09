@@ -190,14 +190,14 @@ $(document).on('pageinit','#page_agenda',function(e) {
                 	if (fechas[j].getTime() == fecha.getTime()) {
                 		output = '<li id="' + i + 'agenda' + item.idAgenda + '"><a data-ajax="false" href="g_agenda_q.html">';
                     	output += '<h2>' + item.age_actividad + '</h2>';
-                    	output += '<p><strong>' + ((item.esp_nombre == null)?"Sin espacio asignado":item.esp_nombre) + '</strong></p>';
-                    	output += '<p>Hasta: ' + item.age_hora_fin + '</p>';
-                    	output += '<p class="ui-li-aside"><strong>Desde: ' + item.age_hora_inicio + '</strong>PM</p>';
+                    	output += '<p>Espacio: <strong>' + ((item.esp_nombre == null)?"Sin espacio asignado":item.esp_nombre) + '</strong></p>';
+                    	output += '<p>Tipo evento:' + item.age_tipo + '</p>';
+                    	output += '<p>Hora inicio: <strong>' + item.age_hora_inicio + '</strong></p>';
+//                    	output += '<p class="ui-li-aside"><strong>Desde: ' + item.age_hora_inicio + '</strong>PM</p>';
                     	output += '</a></li>';
 						div_output.append(output);
 						div_output.listview("refresh");
 						$('#' + i + 'agenda' + item.idAgenda).bind('tap', function(e) {
-							
 							window.localStorage.setItem('activeAgenda', item.idAgenda);
 						});
                 	}
@@ -273,7 +273,12 @@ $(document).on('pageinit','#page_agenda_query',function(e){
 				output += '<span class="ui-btn-c ui-btn-icon-notext ui-icon-calendar" style="position:relative;padding-left:2em;" />  ' + item.age_fecha + ' ';
 				output += '<span class="ui-btn-b ui-btn-icon-notext ui-icon-clock" style="position:relative;padding-left:2em;" /> ' + item.age_hora_inicio + ' ' + ' - ' + item.age_hora_fin + '';
 				output += '</div>';
-				
+				if (!$.isEmptyObject(item.age_tipo)) {
+					output += '<br>';
+					output += '<div class="ui-body ui-body-a ui-corner-all ">';
+					output += 'Tipo de evento: ' + item.age_tipo + '';
+					output += '</div>';
+				}
 				if (!$.isEmptyObject(item.age_descripcion)) {
 					output += '<br>';
 					output += '<div class="ui-body ui-body-a ui-corner-all ">';
