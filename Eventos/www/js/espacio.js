@@ -114,9 +114,17 @@ $(document).on('pageinit','#page_espacio_query',function(e){
                 }
                 output += '<p><h1>' + item.esp_nombre + '</h1></p>';
                 output += '<p>' + item.esp_descripcion + '</p>';
+                output += '<br><p> <b>Capacidad: </b>' + item.esp_capacidad + '</p>';
                 output += '</div>';
                 div_output.append(output);
                 div_output.load();
+                
+                if (!$.isEmptyObject(item.esp_latitud) && !$.isEmptyObject(item.esp_longitud)) {
+                	var location = new google.maps.LatLng(item.esp_latitud, item.esp_longitud);
+                    var mapOptions = { zoom: 16, mapTypeId: google.maps.MapTypeId.ROADMAP, center: location };
+                    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+                    var marker = new google.maps.Marker({map:map, animation: google.maps.Animation.DROP, position: location });
+                }
             });
         },
         beforeSend: function(){

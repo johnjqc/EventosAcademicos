@@ -2,6 +2,7 @@ var text_ip = '';
 var text_puerto = '';
 var activePublicacion;
 var activeEvent;
+var idUsuario;
 var usu_perfil;
 
 var files;
@@ -20,6 +21,7 @@ $(function() {
 
 $(document).on('pageinit','#page_r_publicacion',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
+	idUsuario = window.localStorage.getItem('idUsuario');
 	window.localStorage.setItem('activePublicacion', -1);
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_publicacion.php?jsoncallback=?";
@@ -30,7 +32,7 @@ $(document).on('pageinit','#page_r_publicacion',function(e){
     $.ajax({
         url: archivoValidacion,
         data: {
-            'accion': 'query_r_publicaciones', 'idEvento': activeEvent
+            'accion': 'query_r_publicaciones', 'idEvento': activeEvent, idUsuario: idUsuario
         },
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
@@ -49,9 +51,12 @@ $(document).on('pageinit','#page_r_publicacion',function(e){
             	output = '<li id="r_publicacion' + item.idPublicacion + '"><a data-ajax="false" href="g_publicacion_q.html">';
             	
             	output += '<h2>' + item.pub_titulo + '</h2></a>';
-            	if (usu_perfil != 3) {
+            	if (usu_perfil != 3 && usu_perfil != 4) {
             		output += '<a id="delete_r_publicacion' + item.idPublicacion + '" href="#" >Elimina Relacion</a>';
             	}
+            	if (usu_perfil == 4 && idUsuario== item.usuario_idUsuario) {
+            		output += '<a id="delete_r_publicacion' + item.idPublicacion + '" href="#" >Elimina Relacion</a>';
+        		}
 				output += '</li>';
                 div_output.append(output);
                 div_output.listview("refresh");
@@ -104,7 +109,9 @@ $(document).on('pageinit','#page_r_publicacion',function(e){
 
 $(document).on('pageinit','#page_r_publicacion_evento',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
+	idUsuario = window.localStorage.getItem('idUsuario');
 	activePublicacion = localStorage.getItem('activePublicacion');
+	usu_perfil = window.localStorage.getItem('usu_perfil');
 	
 	getIpPortserver();
 	var urlServer = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_publicacion.php?jsoncallback=?";
@@ -115,7 +122,7 @@ $(document).on('pageinit','#page_r_publicacion_evento',function(e){
     $.ajax({
         url: urlServer,
         data: {
-            'accion': 'query_publicacion_to_add', 'idEvento': activeEvent
+            'accion': 'query_publicacion_to_add', 'idEvento': activeEvent, idUsuario: idUsuario, usu_perfil: usu_perfil
         },
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
@@ -123,6 +130,13 @@ $(document).on('pageinit','#page_r_publicacion_evento',function(e){
         success: function(data, status){
         	div_output.empty();
         	
+        	if ($.isEmptyObject(data)) {
+            	output = '<div class="ui-body ui-body-a ui-corner-all ">';
+            	output += '<p>No se encontraron registros en la Base de Datos para mostrar</p>';
+                output += '</div>';
+                div_output.append(output);
+                div_output.load();
+            }
             $.each(data, function(i,item){
             	output = '<li id="publicacion' + item.idPublicacion + '" data-icon="plus"><a href="#">';
             	

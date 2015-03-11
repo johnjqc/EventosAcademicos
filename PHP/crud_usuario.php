@@ -129,7 +129,18 @@
 						
 			$nextId = $_REQUEST['idUsuario']; 
 			
-			$res = mysql_query("UPDATE usuario SET usu_identificacion='$t_identificacion' ,usu_nombre='$t_nombre' ,usu_apellido='$t_apellido' ,usu_nacionalidad='$t_nacionalidad' ,usu_email='$t_email' ,usu_telefono='$t_telefono' ,usu_contrasena=md5('$t_contrasena') ,usu_imagen='$t_archivo_path' ,usu_perfil='$t_perfil' ,usu_institucion='$t_institucion' ,usu_nivel_academico='$t_nivel_academico' ,usu_biografia='$t_biografia' ,usu_profesion='$t_profesion' WHERE idUsuario=$nextId") or $rows["error"] =mysql_error();
+			$sth = mysql_query("SELECT usu_contrasena from usuario WHERE idUsuario=$nextId");
+			$rows = array();
+			
+			$ret = mysql_fetch_array($sth);  
+			$segm = $ret["usu_contrasena"]; 
+			$rows["pwd"] = $segm;
+			if ($segm == $t_contrasena) {
+				$res = mysql_query("UPDATE usuario SET usu_identificacion='$t_identificacion' ,usu_nombre='$t_nombre' ,usu_apellido='$t_apellido' ,usu_nacionalidad='$t_nacionalidad' ,usu_email='$t_email' ,usu_telefono='$t_telefono', usu_imagen='$t_archivo_path' ,usu_perfil='$t_perfil' ,usu_institucion='$t_institucion' ,usu_nivel_academico='$t_nivel_academico' ,usu_biografia='$t_biografia' ,usu_profesion='$t_profesion' WHERE idUsuario=$nextId") or $rows["error"] =mysql_error();
+			} else {
+				$res = mysql_query("UPDATE usuario SET usu_identificacion='$t_identificacion' ,usu_nombre='$t_nombre' ,usu_apellido='$t_apellido' ,usu_nacionalidad='$t_nacionalidad' ,usu_email='$t_email' ,usu_telefono='$t_telefono' ,usu_contrasena=md5('$t_contrasena') ,usu_imagen='$t_archivo_path' ,usu_perfil='$t_perfil' ,usu_institucion='$t_institucion' ,usu_nivel_academico='$t_nivel_academico' ,usu_biografia='$t_biografia' ,usu_profesion='$t_profesion' WHERE idUsuario=$nextId") or $rows["error"] =mysql_error();
+			}
+			
 
 			$resultadosJson= json_encode($rows);
 			echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';

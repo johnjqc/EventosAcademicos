@@ -17,8 +17,17 @@
 		$rows = array();
 		
 		if ($accion == "query_publicaciones") {
-			$sth = mysql_query("SELECT * from publicacion");
+			$idUsuario = $_REQUEST['idUsuario'];
+			$usu_perfil = $_REQUEST['usu_perfil'];
+			$sql = "";
+			if ($usu_perfil == "1") {
+				$sql = "SELECT * from publicacion";
+			} else {
+				$sql = "SELECT * from publicacion WHERE usuario_idUsuario= $idUsuario";
+			}
 			$rows = array();
+			$sth = mysql_query($sql) or $rows["error"] =mysql_error();
+			
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
 			}
@@ -29,8 +38,9 @@
 		
 		if ($accion == "query_publicacion" ) {
 			$idPublicacion = $_GET['idPublicacion'];
-			$sth = mysql_query("SELECT * from publicacion WHERE idPublicacion = '$idPublicacion'");
 			$rows = array();
+			$sth = mysql_query("SELECT * from publicacion WHERE idPublicacion = '$idPublicacion'") or $rows["error"] =mysql_error();
+			
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
 			}
@@ -40,7 +50,8 @@
 		
 		if ($accion == "query_r_publicaciones") {
 			$rows = array();
-			$idEvento = $_GET['idEvento'];
+			$idEvento = $_REQUEST['idEvento'];
+			$idUsuario = $_REQUEST['idUsuario'];
 			$sth = mysql_query("SELECT * FROM publicacion a WHERE a.evento_idEvento = $idEvento") or $rows["error"] =mysql_error();
 			
 			while($r = mysql_fetch_assoc($sth)) {
@@ -54,7 +65,17 @@
 		if ($accion == "query_publicacion_to_add") {
 			$rows = array();
 			$idEvento = $_GET['idEvento'];
-			$sth = mysql_query("SELECT * FROM publicacion a where a.evento_idEvento = 0") or $rows["error"] =mysql_error();
+			$idUsuario = $_REQUEST['idUsuario'];
+			$usu_perfil = $_REQUEST['usu_perfil'];
+			
+			$sql = "";
+			if ($usu_perfil == "1") {
+				$sql = "SELECT * FROM publicacion a where a.evento_idEvento = 0";
+			} else {
+				$sql = "SELECT * FROM publicacion a where a.evento_idEvento = 0 AND a.usuario_idUsuario = $idUsuario";
+			}
+			
+			$sth = mysql_query($sql) or $rows["error"] =mysql_error();
 			
 			while($r = mysql_fetch_assoc($sth)) {
 				$rows[] = $r;
@@ -99,6 +120,8 @@
 		if ($accion == "new_publicacion") {
 			$rows = array();
 			
+			$idEvento = $_REQUEST['idEvento'];
+			$idUsuario = $_REQUEST['idUsuario'];
 			$t_titulo = $_REQUEST['t_titulo'];
 			$t_resumen = $_REQUEST['t_resumen'];
 			$t_estado = "PENDIENTE";
@@ -116,8 +139,8 @@
 			$row = mysql_fetch_array($result);
 			$nextId = $row['Auto_increment'];
 			
-			$res = mysql_query("INSERT INTO publicacion (pub_titulo, pub_resumen, pub_estado, pub_otros_autores, pub_archivo)
-				VALUES ('$t_titulo', '$t_resumen', '$t_estado', '$t_otros_autores', '$t_archivo_path') ") or $rows["error"] =mysql_error();
+			$res = mysql_query("INSERT INTO publicacion (pub_titulo, pub_resumen, pub_estado, pub_otros_autores, pub_archivo, usuario_idUsuario )
+				VALUES ('$t_titulo', '$t_resumen', '$t_estado', '$t_otros_autores', '$t_archivo_path','$idUsuario') ") or $rows["error"] =mysql_error();
 
 			$rows["respuesta"] = "ok";
 			$rows["id"] = "$nextId";

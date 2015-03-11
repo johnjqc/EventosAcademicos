@@ -384,6 +384,7 @@ function submitForm(event, data) {
         jsonp: 'jsoncallback',
         success: function(data, textStatus, jqXHR) {
             if(typeof data.error === 'undefined') {
+            	alert(data.pwd);
             	window.history.back();
             } else {
                 console.log('ERRORS: ' + data.error);
@@ -426,6 +427,7 @@ function security() {
 			$("#btn_menu_home").hide();
 			$("#btn_confirm_delete_usuario").hide();
 			$("#btn_edit_comite").hide();
+			$("#btn_edit_usuario").hide();
 		}
 		if (usu_perfil == 1) {
 			if (localStorage.getItem('idUsuario') == localStorage.getItem('activeUsuario')) {

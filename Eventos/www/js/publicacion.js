@@ -4,6 +4,7 @@ var text_puerto = '';
 var activePublicacion;
 var activeEvent;
 var usu_perfil;
+var idUsuario;
 
 var files;
 
@@ -23,6 +24,8 @@ $(function() {
 
 $(document).on('pageinit','#page_publicaciones',function(e){
 	activeEvent = window.localStorage.getItem('activeEvent');
+	idUsuario = window.localStorage.getItem('idUsuario');
+	usu_perfil = window.localStorage.getItem('usu_perfil');
 	window.localStorage.setItem('activePublicacion', -1);
 	getIpPortserver();
 	var archivoValidacion = "http://" + text_ip + ":" + text_puerto + "/web/eventos/crud_publicacion.php?jsoncallback=?";
@@ -33,7 +36,7 @@ $(document).on('pageinit','#page_publicaciones',function(e){
     $.ajax({
         url: archivoValidacion,
         data: {
-            'accion': 'query_publicaciones'
+            'accion': 'query_publicaciones', idUsuario: idUsuario, usu_perfil: usu_perfil
         },
         dataType: 'jsonp',
         jsonp: 'jsoncallback',
@@ -247,7 +250,9 @@ function uploadFiles(event) {
 function submitForm(event, data) {
     $form = $(event.target);
     activePublicacion = window.localStorage.getItem('activePublicacion');
-    var accion = '&accion=new_publicacion';
+    idUsuario = window.localStorage.getItem('idUsuario');
+    
+    var accion = '&accion=new_publicacion&idUsuario=' + idUsuario;
     if (activePublicacion != -1) {
     	accion = '&accion=update_publicacion&idPublicacion='+ activePublicacion;
     }
