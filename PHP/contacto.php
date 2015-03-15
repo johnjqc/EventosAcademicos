@@ -1,4 +1,5 @@
 <?php
+	error_reporting(0);
 	include 'database.php';
 	header('Content-type: application/json');	
 	date_default_timezone_set('Etc/UTC');
@@ -18,14 +19,14 @@
 		$mail->isSMTP();
 		$mail->SMTPDebug = 0;
 		//$mail->Debugoutput = 'html';
-		$mail->Host = 'smtp.alliensoft.com.co';
+		$mail->Host = '';
 		$mail->Port = 25;
 		$mail->SMTPAuth = true;
-		$mail->Username = "pruebas.desarrollo@alliensoft.com.co";
-		$mail->Password = "Abcd123456";
+		$mail->Username = "";
+		$mail->Password = "";
 		$mail->setFrom('contacto@eventosud.com', 'Contacto Eventos');
 		$mail->addReplyTo('contacto@eventosud.com', 'Contacto Eventos');
-		$mail->addAddress('johnquirogac@gmail.com', 'John J');
+		$mail->addAddress('', 'John J');
 		$mail->Subject = $asunto;
 		$mail->Body    = $mensaje;
 		//$mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));

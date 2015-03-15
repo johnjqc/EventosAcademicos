@@ -231,6 +231,8 @@ function security() {
 			$("#mnuPatrocinadores").hide();
 			$("#mnuUsuarios").hide();
 			$("#mnuInscripciones").hide();
+			
+			$("#btn_r_publicacion").hide();
 		}
 	}
 }

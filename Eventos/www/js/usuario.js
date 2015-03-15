@@ -384,7 +384,6 @@ function submitForm(event, data) {
         jsonp: 'jsoncallback',
         success: function(data, textStatus, jqXHR) {
             if(typeof data.error === 'undefined') {
-            	alert(data.pwd);
             	window.history.back();
             } else {
                 console.log('ERRORS: ' + data.error);
